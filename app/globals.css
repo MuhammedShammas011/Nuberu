@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme {
+  --color-carbon: #171614;
+  --color-ivory: #F4EFE6;
+  --color-terracotta: #B84A2B;
+  --color-sand: #DDD4C5;
+  --color-clay: #DA6A43;
+  --color-teal: #1E5A63;
+  --font-sans: 'Host Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================
+   NUBERU — Brand Typography & Tokens
+   ============================================ */
+
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('/fonts/HostGrotesk-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('/fonts/HostGrotesk-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --carbon: #171614;
+  --ivory: #F4EFE6;
+  --terracotta: #B84A2B;
+  --sand: #DDD4C5;
+  --clay: #DA6A43;
+  --teal: #1E5A63;
+
+  --carbon-rgb: 23, 22, 20;
+  --ivory-rgb: 244, 239, 230;
+  --terracotta-rgb: 184, 74, 43;
+  --sand-rgb: 221, 212, 197;
+  --clay-rgb: 218, 106, 67;
+  --teal-rgb: 30, 90, 99;
+
+  --font-primary: 'Host Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --header-height: 80px;
+  --max-width: 1280px;
+  --max-width-wide: 1440px;
+
+  --transition-fast: 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-base: 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  color: var(--carbon);
+  background-color: var(--ivory);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--terracotta);
+  color: var(--ivory);
+}
+
+/* Container */
+.container-custom {
+  width: 100%;
+  max-width: var(--max-width-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-custom {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--carbon-rgb), 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--carbon-rgb), 0.4);
+}
