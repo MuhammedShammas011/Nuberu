@@ -140,10 +140,10 @@ export default function Footer() {
             <div>
               <Link href="/" className="inline-block mb-6 group" aria-label="Nuberu Home">
                 <Image
-                  src="/images/nuberu_logo_light.svg"
+                  src="/images/Group 3056.svg"
                   alt="NUBERU"
-                  width={142}
-                  height={34}
+                  width={154}
+                  height={36}
                   className="h-8 w-auto block transition-opacity group-hover:opacity-90"
                 />
               </Link>
@@ -277,11 +277,21 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Monumental Architectural Brand Imprint */}
-        <div className="py-12 sm:py-16 overflow-hidden select-none pointer-events-none flex items-center justify-center">
-          <p className="text-[clamp(4.2rem,15vw,13.5rem)] font-extrabold tracking-[-0.05em] leading-none text-white/[0.04] sm:text-white/[0.05] m-0 text-center uppercase tracking-tight">
-            NUBERU
-          </p>
+        {/* Architectural Brand Logo Imprint */}
+        <div className="py-12 sm:py-16 overflow-hidden flex items-center justify-center">
+          <Link
+            href="/"
+            aria-label="Nuberu Home"
+            className="block w-full max-w-[500px] sm:max-w-[660px] lg:max-w-[780px] transition-all duration-300 hover:opacity-90 hover:scale-[1.01]"
+          >
+            <Image
+              src="/images/Group 3056.svg"
+              alt="Nuberu"
+              width={523}
+              height={112}
+              className="w-full h-auto object-contain select-none opacity-90 hover:opacity-100 transition-opacity"
+            />
+          </Link>
         </div>
 
         {/* Sub-Footer Precision Bar */}
@@ -310,7 +320,7 @@ export default function Footer() {
               <span>Top</span>
               <ArrowUp className="w-3 h-3" />
             </button>
-          </div>
+          </div>0
         </div>
       </div>
     </footer>
