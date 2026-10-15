@@ -15,7 +15,7 @@ export default function ServicesOverview() {
             <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-[#1E5A63] mb-3">
               Service Portfolio
             </p>
-            <h2 className="text-[clamp(2.2rem,4vw,3.5rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.1]">
+            <h2 className="text-[clamp(2.6rem,5.2vw,4.5rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.98]">
               Engineered Services. <br />Enterprise Delivery.
             </h2>
           </div>
@@ -40,7 +40,7 @@ export default function ServicesOverview() {
                   0{index + 1} · {service.category}
                 </span>
                 <Link href={`/services/${service.slug}`}>
-                  <h3 className="text-2xl font-bold text-[#171614] group-hover:text-[#B84A2B] transition-colors tracking-tight">
+                  <h3 className="text-2xl sm:text-[1.7rem] font-extrabold text-[#171614] group-hover:text-[#B84A2B] transition-colors tracking-tight">
                     {service.title}
                   </h3>
                 </Link>

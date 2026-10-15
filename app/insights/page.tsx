@@ -22,7 +22,7 @@ export default function InsightsPage() {
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#B84A2B] block mb-4">
               Engineering Knowledge
             </span>
-            <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.08] max-w-4xl mb-6">
+            <h1 className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] max-w-5xl mb-6">
               Technical Insights & Guides.
             </h1>
             <p className="text-xl sm:text-2xl text-[#171614]/75 max-w-3xl leading-relaxed">
@@ -47,7 +47,7 @@ export default function InsightsPage() {
                     <span>{item.readTime}</span>
                   </div>
 
-                  <h2 className="text-2xl font-bold text-[#171614] tracking-tight leading-snug mb-4">
+                  <h2 className="text-2xl sm:text-[1.65rem] font-extrabold text-[#171614] tracking-tight leading-snug mb-4">
                     {item.title}
                   </h2>
 

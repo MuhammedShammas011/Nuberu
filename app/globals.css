@@ -79,6 +79,10 @@ body {
   padding: 0;
 }
 
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
 ::selection {
   background: var(--terracotta);
   color: var(--ivory);

@@ -22,7 +22,7 @@ export default function AboutPage() {
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#B84A2B] block mb-4">
               Company Overview
             </span>
-            <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.08] max-w-4xl mb-8">
+            <h1 className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] max-w-5xl mb-8">
               Engineering the Next Stage of Enterprise Technology.
             </h1>
             <p className="text-xl sm:text-2xl text-[#171614]/75 max-w-3xl leading-relaxed">
@@ -36,7 +36,7 @@ export default function AboutPage() {
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
               <div className="lg:col-span-5">
-                <h2 className="text-3xl font-bold text-[#171614] tracking-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#171614] tracking-tight leading-[1.05]">
                   Clarity, Connection & Transformation.
                 </h2>
               </div>
@@ -88,7 +88,7 @@ export default function AboutPage() {
         {/* CTA */}
         <section className="py-20 bg-[#171614] text-[#F4EFE6] text-center">
           <div className="container-custom max-w-2xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
               Ready to Discuss Your Architecture?
             </h2>
             <p className="text-base text-[#F4EFE6]/70 mb-8">

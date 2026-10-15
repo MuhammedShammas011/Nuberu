@@ -46,7 +46,7 @@ export default function ContactSection() {
             <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1E5A63] mb-4">
               Direct Engagement
             </p>
-            <h2 className="text-[clamp(2.3rem,4vw,3.6rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.08] mb-6">
+            <h2 className="text-[clamp(2.6rem,4.8vw,4.4rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] mb-6">
               READY TO MODERNIZE YOUR DIGITAL CORE?
             </h2>
             <p className="text-[1.1rem] leading-relaxed text-[#171614]/70 mb-10 max-w-[460px]">

@@ -125,7 +125,7 @@ export default function HowWeWork() {
               </span>
             </div>
 
-            <h2 className="text-[clamp(2.4rem,4.5vw,3.8rem)] font-bold text-[#171614] tracking-[-0.035em] leading-[1.08] m-0">
+            <h2 className="text-[clamp(2.8rem,5.6vw,4.6rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] m-0">
               How We Work.
             </h2>
             <p className="text-[1.05rem] sm:text-[1.12rem] text-[#555047] mt-4 leading-relaxed max-w-xl">
@@ -216,7 +216,7 @@ export default function HowWeWork() {
                   {/* Stage Headline & Timing */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="text-xl font-bold tracking-tight text-[#171614] m-0">
+                      <h3 className="text-xl font-extrabold tracking-tight text-[#171614] m-0">
                         {stage.name}
                       </h3>
                       <span className="font-mono text-[11px] font-medium text-[#1E5A63] bg-[#1E5A63]/[0.08] px-2 py-0.5 rounded-full">

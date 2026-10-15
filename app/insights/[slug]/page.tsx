@@ -58,7 +58,7 @@ export default async function InsightDetailPage({ params }: Props) {
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#B84A2B] block mb-4">
               {item.category}
             </span>
-            <h1 className="text-[clamp(2.3rem,4.5vw,3.8rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.12] mb-6">
+            <h1 className="text-[clamp(2.8rem,5.5vw,4.6rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.98] mb-6">
               {item.title}
             </h1>
 

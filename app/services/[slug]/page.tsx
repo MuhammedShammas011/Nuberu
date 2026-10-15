@@ -58,7 +58,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#B84A2B] block mb-4">
               Practice Focus · {service.category}
             </span>
-            <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.08] max-w-4xl mb-6">
+            <h1 className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] max-w-5xl mb-6">
               {service.title}
             </h1>
             <p className="text-xl sm:text-2xl text-[#171614]/75 max-w-3xl leading-relaxed mb-8">
@@ -81,7 +81,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         <section className="py-20 border-b border-[#171614]/10">
           <div className="container-custom grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6">
-              <h2 className="text-2xl font-bold text-[#171614] tracking-tight">
+              <h2 className="text-3xl font-extrabold text-[#171614] tracking-tight">
                 Practice Overview
               </h2>
               <p className="text-base text-[#171614]/70 leading-relaxed">
@@ -128,7 +128,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         {/* CTA */}
         <section className="py-20 bg-[#171614] text-[#F4EFE6] text-center">
           <div className="container-custom max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
               Initiate a {service.title} Assessment
             </h2>
             <p className="text-base text-[#F4EFE6]/70 mb-8">

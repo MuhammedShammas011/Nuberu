@@ -142,7 +142,7 @@ export default function Capabilities() {
               </span>
             </div>
 
-            <h2 className="text-[clamp(2.3rem,4.4vw,3.8rem)] font-bold text-[#171614] tracking-[-0.035em] leading-[1.08] m-0">
+            <h2 className="text-[clamp(2.8rem,5.6vw,4.6rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] m-0">
               Five Interconnected <br className="hidden sm:block" />
               Capabilities.
             </h2>
@@ -287,7 +287,7 @@ export default function Capabilities() {
                   </div>
 
                   {/* Title & Subtitle */}
-                  <h3 className="text-xl font-bold tracking-tight text-[#171614] m-0 mb-1">
+                  <h3 className="text-xl font-extrabold tracking-tight text-[#171614] m-0 mb-1">
                     {cap.title}
                   </h3>
                   <p className="text-[11.5px] font-semibold uppercase tracking-wider text-[#B84A2B] mb-3">

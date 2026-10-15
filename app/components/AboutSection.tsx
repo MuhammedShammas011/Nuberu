@@ -44,7 +44,7 @@ export default function AboutSection() {
             <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#B84A2B] mb-4">
               About Nuberu
             </p>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.4rem)] font-bold tracking-[-0.03em] leading-[1.12] text-white">
+            <h2 className="text-[clamp(2.5rem,4.8vw,4.4rem)] font-extrabold tracking-[-0.04em] leading-[0.98] text-white">
               ENGINEERING THE NEXT STAGE OF ENTERPRISE TECHNOLOGY.
             </h2>
             <div className="mt-8 pt-8 border-t border-white/10 hidden lg:block">

@@ -22,7 +22,7 @@ export default function ServicesPage() {
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#B84A2B] block mb-4">
               Practices & Solutions
             </span>
-            <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-bold text-[#171614] tracking-[-0.03em] leading-[1.08] max-w-4xl mb-6">
+            <h1 className="text-[clamp(3rem,6vw,5.5rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] max-w-5xl mb-6">
               Enterprise Technology Services.
             </h1>
             <p className="text-xl sm:text-2xl text-[#171614]/75 max-w-3xl leading-relaxed">
@@ -44,7 +44,7 @@ export default function ServicesPage() {
                   <span className="text-xs font-mono font-semibold text-[#B84A2B] tracking-wider uppercase block mb-3">
                     0{index + 1} · {service.category}
                   </span>
-                  <h2 className="text-3xl font-bold text-[#171614] tracking-tight mb-4">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-[#171614] tracking-tight leading-snug mb-4">
                     {service.title}
                   </h2>
                   <p className="text-base text-[#171614]/70 leading-relaxed mb-6">
@@ -112,7 +112,7 @@ export default function ServicesPage() {
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#B84A2B] block mb-3">
               Strategic Foundation
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold text-white mb-6 tracking-tight leading-snug">
               Advisory and Assessment Services
             </h2>
             <p className="text-base text-[#F4EFE6]/70 max-w-2xl leading-relaxed mb-10">

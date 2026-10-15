@@ -50,7 +50,7 @@ export default function TechEcosystem() {
             <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#B84A2B] mb-3">
               Platform Integration
             </p>
-            <h2 className="text-[clamp(2.2rem,4vw,3.5rem)] font-bold text-white tracking-[-0.03em] leading-[1.1]">
+            <h2 className="text-[clamp(2.6rem,5.2vw,4.5rem)] font-extrabold text-white tracking-[-0.04em] leading-[0.98]">
               Technology Ecosystem.
             </h2>
           </div>
@@ -90,7 +90,7 @@ export default function TechEcosystem() {
                 <span className="text-xs font-mono font-bold text-[#1E5A63] tracking-widest uppercase block mb-3">
                   {tech.code}
                 </span>
-                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
+                <h3 className="text-xl font-extrabold text-white mb-3 tracking-tight">
                   {tech.name}
                 </h3>
                 <p className="text-sm leading-relaxed text-[#F4EFE6]/60">

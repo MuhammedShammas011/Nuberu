@@ -55,7 +55,7 @@ export default function Hero() {
 
           <motion.h1
             variants={itemVariants}
-            className="text-[clamp(2.8rem,4.7vw,4.75rem)] font-[550] leading-[1.06] tracking-[-0.035em] text-[#171614] m-0"
+            className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] m-0"
           >
             Here Infrastructure<br />
             Enables<br />
