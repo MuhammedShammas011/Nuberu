@@ -278,18 +278,19 @@ export default function Footer() {
         </div>
 
         {/* Architectural Brand Logo Imprint */}
-        <div className="py-12 sm:py-16 overflow-hidden flex items-center justify-center">
+        <div className="py-10 sm:py-14 lg:py-18 overflow-hidden flex items-center justify-center -mx-4 sm:-mx-6 md:-mx-10 xl:-mx-16 px-2 sm:px-4">
           <Link
             href="/"
             aria-label="Nuberu Home"
-            className="block w-full max-w-[500px] sm:max-w-[660px] lg:max-w-[780px] transition-all duration-300 hover:opacity-90 hover:scale-[1.01]"
+            className="block w-full transition-all duration-300 hover:opacity-95 hover:scale-[1.005]"
           >
             <Image
               src="/images/Group 3056.svg"
               alt="Nuberu"
-              width={523}
-              height={112}
-              className="w-full h-auto object-contain select-none opacity-90 hover:opacity-100 transition-opacity"
+              width={1440}
+              height={308}
+              priority
+              className="w-full h-auto object-contain select-none transition-opacity"
             />
           </Link>
         </div>
