@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 export interface ScrollRevealTextProps {
@@ -59,11 +60,7 @@ const DEFAULT_PREVIEWS: Record<string, { image: string; tag: string }> = {
   },
 };
 
-function renderWordGroup(
-  group: WordGroup,
-  keyPrefix: string,
-  spanRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>
-) {
+function renderWordGroup(group: WordGroup, keyPrefix: string) {
   if (group.type === 'word') {
     return (
       <span
@@ -74,9 +71,7 @@ function renderWordGroup(
         {group.spans.map(({ char, idx, isBold }) => (
           <span
             key={idx}
-            ref={(el) => {
-              spanRefs.current[idx] = el;
-            }}
+            data-char-idx={idx}
             style={{
               display: 'inline-block',
               fontWeight: isBold ? 650 : 400,
@@ -101,12 +96,10 @@ function BoldHoverPhrase({
   phrase,
   preview,
   wordGroups,
-  spanRefs,
 }: {
   phrase: string;
   preview?: { image: string; tag: string };
   wordGroups: WordGroup[];
-  spanRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -120,7 +113,7 @@ function BoldHoverPhrase({
       {/* Interactive underlined text */}
       <span className="underline decoration-[#B84A2B]/45 hover:decoration-[#B84A2B] decoration-2 underline-offset-[6px] transition-colors duration-200">
         {wordGroups.map((group, gi) =>
-          renderWordGroup(group, `b-${phrase}-${gi}`, spanRefs)
+          renderWordGroup(group, `b-${phrase}-${gi}`)
         )}
       </span>
 
@@ -136,11 +129,12 @@ function BoldHoverPhrase({
           >
             {/* Compact mini card */}
             <span className="block w-28 sm:w-32 h-20 sm:h-22 rounded-lg overflow-hidden border border-[#171614]/20 shadow-[0_12px_28px_rgba(0,0,0,0.22)] bg-[#171614] relative">
-              <img
+              <Image
                 src={preview.image}
                 alt={phrase}
-                className="w-full h-full object-cover block"
-                loading="eager"
+                fill
+                sizes="130px"
+                className="object-cover"
               />
               <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent pointer-events-none" />
               <span className="absolute bottom-1.5 left-2 right-2 font-mono text-[8.5px] font-semibold text-white/95 tracking-wider uppercase truncate block text-left">
@@ -189,7 +183,6 @@ export default function ScrollRevealText({
   previews = DEFAULT_PREVIEWS,
 }: ScrollRevealTextProps) {
   const containerRef = useRef<HTMLElement | null>(null);
-  const spanRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const isVisible = useRef(false);
   const rafId = useRef<number>(0);
   const scheduled = useRef(false);
@@ -288,14 +281,13 @@ export default function ScrollRevealText({
     const totalUnits = unitCount;
     if (totalUnits === 0) return;
 
-    spanRefs.current = spanRefs.current.slice(0, allSpans.length);
+    const charEls = Array.from(
+      container.querySelectorAll<HTMLSpanElement>('[data-char-idx]')
+    );
 
     // If user prefers reduced motion, show fully revealed
     if (shouldReduceMotion) {
-      spanRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const span = allSpans[i];
-        if (!span || span.isSpace) return;
+      charEls.forEach((el) => {
         el.style.opacity = '1';
         el.style.transform = 'none';
         el.style.filter = '';
@@ -313,8 +305,8 @@ export default function ScrollRevealText({
     const applyProgress = (scrollP: number) => {
       const time = scrollP * totalTime;
 
-      spanRefs.current.forEach((el, i) => {
-        if (!el) return;
+      charEls.forEach((el) => {
+        const i = Number(el.dataset.charIdx);
         const span = allSpans[i];
         if (!span || span.isSpace) return;
 
@@ -458,7 +450,6 @@ export default function ScrollRevealText({
               phrase={seg.phrase}
               preview={seg.preview}
               wordGroups={seg.wordGroups}
-              spanRefs={spanRefs}
             />
           );
         }
@@ -466,7 +457,7 @@ export default function ScrollRevealText({
         return (
           <React.Fragment key={`seg-${sIdx}`}>
             {seg.wordGroups.map((group, gi) =>
-              renderWordGroup(group, `s${sIdx}-w${gi}`, spanRefs)
+              renderWordGroup(group, `s${sIdx}-w${gi}`)
             )}
           </React.Fragment>
         );
