@@ -34,7 +34,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
-      <body className="bg-[#F4EFE6] text-[#171614] antialiased selection:bg-[#B84A2B] selection:text-[#F4EFE6]">
+      <body className="bg-[#F4EFE6] text-[#171614] antialiased selection:bg-[#B84A2B] selection:text-[#F4EFE6] relative">
+        {/* Universal Architectural Grain Texture Overlay */}
+        <div className="grain-overlay" aria-hidden="true" />
         {children}
       </body>
     </html>

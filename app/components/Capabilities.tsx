@@ -177,21 +177,17 @@ export default function Capabilities() {
               return (
                 <div
                   key={cap.id}
-                  className="group relative rounded-3xl p-8 sm:p-10 lg:p-12 bg-white/80 hover:bg-white border border-[#171614]/[0.08] hover:border-[#B84A2B]/40 transition-all duration-300 hover:shadow-[0_24px_50px_-16px_rgba(23,22,20,0.1)] hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden ring-1 ring-transparent hover:ring-[#B84A2B]/20 w-[86vw] sm:w-[70vw] md:w-[560px] lg:w-[620px] h-[460px] sm:h-[480px] lg:h-[500px] shrink-0"
+                  className="group relative rounded-none p-8 sm:p-10 lg:p-12 bg-white/80 hover:bg-white border border-[#171614]/[0.08] hover:border-[#B84A2B]/40 transition-all duration-300 hover:shadow-[0_24px_50px_-16px_rgba(23,22,20,0.1)] hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden ring-1 ring-transparent hover:ring-[#B84A2B]/20 w-[86vw] sm:w-[70vw] md:w-[560px] lg:w-[620px] h-[460px] sm:h-[480px] lg:h-[500px] shrink-0"
                 >
                   {/* Top Highlight Accent Line */}
-                  <div className="absolute top-0 left-8 right-8 h-[3px] bg-[#B84A2B] opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#B84A2B] opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                  {/* Top Bar: Chunky Icon Badge + Big Bulky Monospace Numeral */}
+                  {/* Top Bar: Chunky Icon Badge */}
                   <div>
                     <div className="flex items-center justify-between mb-8 pb-6 border-b border-[#171614]/[0.06]">
                       <div className="w-14 h-14 rounded-2xl bg-[#171614]/[0.05] text-[#171614] group-hover:bg-[#B84A2B] group-hover:text-white transition-all flex items-center justify-center shadow-xs">
                         <Icon className="w-7 h-7 stroke-[1.8]" />
                       </div>
-
-                      <span className="text-5xl sm:text-6xl font-black font-mono text-[#171614]/15 group-hover:text-[#B84A2B]/40 transition-colors select-none">
-                        {cap.number}
-                      </span>
                     </div>
 
                     {/* Category Eyebrow */}
