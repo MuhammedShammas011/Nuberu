@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useEffect, useMemo, useState } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 
 export interface ScrollRevealTextProps {
   text: string;
@@ -48,15 +48,15 @@ interface TextSegment {
 const DEFAULT_PREVIEWS: Record<string, { image: string; tag: string }> = {
   'Technology Neutral': {
     image: '/images/about/tech-neutral.jpg',
-    tag: 'Silicon to Compute',
+    tag: 'Silicon Core',
   },
   'Transformation Focused': {
     image: '/images/about/transformation.jpg',
-    tag: 'Engineered Velocity',
+    tag: 'Cloud Velocity',
   },
   'Clarity & Connection': {
     image: '/images/about/clarity-connection.jpg',
-    tag: 'Full-Stack Mesh',
+    tag: 'Unified Mesh',
   },
 };
 
@@ -72,6 +72,7 @@ function renderWordGroup(group: WordGroup, keyPrefix: string) {
           <span
             key={idx}
             data-char-idx={idx}
+            className={isBold ? 'group-hover/phrase:!text-[#B84A2B] transition-colors duration-200' : undefined}
             style={{
               display: 'inline-block',
               fontWeight: isBold ? 650 : 400,
@@ -101,52 +102,63 @@ function BoldHoverPhrase({
   preview?: { image: string; tag: string };
   wordGroups: WordGroup[];
 }) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <span
       className="relative inline-block cursor-pointer select-none group/phrase"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => setIsHovered((prev) => !prev)}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      tabIndex={0}
+      role="button"
+      aria-label={`${phrase} preview`}
     >
-      {/* Interactive underlined text */}
-      <span className="underline decoration-[#B84A2B]/45 hover:decoration-[#B84A2B] decoration-2 underline-offset-[6px] transition-colors duration-200">
+      {/* Interactive underlined text that illuminates in terracotta on hover */}
+      <span
+        className={`underline decoration-2 underline-offset-[6px] transition-colors duration-200 ${
+          isHovered
+            ? 'decoration-[#B84A2B] text-[#B84A2B]'
+            : 'decoration-[#B84A2B]/40 group-hover/phrase:decoration-[#B84A2B] group-hover/phrase:text-[#B84A2B]'
+        }`}
+      >
         {wordGroups.map((group, gi) =>
           renderWordGroup(group, `b-${phrase}-${gi}`)
         )}
       </span>
 
-      {/* Very small floating image preview upon the same text */}
-      <AnimatePresence>
-        {isHovered && preview && (
-          <motion.span
-            initial={{ opacity: 0, y: 8, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.92 }}
-            transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 z-50 pointer-events-none flex flex-col items-center"
-          >
-            {/* Compact mini card */}
-            <span className="block w-28 sm:w-32 h-20 sm:h-22 rounded-lg overflow-hidden border border-[#171614]/20 shadow-[0_12px_28px_rgba(0,0,0,0.22)] bg-[#171614] relative">
-              <Image
-                src={preview.image}
-                alt={phrase}
-                fill
-                sizes="130px"
-                className="object-cover"
-              />
-              <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent pointer-events-none" />
-              <span className="absolute bottom-1.5 left-2 right-2 font-mono text-[8.5px] font-semibold text-white/95 tracking-wider uppercase truncate block text-left">
-                {preview.tag}
-              </span>
+      {/* Very small floating image preview sitting directly upon the text */}
+      {preview && (
+        <span
+          className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none flex flex-col items-center transition-all duration-200 ease-out ${
+            isHovered
+              ? 'opacity-100 scale-100 translate-y-0'
+              : 'opacity-0 scale-90 translate-y-1.5 group-hover/phrase:opacity-100 group-hover/phrase:scale-100 group-hover/phrase:translate-y-0'
+          }`}
+        >
+          {/* Compact mini card (approx 104px x 68px) */}
+          <span className="block w-24 sm:w-28 h-16 sm:h-[70px] rounded-lg overflow-hidden border border-[#171614]/20 shadow-[0_10px_25px_rgba(0,0,0,0.25)] bg-[#171614] relative">
+            <Image
+              src={preview.image}
+              alt={phrase}
+              fill
+              sizes="112px"
+              className="object-cover"
+              priority
+            />
+            <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent pointer-events-none" />
+            <span className="absolute bottom-1 left-1.5 right-1.5 font-mono text-[8px] font-semibold text-white/95 tracking-wider uppercase truncate block text-left">
+              {preview.tag}
             </span>
+          </span>
 
-            {/* Caret pointing directly at the hovered word */}
-            <span className="w-2 h-2 bg-[#171614] rotate-45 -mt-1 shadow-sm block" />
-          </motion.span>
-        )}
-      </AnimatePresence>
+          {/* Caret pointing directly upon the hovered word */}
+          <span className="w-2 h-2 bg-[#171614] rotate-45 -mt-1 shadow-sm block" />
+        </span>
+      )}
     </span>
   );
 }
