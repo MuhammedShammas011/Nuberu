@@ -9,7 +9,7 @@ const phases = [
     step: '01',
     name: 'Consult',
     tag: 'Discovery & Audit',
-    desc: 'We map your architecture, surface risks, and define the path forward.',
+    desc: 'We map your architecture, surface risks, and define the path forward before a single line changes.',
     img: '/images/methodology/consult.jpg',
     accent: '#B84A2B',
   },
@@ -17,7 +17,7 @@ const phases = [
     step: '02',
     name: 'Design',
     tag: 'Blueprint & IaC',
-    desc: 'Target architecture, infrastructure as code, and cutover runbooks.',
+    desc: 'Target architecture, infrastructure as code, and zero-downtime cutover runbooks — built to last.',
     img: '/images/methodology/design.jpg',
     accent: '#1E5A63',
   },
@@ -25,7 +25,7 @@ const phases = [
     step: '03',
     name: 'Deploy',
     tag: 'Execution',
-    desc: 'Hardened clusters, GitOps pipelines, phased migration with rollback.',
+    desc: 'Hardened clusters, declarative GitOps pipelines, phased migrations with guaranteed rollback.',
     img: '/images/methodology/deploy.jpg',
     accent: '#B84A2B',
   },
@@ -33,14 +33,16 @@ const phases = [
     step: '04',
     name: 'Manage',
     tag: 'Day 2 SRE',
-    desc: 'Continuous reliability, security patching, and cost governance.',
+    desc: 'Continuous reliability engineering, proactive security patching, and FinOps cost governance.',
     img: '/images/methodology/manage.jpg',
     accent: '#1E5A63',
   },
 ] as const;
 
 export default function HowWeWork() {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  const active = phases[activeIdx];
 
   return (
     <section
@@ -49,8 +51,8 @@ export default function HowWeWork() {
     >
       <div className="container-custom">
 
-        {/* ── Header ── */}
-        <div className="flex items-center justify-between mb-16 pb-5 border-b border-[#171614]/10">
+        {/* ── Eyebrow ── */}
+        <div className="flex items-center justify-between mb-14 pb-5 border-b border-[#171614]/10">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B84A2B]" />
             <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#B84A2B]">
@@ -62,115 +64,169 @@ export default function HowWeWork() {
           </span>
         </div>
 
-        {/* ── Phase rows ── */}
-        <div className="space-y-0 divide-y divide-[#171614]/10">
-          {phases.map((phase, idx) => {
-            const isActive = activeIdx === idx;
+        {/* ── Two-column layout ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-            return (
-              <motion.div
-                key={phase.step}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.4, delay: idx * 0.07 }}
-                onMouseEnter={() => setActiveIdx(idx)}
-                onMouseLeave={() => setActiveIdx(null)}
-                className="group flex items-center gap-6 sm:gap-10 py-7 sm:py-8 cursor-default"
-              >
-                {/* Step number */}
-                <span
-                  className="font-mono text-[11px] font-bold shrink-0 transition-colors duration-200"
-                  style={{ color: isActive ? phase.accent : '#17161440' }}
-                >
-                  {phase.step}
-                </span>
+          {/* LEFT — heading + phase rows */}
+          <div>
+            <h2 className="text-[clamp(2.6rem,5vw,4rem)] font-extrabold tracking-[-0.035em] leading-[0.96] mb-12">
+              How we{' '}
+              <span className="text-[#171614]/25 font-light italic">
+                deliver.
+              </span>
+            </h2>
 
-                {/* Small interactive image */}
-                <div className="relative shrink-0">
-                  <motion.div
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden relative shadow-sm"
-                    animate={{
-                      scale: isActive ? 1.15 : 1,
-                      rotate: isActive ? 3 : 0,
-                    }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+            <div className="divide-y divide-[#171614]/10">
+              {phases.map((phase, idx) => {
+                const isActive = activeIdx === idx;
+
+                return (
+                  <motion.button
+                    key={phase.step}
+                    type="button"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.06 }}
+                    onMouseEnter={() => setActiveIdx(idx)}
+                    onClick={() => setActiveIdx(idx)}
+                    className="w-full text-left group flex items-center gap-5 py-6 cursor-pointer"
                   >
-                    <Image
-                      src={phase.img}
-                      alt={phase.name}
-                      fill
-                      className="object-cover"
-                      sizes="56px"
-                    />
-                    {/* color overlay */}
+                    {/* Step */}
+                    <span
+                      className="font-mono text-[11px] font-bold shrink-0 w-6 transition-colors duration-200"
+                      style={{ color: isActive ? phase.accent : '#17161435' }}
+                    >
+                      {phase.step}
+                    </span>
+
+                    {/* Thumbnail */}
                     <motion.div
-                      className="absolute inset-0"
-                      style={{ background: phase.accent }}
-                      animate={{ opacity: isActive ? 0.15 : 0 }}
-                      transition={{ duration: 0.25 }}
-                    />
-                  </motion.div>
+                      className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0"
+                      animate={{
+                        scale: isActive ? 1.1 : 1,
+                        rotate: isActive ? 4 : 0,
+                      }}
+                      transition={{ type: 'spring', stiffness: 280, damping: 20 }}
+                    >
+                      <Image
+                        src={phase.img}
+                        alt={phase.name}
+                        fill
+                        className="object-cover"
+                        sizes="40px"
+                      />
+                      <motion.div
+                        className="absolute inset-0"
+                        style={{ background: phase.accent }}
+                        animate={{ opacity: isActive ? 0.18 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    </motion.div>
 
-                  {/* Glow ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-xl"
-                    animate={{
-                      boxShadow: isActive
-                        ? `0 0 0 2px ${phase.accent}60, 0 8px 24px -4px ${phase.accent}40`
-                        : '0 0 0 0px transparent',
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-
-                {/* Name */}
-                <div className="min-w-[80px] sm:min-w-[120px]">
-                  <motion.h3
-                    className="text-lg sm:text-2xl font-bold tracking-tight m-0 leading-none transition-colors duration-200"
-                    style={{ color: isActive ? phase.accent : '#171614' }}
-                  >
-                    {phase.name}
-                  </motion.h3>
-                </div>
-
-                {/* Tag + Desc */}
-                <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
-                  <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.13em] text-[#171614]/40 shrink-0">
-                    {phase.tag}
-                  </span>
-
-                  {/* Description fades in on hover */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.p
-                        key="desc"
-                        initial={{ opacity: 0, x: -6 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -4 }}
-                        transition={{ duration: 0.22 }}
-                        className="text-[13px] text-[#171614]/65 leading-snug m-0"
+                    {/* Name + tag */}
+                    <div className="flex-1">
+                      <p
+                        className="text-[1.15rem] sm:text-xl font-bold tracking-tight leading-none m-0 transition-colors duration-200"
+                        style={{ color: isActive ? phase.accent : '#171614' }}
                       >
-                        {phase.desc}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </div>
+                        {phase.name}
+                      </p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#171614]/40 mt-1 m-0">
+                        {phase.tag}
+                      </p>
+                    </div>
 
-                {/* Accent dot right */}
-                <motion.span
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ background: phase.accent }}
-                  animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.4 }}
-                  transition={{ duration: 0.2 }}
+                    {/* Arrow */}
+                    <motion.svg
+                      width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      animate={{
+                        x: isActive ? 2 : 0,
+                        opacity: isActive ? 1 : 0.2,
+                      }}
+                      transition={{ duration: 0.2 }}
+                      style={{ color: phase.accent }}
+                      className="shrink-0"
+                    >
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </motion.svg>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* RIGHT — large image + description panel */}
+          <div className="lg:sticky lg:top-32">
+            <div className="relative rounded-2xl overflow-hidden bg-[#171614]/[0.04] aspect-[4/3] w-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIdx}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={active.img}
+                    alt={active.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
+                  {/* Subtle gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#171614]/60 via-transparent to-transparent" />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Bottom text overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 z-10">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIdx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p
+                      className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] mb-2"
+                      style={{ color: active.accent }}
+                    >
+                      {active.step} — {active.tag}
+                    </p>
+                    <p className="text-[#F4EFE6] text-[14px] sm:text-[15px] leading-relaxed m-0 max-w-xs">
+                      {active.desc}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Progress dots */}
+            <div className="flex items-center gap-2 mt-5 justify-center">
+              {phases.map((p, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveIdx(i)}
+                  className="transition-all duration-300 rounded-full"
+                  style={{
+                    width: activeIdx === i ? 24 : 6,
+                    height: 6,
+                    background: activeIdx === i ? p.accent : '#17161420',
+                  }}
                 />
-              </motion.div>
-            );
-          })}
+              ))}
+            </div>
+          </div>
+
         </div>
 
         {/* ── Footer ── */}
-        <p className="mt-12 font-mono text-[10.5px] text-[#171614]/30 tracking-wider text-center">
+        <p className="mt-16 font-mono text-[10.5px] text-[#171614]/30 tracking-wider text-center border-t border-[#171614]/10 pt-8">
           End-to-end — from first audit to continuous SRE, no hand-offs.
         </p>
 
