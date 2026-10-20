@@ -2,76 +2,81 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import { Compass, Cpu, Rocket, ShieldCheck, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, ArrowRight, ShieldCheck, GitBranch, RefreshCw } from 'lucide-react';
 
-interface Stage {
+interface MethodologyStage {
   step: string;
   name: string;
   subtitle: string;
   timeline: string;
-  icon: typeof Compass;
-  description: string;
-  keyDeliverables: string[];
-  focusPill: string;
+  mandate: string;
+  focus: string;
+  governance: string;
+  deliverables: string[];
+  tooling: string[];
 }
 
-const stages: Stage[] = [
+const methodologyStages: MethodologyStage[] = [
   {
     step: '01',
-    name: 'CONSULT',
+    name: 'Consult',
     subtitle: 'Discovery & Assessment',
-    timeline: 'Weeks 1–2',
-    icon: Compass,
-    description: 'We audit your existing workload architecture, technical constraints, security posture, and business objectives.',
-    focusPill: 'Risk & Landscape Audit',
-    keyDeliverables: [
-      'Current-state architecture audit',
-      'Cost & migration risk matrix',
-      'Dependency mapping & gaps',
+    timeline: 'Weeks 01–02',
+    mandate: 'We audit your workload architecture, dependency trees, security posture, and cloud expenditures to identify operational risks and modernization opportunities.',
+    focus: 'Risk & Landscape Audit',
+    governance: 'ISO 27001 / SOC 2 Scope',
+    deliverables: [
+      'Current-state architecture topology audit',
+      'Dependency mapping & failure domain matrix',
+      'Migration feasibility & TCO model',
     ],
+    tooling: ['CloudHealth', 'Trivy', 'Kubescape', 'Well-Architected'],
   },
   {
     step: '02',
-    name: 'DESIGN',
+    name: 'Design',
     subtitle: 'Architecture & Planning',
-    timeline: 'Weeks 3–4',
-    icon: Cpu,
-    description: 'We engineer target multi-cloud topologies, platform specifications, Infrastructure as Code scaffolds, and cutover roadmaps.',
-    focusPill: 'Target Blueprint',
-    keyDeliverables: [
-      'High-Level Design (HLD) blueprint',
-      'Terraform / IaC module foundations',
-      'Zero-downtime migration strategy',
+    timeline: 'Weeks 03–04',
+    mandate: 'We engineer target multi-cloud landing zones, platform specifications, declarative Infrastructure as Code modules, and deterministic cutover runbooks.',
+    focus: 'Target Blueprint & IaC',
+    governance: 'Deterministic IaC Foundations',
+    deliverables: [
+      'High-Level Design (HLD) & target blueprints',
+      'Modular Terraform / OpenTofu IaC scaffolds',
+      'Zero-downtime cutover & rollback runbooks',
     ],
+    tooling: ['Terraform', 'OpenTofu', 'Terragrunt', 'Cisco ACI'],
   },
   {
     step: '03',
-    name: 'DEPLOY',
+    name: 'Deploy',
     subtitle: 'Execution & Engineering',
-    timeline: 'Weeks 5–10',
-    icon: Rocket,
-    description: 'We roll out production-grade clusters, CI/CD automation pipelines, workload migrations, and perform rigorous load testing.',
-    focusPill: 'Production Go-Live',
-    keyDeliverables: [
-      'Hardened cloud / container clusters',
-      'Automated deployment pipelines',
-      'Production cutover & validation',
+    timeline: 'Weeks 05–10',
+    mandate: 'We roll out hardened container platforms, automated GitOps delivery pipelines, execute phased workload migrations, and perform rigorous load validation.',
+    focus: 'Production Go-Live',
+    governance: 'SLO & Gate-Checked Rollouts',
+    deliverables: [
+      'Hardened Kubernetes & OpenShift clusters',
+      'Declarative GitOps CI/CD delivery pipelines',
+      'Production cutover with rollback guarantees',
     ],
+    tooling: ['ArgoCD', 'Kubernetes', 'OpenShift', 'GitHub Actions'],
   },
   {
     step: '04',
-    name: 'MANAGE',
-    subtitle: 'Day 2 Operations',
+    name: 'Manage',
+    subtitle: 'Day 2 SRE & Governance',
     timeline: 'Continuous',
-    icon: ShieldCheck,
-    description: 'Ongoing SRE observability, telemetry-driven autoscaling, proactive vulnerability remediation, and continuous platform governance.',
-    focusPill: '24/7 SRE & Governance',
-    keyDeliverables: [
-      'Proactive monitoring & incident response',
-      'FinOps cloud cost governance',
-      'Continuous compliance & patching',
+    mandate: 'Continuous site reliability engineering, telemetry-driven autoscaling, proactive CVE vulnerability remediation, and automated FinOps governance.',
+    focus: '24/7 SRE & Governance',
+    governance: 'Continuous 99.99% Uptime SLA',
+    deliverables: [
+      'Proactive 24/7 APM & incident telemetry',
+      'Continuous security compliance & patching',
+      'FinOps multi-cloud unit economics & rightsizing',
     ],
+    tooling: ['Prometheus', 'Grafana', 'OpenTelemetry', 'Datadog'],
   },
 ];
 
@@ -79,228 +84,231 @@ export default function HowWeWork() {
   const [activeStage, setActiveStage] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.12,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
-    },
-  };
-
   return (
-    <section className="py-24 sm:py-32 bg-[#F4EFE6] relative overflow-hidden" id="delivery-approach">
-      {/* Subtle architectural grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(#171614 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
-        aria-hidden="true"
-      />
-
+    <section className="py-20 sm:py-28 bg-[#F4EFE6] text-[#171614] relative overflow-hidden" id="delivery-approach">
       <div className="container-custom relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 lg:mb-20 pb-8 border-b border-[#171614]/10">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-[#171614]/[0.04] border border-[#171614]/[0.08] mb-4">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B84A2B] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#B84A2B]" />
-              </span>
-              <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-[#171614]/80">
-                Delivery Methodology
-              </span>
-            </div>
+        {/* Top Eyebrow Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.45 }}
+          className="flex items-center justify-between mb-8 sm:mb-10 pb-4 border-b border-[#171614]/10"
+        >
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#171614]/[0.04] border border-[#171614]/[0.08]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B84A2B]" />
+            <span className="text-[10.5px] font-mono font-semibold uppercase tracking-[0.16em] text-[#B84A2B]">
+              Delivery Methodology
+            </span>
+          </div>
 
-            <h2 className="text-[clamp(2.8rem,5.6vw,4.6rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] m-0">
-              How We Work.
+          <span className="font-mono text-[11px] font-semibold text-[#171614]/40 tracking-wider uppercase">
+            04 PHASES {'//'} SILICON TO DAY 2 SRE
+          </span>
+        </motion.div>
+
+        {/* Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 lg:mb-14">
+          <div className="max-w-2xl">
+            <h2 className="text-[clamp(2.5rem,5vw,4.2rem)] font-extrabold tracking-[-0.035em] text-[#171614] leading-[0.98] m-0">
+              Disciplined Lifecycle. <br />
+              <span className="text-[#171614]/40 font-normal">Predictable Velocity.</span>
             </h2>
-            <p className="text-[1.05rem] sm:text-[1.12rem] text-[#555047] mt-4 leading-relaxed max-w-xl">
-              A disciplined, minimal four-stage engineering lifecycle built to de-risk complex transformations and deliver measurable outcomes.
+          </div>
+
+          <div className="max-w-md">
+            <p className="text-[1.05rem] text-[#171614]/70 leading-relaxed m-0">
+              A structured, milestone-governed engineering process designed to eliminate technical debt, prevent vendor lock-in, and guarantee zero-downtime cutover.
             </p>
           </div>
-
-          {/* Quick Stats Pill */}
-          <div className="flex items-center gap-6 font-mono text-xs text-[#171614]/60 pt-2 md:pt-0">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#1E5A63]" />
-              <span>4 Structured Phases</span>
-            </div>
-            <div className="hidden sm:flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B84A2B]" />
-              <span>Zero-Downtime Focus</span>
-            </div>
-          </div>
         </div>
 
-        {/* Minimal Timeline Connector Line (Desktop) */}
-        <div className="hidden lg:block relative mb-6 px-4">
-          <div className="h-[1px] w-full bg-[#171614]/10 relative">
-            {/* Animated active tracer */}
+        {/* Master Lifecycle Timeline Progress Bar */}
+        <div className="relative mb-6">
+          <div className="h-[2px] w-full bg-[#171614]/10 rounded-full overflow-hidden relative">
             <motion.div
-              className="absolute top-0 left-0 h-[2px] bg-[#B84A2B] origin-left"
-              initial={{ width: '0%' }}
-              animate={{ width: `${((activeStage + 1) / stages.length) * 100}%` }}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+              className="absolute top-0 left-0 h-full bg-[#B84A2B] rounded-full"
+              initial={false}
+              animate={{
+                width: `${((activeStage + 1) / methodologyStages.length) * 100}%`,
+              }}
+              transition={{
+                duration: shouldReduceMotion ? 0 : 0.35,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
             />
           </div>
+
+          {/* Minimal Phase Stepper Ticks */}
+          <div className="grid grid-cols-4 pt-2.5 font-mono text-[11px]">
+            {methodologyStages.map((stage, idx) => {
+              const isSelected = activeStage === idx;
+              const isPassed = activeStage >= idx;
+
+              return (
+                <button
+                  key={stage.step}
+                  type="button"
+                  onClick={() => setActiveStage(idx)}
+                  className={`text-left transition-colors duration-200 cursor-pointer group flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'text-[#B84A2B] font-semibold'
+                      : isPassed
+                      ? 'text-[#171614]/80'
+                      : 'text-[#171614]/40 hover:text-[#171614]/70'
+                  }`}
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full transition-transform ${
+                      isSelected ? 'bg-[#B84A2B] scale-125' : isPassed ? 'bg-[#171614]/40' : 'bg-[#171614]/20'
+                    }`}
+                  />
+                  <span className="truncate">
+                    {stage.step} {stage.name}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* 4 Minimal Stage Columns / Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5"
-        >
-          {stages.map((stage, index) => {
-            const Icon = stage.icon;
-            const isActive = activeStage === index;
+        {/* Unified Architectural 4-Column Monolith Grid */}
+        <div className="rounded-2xl border border-[#171614]/10 bg-[#171614]/[0.015] overflow-hidden shadow-[0_20px_45px_-25px_rgba(23,22,20,0.06)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#171614]/10">
+            {methodologyStages.map((stage, idx) => {
+              const isSelected = activeStage === idx;
 
-            return (
-              <motion.div
-                key={stage.step}
-                variants={itemVariants}
-                whileHover={shouldReduceMotion ? undefined : { y: -6, transition: { duration: 0.25 } }}
-                onMouseEnter={() => setActiveStage(index)}
-                onClick={() => setActiveStage(index)}
-                className={`group relative rounded-2xl p-7 transition-all duration-300 flex flex-col justify-between cursor-pointer border ${
-                  isActive
-                    ? 'bg-white shadow-[0_16px_36px_-12px_rgba(23,22,20,0.08)] border-[#B84A2B]/40 ring-1 ring-[#B84A2B]/20'
-                    : 'bg-white/60 hover:bg-white border-[#171614]/[0.08] hover:border-[#171614]/20 shadow-[0_4px_20px_-10px_rgba(23,22,20,0.03)]'
-                }`}
-              >
-                {/* Active indicator bar along top border */}
-                {isActive && (
-                  <motion.div
-                    layoutId="active-stage-top-bar"
-                    className="absolute top-0 left-6 right-6 h-[2.5px] bg-[#B84A2B] rounded-full"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
+              return (
+                <div
+                  key={stage.step}
+                  onMouseEnter={() => setActiveStage(idx)}
+                  onClick={() => setActiveStage(idx)}
+                  className={`relative p-7 sm:p-8 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                    isSelected
+                      ? 'bg-white shadow-[0_12px_32px_-12px_rgba(23,22,20,0.08)] z-10'
+                      : 'hover:bg-white/50 bg-transparent'
+                  }`}
+                >
+                  {/* Active Top Accent Line */}
+                  {isSelected && (
+                    <motion.div
+                      layoutId="stage-active-accent"
+                      className="absolute top-0 left-0 right-0 h-[2.5px] bg-[#B84A2B]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
 
-                <div>
-                  {/* Top Bar: Icon + Step Index */}
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#171614]/[0.06]">
-                    <div
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${
-                        isActive
-                          ? 'bg-[#B84A2B] text-white shadow-sm'
-                          : 'bg-[#171614]/[0.05] text-[#171614] group-hover:bg-[#171614]/[0.08]'
-                      }`}
-                    >
-                      <Icon className="w-5 h-5 stroke-[1.8]" />
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-semibold text-[#171614]/40 tracking-wider">
-                        {stage.step} / 04
+                  <div>
+                    {/* Step Numeral + Timeline Badge */}
+                    <div className="flex items-center justify-between gap-2 mb-6">
+                      <span
+                        className={`font-mono text-3xl sm:text-4xl font-extrabold tracking-tighter transition-colors duration-200 ${
+                          isSelected ? 'text-[#B84A2B]' : 'text-[#171614]/25'
+                        }`}
+                      >
+                        {stage.step}
                       </span>
-                    </div>
-                  </div>
 
-                  {/* Stage Headline & Timing */}
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="text-xl font-extrabold tracking-tight text-[#171614] m-0">
-                        {stage.name}
-                      </h3>
-                      <span className="font-mono text-[11px] font-medium text-[#1E5A63] bg-[#1E5A63]/[0.08] px-2 py-0.5 rounded-full">
+                      <span className="font-mono text-[10.5px] font-semibold text-[#1E5A63] bg-[#1E5A63]/[0.07] px-2.5 py-1 rounded-full uppercase tracking-wider">
                         {stage.timeline}
                       </span>
                     </div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#B84A2B]">
-                      {stage.subtitle}
+
+                    {/* Stage Name & Subtitle */}
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-extrabold tracking-tight text-[#171614] m-0 mb-1">
+                        {stage.name}
+                      </h3>
+                      <p className="text-[11px] font-mono font-semibold uppercase tracking-[0.12em] text-[#B84A2B]">
+                        {stage.subtitle}
+                      </p>
+                    </div>
+
+                    {/* Mandate Prose */}
+                    <p className="text-[13.5px] leading-relaxed text-[#171614]/75 mb-6">
+                      {stage.mandate}
                     </p>
+
+                    {/* Key Outputs — Minimalist Typographic List */}
+                    <div className="pt-4 border-t border-[#171614]/10 mb-6">
+                      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#171614]/40 mb-3">
+                        Core Artifacts & Deliverables:
+                      </p>
+                      <ul className="space-y-2.5 list-none p-0 m-0">
+                        {stage.deliverables.map((item, dIdx) => (
+                          <li
+                            key={dIdx}
+                            className="flex items-start gap-2 text-xs text-[#171614]/85 leading-snug"
+                          >
+                            <span
+                              className={`font-mono text-[11px] font-semibold shrink-0 transition-colors ${
+                                isSelected ? 'text-[#B84A2B]' : 'text-[#171614]/30'
+                              }`}
+                            >
+                              0{dIdx + 1} ·
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-[13.5px] leading-relaxed text-[#171614]/70 mb-6">
-                    {stage.description}
-                  </p>
+                  {/* Bottom Tooling Stack & Focus Status */}
+                  <div className="pt-4 border-t border-[#171614]/10">
+                    <div className="flex flex-wrap gap-1.5 mb-3.5">
+                      {stage.tooling.map((tool) => (
+                        <span
+                          key={tool}
+                          className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#171614]/[0.04] text-[#171614]/60"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
 
-                  {/* Key Deliverables Minimal List */}
-                  <div className="space-y-2 pt-4 border-t border-[#171614]/[0.06]">
-                    <p className="font-mono text-[10.5px] uppercase tracking-wider text-[#171614]/40 font-semibold mb-2.5">
-                      Key Outputs:
-                    </p>
-                    {stage.keyDeliverables.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-[#171614]/80 leading-snug">
-                        <CheckCircle2
-                          className={`w-3.5 h-3.5 mt-0.5 shrink-0 transition-colors ${
-                            isActive ? 'text-[#B84A2B]' : 'text-[#171614]/30 group-hover:text-[#171614]/60'
-                          }`}
-                        />
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#171614]/60">
+                      <span>{stage.focus}</span>
+                      <ArrowRight
+                        className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
+                          isSelected ? 'text-[#B84A2B] translate-x-1' : 'opacity-30'
+                        }`}
+                      />
+                    </div>
                   </div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
 
-                {/* Bottom Pill Indicator */}
-                <div className="mt-7 pt-4 border-t border-[#171614]/[0.06] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#171614]/50 truncate max-w-[170px]">
-                    {stage.focusPill}
-                  </span>
-                  <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
-                      isActive
-                        ? 'bg-[#B84A2B]/10 text-[#B84A2B] translate-x-0.5'
-                        : 'text-[#171614]/30 group-hover:text-[#171614] group-hover:translate-x-0.5'
-                    }`}
-                  >
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Minimal Bottom Banner with CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 p-6 sm:p-8 rounded-2xl bg-[#171614] text-[#F4EFE6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#B84A2B] shrink-0">
-              <Sparkles className="w-5 h-5" />
+        {/* Bottom Precision Guarantees & Action Bar */}
+        <div className="mt-12 sm:mt-14 pt-6 border-t border-[#171614]/10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+          {/* Methodology Telemetry Badges */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8 font-mono text-xs text-[#171614]/65">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#B84A2B]" />
+              <span>Zero-Downtime Migration Protocol</span>
             </div>
-            <div>
-              <h4 className="text-base font-semibold text-white tracking-tight">
-                Require a customized execution plan?
-              </h4>
-              <p className="text-xs text-[#F4EFE6]/60 mt-0.5">
-                Our platform architects assess your infrastructure and formulate milestone-backed scoping.
-              </p>
+            <div className="hidden sm:flex items-center gap-2">
+              <GitBranch className="w-4 h-4 text-[#1E5A63]" />
+              <span>100% Declarative GitOps Scaffolding</span>
+            </div>
+            <div className="hidden md:flex items-center gap-2">
+              <RefreshCw className="w-4 h-4 text-[#171614]/40" />
+              <span>Direct Principal Architect Engagement</span>
             </div>
           </div>
 
+          {/* Sleek Minimal CTA */}
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#171614] bg-[#F4EFE6] hover:bg-white px-6 py-3 rounded-full transition-all hover:shadow-[0_4px_16px_rgba(244,239,230,0.2)] shrink-0 self-stretch sm:self-auto"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#171614] hover:text-[#B84A2B] transition-colors group"
           >
-            <span>Request Architecture Review</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Request Methodology Runbook & Scope</span>
+            <ArrowUpRight className="w-4 h-4 text-[#B84A2B] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
