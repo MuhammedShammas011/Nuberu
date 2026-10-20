@@ -2,22 +2,22 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const phases = [
   {
     step: '01',
     name: 'Consult',
-    tag: 'Discovery',
-    desc: 'We audit your architecture, map dependencies, and identify risks before a single line changes.',
+    tag: 'Discovery & Audit',
+    desc: 'We map your architecture, surface risks, and define the path forward.',
     img: '/images/methodology/consult.jpg',
     accent: '#B84A2B',
   },
   {
     step: '02',
     name: 'Design',
-    tag: 'Blueprint',
-    desc: 'Target architectures, IaC scaffolds, and zero-downtime cutover runbooks — designed to last.',
+    tag: 'Blueprint & IaC',
+    desc: 'Target architecture, infrastructure as code, and cutover runbooks.',
     img: '/images/methodology/design.jpg',
     accent: '#1E5A63',
   },
@@ -25,7 +25,7 @@ const phases = [
     step: '03',
     name: 'Deploy',
     tag: 'Execution',
-    desc: 'Hardened clusters, GitOps pipelines, and phased migrations with rollback guarantees.',
+    desc: 'Hardened clusters, GitOps pipelines, phased migration with rollback.',
     img: '/images/methodology/deploy.jpg',
     accent: '#B84A2B',
   },
@@ -33,133 +33,146 @@ const phases = [
     step: '04',
     name: 'Manage',
     tag: 'Day 2 SRE',
-    desc: 'Continuous reliability engineering, security patching, and FinOps governance — ongoing.',
+    desc: 'Continuous reliability, security patching, and cost governance.',
     img: '/images/methodology/manage.jpg',
     accent: '#1E5A63',
   },
 ] as const;
 
 export default function HowWeWork() {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
   return (
     <section
-      className="py-24 sm:py-32 bg-[#171614] text-[#F4EFE6] overflow-hidden"
+      className="py-24 sm:py-32 bg-[#F4EFE6] text-[#171614]"
       id="delivery-approach"
     >
       <div className="container-custom">
 
         {/* ── Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 sm:mb-20"
-        >
-          <span className="inline-flex items-center gap-2 mb-6">
+        <div className="flex items-center justify-between mb-16 pb-5 border-b border-[#171614]/10">
+          <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B84A2B]" />
             <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#B84A2B]">
               Delivery Methodology
             </span>
+          </div>
+          <span className="font-mono text-[10.5px] text-[#171614]/35 uppercase tracking-wider hidden sm:block">
+            04 phases
           </span>
+        </div>
 
-          <h2 className="text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-[-0.03em] leading-[1] m-0">
-            How we{' '}
-            <span className="text-[#F4EFE6]/30 font-light italic">work.</span>
-          </h2>
-        </motion.div>
-
-        {/* ── Phase Grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#F4EFE6]/10 rounded-2xl overflow-hidden">
+        {/* ── Phase rows ── */}
+        <div className="space-y-0 divide-y divide-[#171614]/10">
           {phases.map((phase, idx) => {
-            const isHovered = hovered === idx;
+            const isActive = activeIdx === idx;
 
             return (
               <motion.div
                 key={phase.step}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
-                onMouseEnter={() => setHovered(idx)}
-                onMouseLeave={() => setHovered(null)}
-                className="relative flex flex-col bg-[#171614] cursor-default overflow-hidden group"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: idx * 0.07 }}
+                onMouseEnter={() => setActiveIdx(idx)}
+                onMouseLeave={() => setActiveIdx(null)}
+                className="group flex items-center gap-6 sm:gap-10 py-7 sm:py-8 cursor-default"
               >
-                {/* Image block */}
-                <div className="relative w-full aspect-square overflow-hidden bg-[#1a1917]">
-                  <Image
-                    src={phase.img}
-                    alt={phase.name}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                  {/* Overlay tint on hover */}
-                  <div
-                    className="absolute inset-0 transition-opacity duration-500"
-                    style={{
-                      background: `${phase.accent}22`,
-                      opacity: isHovered ? 1 : 0,
+                {/* Step number */}
+                <span
+                  className="font-mono text-[11px] font-bold shrink-0 transition-colors duration-200"
+                  style={{ color: isActive ? phase.accent : '#17161440' }}
+                >
+                  {phase.step}
+                </span>
+
+                {/* Small interactive image */}
+                <div className="relative shrink-0">
+                  <motion.div
+                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden relative shadow-sm"
+                    animate={{
+                      scale: isActive ? 1.15 : 1,
+                      rotate: isActive ? 3 : 0,
                     }}
-                  />
-                  {/* Step number top-left */}
-                  <span
-                    className="absolute top-4 left-4 font-mono text-xs font-bold px-2 py-0.5 rounded backdrop-blur-sm"
-                    style={{
-                      color: phase.accent,
-                      background: `${phase.accent}18`,
-                      border: `1px solid ${phase.accent}30`,
-                    }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 22 }}
                   >
-                    {phase.step}
-                  </span>
+                    <Image
+                      src={phase.img}
+                      alt={phase.name}
+                      fill
+                      className="object-cover"
+                      sizes="56px"
+                    />
+                    {/* color overlay */}
+                    <motion.div
+                      className="absolute inset-0"
+                      style={{ background: phase.accent }}
+                      animate={{ opacity: isActive ? 0.15 : 0 }}
+                      transition={{ duration: 0.25 }}
+                    />
+                  </motion.div>
+
+                  {/* Glow ring */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl"
+                    animate={{
+                      boxShadow: isActive
+                        ? `0 0 0 2px ${phase.accent}60, 0 8px 24px -4px ${phase.accent}40`
+                        : '0 0 0 0px transparent',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </div>
 
-                {/* Text block */}
-                <div className="p-6 flex flex-col gap-2 flex-1">
-                  {/* Tag */}
-                  <span
-                    className="font-mono text-[10px] font-semibold uppercase tracking-[0.15em] transition-colors duration-300"
-                    style={{ color: isHovered ? phase.accent : '#F4EFE6' + '50' }}
+                {/* Name */}
+                <div className="min-w-[80px] sm:min-w-[120px]">
+                  <motion.h3
+                    className="text-lg sm:text-2xl font-bold tracking-tight m-0 leading-none transition-colors duration-200"
+                    style={{ color: isActive ? phase.accent : '#171614' }}
                   >
+                    {phase.name}
+                  </motion.h3>
+                </div>
+
+                {/* Tag + Desc */}
+                <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                  <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.13em] text-[#171614]/40 shrink-0">
                     {phase.tag}
                   </span>
 
-                  {/* Name */}
-                  <h3 className="text-xl font-bold tracking-tight text-[#F4EFE6] m-0">
-                    {phase.name}
-                  </h3>
-
-                  {/* Desc */}
-                  <p className="text-[13.5px] leading-relaxed text-[#F4EFE6]/55 m-0">
-                    {phase.desc}
-                  </p>
+                  {/* Description fades in on hover */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.p
+                        key="desc"
+                        initial={{ opacity: 0, x: -6 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -4 }}
+                        transition={{ duration: 0.22 }}
+                        className="text-[13px] text-[#171614]/65 leading-snug m-0"
+                      >
+                        {phase.desc}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                {/* Bottom accent line on hover */}
-                <motion.div
-                  className="absolute bottom-0 left-0 h-[2px]"
+                {/* Accent dot right */}
+                <motion.span
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
                   style={{ background: phase.accent }}
-                  initial={false}
-                  animate={{ width: isHovered ? '100%' : '0%' }}
-                  transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.4 }}
+                  transition={{ duration: 0.2 }}
                 />
               </motion.div>
             );
           })}
         </div>
 
-        {/* ── Footer note ── */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 font-mono text-[11px] text-[#F4EFE6]/30 tracking-wider text-center"
-        >
-          From first audit to continuous SRE — end-to-end, no hand-offs.
-        </motion.p>
+        {/* ── Footer ── */}
+        <p className="mt-12 font-mono text-[10.5px] text-[#171614]/30 tracking-wider text-center">
+          End-to-end — from first audit to continuous SRE, no hand-offs.
+        </p>
 
       </div>
     </section>
