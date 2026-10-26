@@ -17,13 +17,13 @@ export default function Hero() {
             ONE SYSTEM. MANY CAPABILITIES.
           </p>
 
-          <h1 className="text-[clamp(2.8rem,4.7vw,4.75rem)] font-[550] leading-[1.06] tracking-[-0.035em] text-[#171614] m-0">
+          <h1 className="text-[clamp(3.4rem,5.8vw,5.75rem)] font-[550] leading-[1.02] tracking-[-0.04em] text-[#171614] m-0">
             Here Infrastructure<br />
             Enables<br />
             Transformation.
           </h1>
 
-          <p className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[500px] mt-6 mb-9">
+          <p className="text-[1.15rem] sm:text-[1.2rem] leading-[1.6] text-[#555047] max-w-[520px] mt-6 mb-9">
             Nuberu connects infrastructure, cloud and modern technologies to create simpler, 
             scalable and resilient technology environments.
           </p>
