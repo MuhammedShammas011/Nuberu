@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
 // Dynamically import the 3D scene with ssr: false — must be inside a Client Component
@@ -27,7 +26,6 @@ const CAPS = [
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 export default function Hero() {
-  const shouldReduceMotion = useReducedMotion();
   const mouse = useRef<[number, number]>([0, 0]);
   const scrollY = useRef<number>(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -57,19 +55,6 @@ export default function Hero() {
     };
   }, []);
 
-  // ── Text animation variants ──────────────────────────────────────────────
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.1, delayChildren: 0.05 },
-    },
-  };
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25, 0.46, 0.45, 0.94] } },
-  };
-
   return (
     <section
       className="relative bg-[#F4EFE6] flex flex-col"
@@ -88,25 +73,17 @@ export default function Hero() {
       <div className="container-custom flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-0 pt-[96px] lg:pt-[80px]">
 
         {/* LEFT — Text column */}
-        <motion.div
-          className="flex flex-col justify-center py-14 lg:py-0 lg:pr-12 z-10"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <div className="flex flex-col justify-center py-14 lg:py-0 lg:pr-12 z-10">
           {/* Eyebrow */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-7">
+          <div className="flex items-center gap-3 mb-7">
             <span className="inline-block w-2 h-2 rounded-full bg-[#B84A2B]" aria-hidden="true" />
             <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#68635B]">
               ONE SYSTEM. MANY CAPABILITIES.
             </p>
-          </motion.div>
+          </div>
 
           {/* Headline */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-[clamp(3rem,6.5vw,5.6rem)] font-extrabold leading-[0.94] tracking-[-0.045em] text-[#171614] m-0 mb-6"
-          >
+          <h1 className="text-[clamp(3rem,6.5vw,5.6rem)] font-extrabold leading-[0.94] tracking-[-0.045em] text-[#171614] m-0 mb-6">
             Here<br />Infrastructure<br />
             <span className="relative inline-block">
               Enables
@@ -116,19 +93,16 @@ export default function Hero() {
               />
             </span>
             <br />Transformation.
-          </motion.h1>
+          </h1>
 
           {/* Body */}
-          <motion.p
-            variants={itemVariants}
-            className="text-[1.05rem] leading-[1.65] text-[#555047] max-w-[460px] mb-9"
-          >
+          <p className="text-[1.05rem] leading-[1.65] text-[#555047] max-w-[460px] mb-9">
             Nuberu connects infrastructure, cloud and modern technologies to create
             simpler, scalable and resilient technology environments for the enterprise.
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3.5 flex-wrap">
+          <div className="flex items-center gap-3.5 flex-wrap">
             <Link
               href="/contact"
               id="hero-cta-primary"
@@ -143,13 +117,10 @@ export default function Hero() {
             >
               See capabilities
             </Link>
-          </motion.div>
+          </div>
 
           {/* Ecosystem legend — visible desktop only */}
-          <motion.div
-            variants={itemVariants}
-            className="hidden lg:flex flex-wrap items-center gap-5 mt-12 pt-8 border-t border-[#171614]/10"
-          >
+          <div className="hidden lg:flex flex-wrap items-center gap-5 mt-12 pt-8 border-t border-[#171614]/10">
             {[
               { dot: '#B84A2B', label: 'Infrastructure & Cloud' },
               { dot: '#1E5A63', label: 'Containers & Automation' },
@@ -160,17 +131,14 @@ export default function Hero() {
                 {label}
               </span>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* RIGHT — 3D Scene column */}
         <div className="relative flex items-center justify-center min-h-[380px] lg:min-h-0">
           {/* Nuberu mark badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="absolute top-6 right-0 z-20 w-[52px] h-[52px] bg-[#B84A2B] rounded-[14px] flex items-center justify-center shadow-[0_6px_20px_rgba(184,74,43,0.3)] hidden lg:flex"
+          <div
+            className="absolute top-6 right-0 z-20 w-[52px] h-[52px] bg-[#B84A2B] rounded-[14px] items-center justify-center shadow-[0_6px_20px_rgba(184,74,43,0.3)] hidden lg:flex"
             aria-hidden="true"
           >
             <Image
@@ -180,15 +148,10 @@ export default function Hero() {
               height={20}
               className="w-[26px] h-auto block"
             />
-          </motion.div>
+          </div>
 
           {/* Architectural label — top left of scene */}
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="absolute top-6 left-0 z-20 hidden lg:flex flex-col gap-1"
-          >
+          <div className="absolute top-6 left-0 z-20 hidden lg:flex flex-col gap-1">
             <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-[#68635B]">
               ECOSYSTEM / LIVE
             </span>
@@ -196,14 +159,11 @@ export default function Hero() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#B84A2B] animate-pulse" aria-hidden="true" />
               <span className="text-[10px] font-mono text-[#68635B]">Interactive</span>
             </div>
-          </motion.div>
+          </div>
 
           {/* 3D Canvas */}
-          <motion.div
+          <div
             className="w-full h-full absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 1.0 }}
             aria-label="Interactive 3D technology ecosystem visualisation"
             role="img"
           >
@@ -211,11 +171,11 @@ export default function Hero() {
               <EcosystemScene
                 mouse={mouse}
                 scrollY={scrollY}
-                reducedMotion={!!shouldReduceMotion}
+                reducedMotion={false}
                 isMobile={isMobile}
               />
             )}
-          </motion.div>
+          </div>
 
           {/* Depth vignette — bottom fade into page */}
           <div
