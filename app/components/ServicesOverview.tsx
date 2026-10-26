@@ -191,7 +191,7 @@ export default function ServicesOverview() {
         </div>
 
         {/* Minimal Footer Strip */}
-        <div className="mt-12 sm:mt-16 pt-6 border-t border-[#171614]/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="font-mono text-[11px] text-[#171614]/40 tracking-wider m-0">
             07 ENGAGEMENT PRACTICES · ARCHITECTURE, MIGRATION & DAY 2 SRE
           </p>
