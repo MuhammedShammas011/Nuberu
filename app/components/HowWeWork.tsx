@@ -10,7 +10,7 @@ const phases = [
     name: 'Consult',
     tag: 'Discovery & Audit',
     desc: 'We map your architecture, surface risks, and define the path forward before a single line changes.',
-    img: '/images/methodology/consult.jpg',
+    img: '/images/methodology/consult.jpeg',
     accent: '#B84A2B',
   },
   {
@@ -18,7 +18,7 @@ const phases = [
     name: 'Design',
     tag: 'Blueprint & IaC',
     desc: 'Target architecture, infrastructure as code, and zero-downtime cutover runbooks — built to last.',
-    img: '/images/methodology/design.jpg',
+    img: '/images/methodology/design.jpeg',
     accent: '#1E5A63',
   },
   {
@@ -26,7 +26,7 @@ const phases = [
     name: 'Deploy',
     tag: 'Execution',
     desc: 'Hardened clusters, declarative GitOps pipelines, phased migrations with guaranteed rollback.',
-    img: '/images/methodology/deploy.jpg',
+    img: '/images/methodology/deploy.jpeg',
     accent: '#B84A2B',
   },
   {
@@ -34,7 +34,7 @@ const phases = [
     name: 'Manage',
     tag: 'Day 2 SRE',
     desc: 'Continuous reliability engineering, proactive security patching, and FinOps cost governance.',
-    img: '/images/methodology/manage.jpg',
+    img: '/images/methodology/manage.jpeg',
     accent: '#1E5A63',
   },
 ] as const;
