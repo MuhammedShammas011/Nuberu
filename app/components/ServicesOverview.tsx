@@ -10,7 +10,7 @@ export default function ServicesOverview() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section className="py-24 sm:py-32 bg-[#F4EFE6] border-b border-[#171614]/8" id="services">
+    <section className="pt-16 pb-24 lg:pt-20 lg:pb-28 bg-[#F4EFE6] border-b border-[#171614]/8" id="services">
       <div className="container-custom">
         {/* Header matching Hero section hierarchy */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-20 gap-8">
