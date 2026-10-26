@@ -28,11 +28,12 @@ interface PracticeArea {
   platforms: string[];
   connectedTo: string;
   href: string;
+  image: string;
   icon: LucideIcon;
   callouts: {
-    compute: string;
-    primary: string;
-    storage: string;
+    top1: string;
+    top2: string;
+    bottom: string;
   };
 }
 
@@ -47,11 +48,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['VMware', 'KVM', 'Pure Storage', 'Cisco'],
     connectedTo: 'Feeds Multi-Cloud Scale',
     href: '/services/datacenter-infrastructure',
+    image: '/images/capabilities/infra.jpg',
     icon: Server,
     callouts: {
-      compute: 'COMPUTE',
-      primary: 'VIRTUALISATION',
-      storage: 'STORAGE',
+      top1: 'COMPUTE',
+      top2: 'VIRTUALISATION',
+      bottom: 'STORAGE',
     },
   },
   {
@@ -64,11 +66,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['AWS', 'Azure', 'GCP', 'Landing Zones'],
     connectedTo: 'Hosts Container Workloads',
     href: '/services/cloud-devops',
+    image: '/images/capabilities/cloud.jpg',
     icon: Cloud,
     callouts: {
-      compute: 'HYPERSCALER',
-      primary: 'LANDING ZONES',
-      storage: 'MESH PEERING',
+      top1: 'HYPERSCALER REGION',
+      top2: 'TRANSIT GATEWAY',
+      bottom: 'DIRECT CONNECT',
     },
   },
   {
@@ -81,11 +84,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['Kubernetes', 'OpenShift', 'EKS', 'Helm'],
     connectedTo: 'Automated via GitOps',
     href: '/services/container-platforms',
+    image: '/images/capabilities/containers.jpg',
     icon: Boxes,
     callouts: {
-      compute: 'POD FABRIC',
-      primary: 'K8S CONTROL PLANE',
-      storage: 'CSI VOLUMES',
+      top1: 'POD ORCHESTRATION',
+      top2: 'CONTROL PLANE',
+      bottom: 'CSI STORAGE FABRIC',
     },
   },
   {
@@ -98,11 +102,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['Terraform', 'Ansible', 'ArgoCD', 'GitHub Actions'],
     connectedTo: 'Drives Continuous Delivery',
     href: '/services/cloud-devops',
+    image: '/images/capabilities/automation.jpg',
     icon: Cpu,
     callouts: {
-      compute: 'RUNNERS',
-      primary: 'GITOPS ENGINE',
-      storage: 'STATE LOCKING',
+      top1: 'GITOPS PIPELINE',
+      top2: 'DECLARATIVE ENGINE',
+      bottom: 'ZERO-DRIFT STATE',
     },
   },
   {
@@ -115,11 +120,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['Microservices', 'Kafka', 'PostgreSQL', 'Day 2 SRE'],
     connectedTo: 'Closes Loop into Core Systems',
     href: '/services/application-modernisation',
+    image: '/images/capabilities/modernisation.jpg',
     icon: RefreshCw,
     callouts: {
-      compute: 'EVENT BUS',
-      primary: 'MICROSERVICES',
-      storage: 'PERSISTENCE',
+      top1: 'EVENT BUS / KAFKA',
+      top2: 'MICROSERVICE MESH',
+      bottom: 'DISTRIBUTED STATE',
     },
   },
   {
@@ -132,11 +138,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['Snowflake', 'Databricks', 'Apache Spark', 'MLflow'],
     connectedTo: 'Powers Predictive Intelligence',
     href: '/services/cloud-devops',
+    image: '/images/capabilities/data-ai.jpg',
     icon: Database,
     callouts: {
-      compute: 'INFERENCE',
-      primary: 'VECTOR PIPELINES',
-      storage: 'LAKEHOUSE',
+      top1: 'NEURAL SYNAPSE',
+      top2: 'VECTOR EMBEDDINGS',
+      bottom: 'GOVERNED LAKEHOUSE',
     },
   },
   {
@@ -149,11 +156,12 @@ const practiceAreas: PracticeArea[] = [
     platforms: ['HashiCorp Vault', 'Wiz', 'Trivy', 'Zero Trust'],
     connectedTo: 'Secures All Surface Tiers',
     href: '/services/application-modernisation',
+    image: '/images/capabilities/security.jpg',
     icon: ShieldCheck,
     callouts: {
-      compute: 'ENCLAVES',
-      primary: 'ZERO TRUST MESH',
-      storage: 'ENCRYPTION',
+      top1: 'VAULT ENCLAVE',
+      top2: 'ZERO TRUST SHIELD',
+      bottom: 'PERIMETER DEFENSE',
     },
   },
 ];
@@ -177,8 +185,8 @@ export default function Capabilities() {
       const rect = centerRef.current.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      tiltX.set(-y * 8); // tilts up/down
-      tiltY.set(x * 10); // tilts left/right
+      tiltX.set(-y * 8);
+      tiltY.set(x * 10);
     },
     [tiltX, tiltY]
   );
@@ -196,13 +204,12 @@ export default function Capabilities() {
     setActiveIndex((prev) => (prev - 1 + totalCount) % totalCount);
   }, [totalCount]);
 
-  // Optional subtle wheel listener inside the section with cooldown
+  // Subtle wheel navigation inside section
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const onWheel = (e: WheelEvent) => {
-      // Only capture when mouse is directly over the practice area list or center
       const now = Date.now();
       if (now - lastScrollTime.current < 650) return;
       if (Math.abs(e.deltaY) < 35) return;
@@ -323,7 +330,7 @@ export default function Capabilities() {
             </div>
           </div>
 
-          {/* ── Column 2: Center Interactive 3D Server Assembly ────── */}
+          {/* ── Column 2: Center Interactive 3D Visual Assembly ────── */}
           <div
             ref={centerRef}
             onMouseMove={handleMouseMove}
@@ -349,142 +356,448 @@ export default function Capabilities() {
                 aria-hidden="true"
               />
 
-              {/* 3D Server Stack Image */}
+              {/* ── Dynamic 3D Feature Image with Smooth Cross-Fade ── */}
               <div className="relative w-[92%] h-[92%] overflow-hidden rounded-[24px]">
-                <Image
-                  src="/images/capabilities/infra.jpg"
-                  alt="Nuberu high-density modular infrastructure architecture"
-                  width={1024}
-                  height={1024}
-                  priority
-                  className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 hover:scale-[1.02]"
-                />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeItem.id}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.03 }}
+                    transition={{ duration: 0.42, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="w-full h-full relative"
+                  >
+                    <Image
+                      src={activeItem.image}
+                      alt={`${activeItem.title} modular technology architecture`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 540px"
+                      priority
+                      className="object-contain mix-blend-multiply transition-transform duration-700 hover:scale-[1.02]"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
-              {/* ── Animated Isometric Overlay SVG ────────────────── */}
-              <svg
-                viewBox="0 0 600 600"
-                className="absolute inset-0 w-full h-full pointer-events-none z-20"
-                fill="none"
-              >
-                {/* 1. COMPUTE Callout (Top-Left) */}
-                <g className="transition-all duration-500">
-                  <text
-                    x="90"
-                    y="190"
-                    className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]"
-                  >
-                    {activeItem.callouts.compute}
-                  </text>
-                  <path
-                    d="M165 186 L230 186 L258 235 L268 250"
-                    stroke="#B84A2B"
-                    strokeWidth="1.2"
-                    strokeOpacity="0.45"
-                  />
-                  {/* Tracing pulse dot on compute line */}
-                  <circle r="2.5" fill="#B84A2B">
-                    <animateMotion
-                      path="M165 186 L230 186 L258 235 L268 250"
-                      dur="3.2s"
-                      repeatCount="indefinite"
-                    />
-                  </circle>
-                  <circle
-                    cx="268"
-                    cy="250"
-                    r="3.5"
-                    fill="#B84A2B"
-                    className="animate-pulse"
-                  />
-                </g>
+              {/* ── Feature-Specific Animated SVG Overlays ───────── */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`overlay-${activeItem.id}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 w-full h-full pointer-events-none z-20"
+                >
+                  {/* ──────────────────────────────────────────────────────────
+                      01. INFRASTRUCTURE ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'infrastructure' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* COMPUTE */}
+                      <g>
+                        <text x="90" y="190" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M165 186 L230 186 L258 235 L268 250" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.45" />
+                        <circle r="2.5" fill="#B84A2B">
+                          <animateMotion path="M165 186 L230 186 L258 235 L268 250" dur="3.2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="268" cy="250" r="3.5" fill="#B84A2B" className="animate-pulse" />
+                      </g>
 
-                {/* 2. VIRTUALISATION Callout (Top-Right) */}
-                <g className="transition-all duration-500">
-                  <text
-                    x="370"
-                    y="125"
-                    className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]"
-                  >
-                    {activeItem.callouts.primary}
-                  </text>
-                  <path
-                    d="M365 135 L330 170 L330 205 L372 230"
-                    stroke="#B84A2B"
-                    strokeWidth="1.2"
-                    strokeOpacity="0.5"
-                  />
-                  {/* Connecting grid line down-right */}
-                  <path
-                    d="M330 205 L370 205 L420 235 L420 280"
-                    stroke="#68635B"
-                    strokeWidth="1"
-                    strokeOpacity="0.25"
-                    strokeDasharray="2 3"
-                  />
-                  {/* Tracing pulse dot */}
-                  <circle r="2.5" fill="#DA6A43">
-                    <animateMotion
-                      path="M365 135 L330 170 L330 205 L372 230"
-                      dur="4s"
-                      repeatCount="indefinite"
-                    />
-                  </circle>
-                  {/* Nodes */}
-                  <circle cx="372" cy="230" r="3.5" fill="#B84A2B" />
-                  <circle cx="420" cy="280" r="3" fill="#B84A2B" opacity="0.8" />
-                  <circle cx="330" cy="170" r="2.5" fill="#68635B" opacity="0.6" />
-                </g>
+                      {/* VIRTUALISATION */}
+                      <g>
+                        <text x="370" y="125" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M365 135 L330 170 L330 205 L372 230" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <path d="M330 205 L370 205 L420 235 L420 280" stroke="#68635B" strokeWidth="1" strokeOpacity="0.25" strokeDasharray="2 3" />
+                        <circle r="2.5" fill="#DA6A43">
+                          <animateMotion path="M365 135 L330 170 L330 205 L372 230" dur="4s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="372" cy="230" r="3.5" fill="#B84A2B" />
+                        <circle cx="420" cy="280" r="3" fill="#B84A2B" opacity="0.8" />
+                      </g>
 
-                {/* 3. STORAGE Callout (Bottom-Left) */}
-                <g className="transition-all duration-500">
-                  <text
-                    x="85"
-                    y="450"
-                    className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]"
-                  >
-                    {activeItem.callouts.storage}
-                  </text>
-                  <path
-                    d="M150 446 L195 446 L235 410 L250 410"
-                    stroke="#B84A2B"
-                    strokeWidth="1.2"
-                    strokeOpacity="0.45"
-                  />
-                  <circle r="2.5" fill="#B84A2B">
-                    <animateMotion
-                      path="M150 446 L195 446 L235 410 L250 410"
-                      dur="3.6s"
-                      repeatCount="indefinite"
-                    />
-                  </circle>
-                  <circle cx="250" cy="410" r="3.5" fill="#B84A2B" />
-                </g>
+                      {/* STORAGE */}
+                      <g>
+                        <text x="85" y="450" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M150 446 L195 446 L235 410 L250 410" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.45" />
+                        <circle r="2.5" fill="#B84A2B">
+                          <animateMotion path="M150 446 L195 446 L235 410 L250 410" dur="3.6s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="250" cy="410" r="3.5" fill="#B84A2B" />
+                      </g>
 
-                {/* 4. Subtle Wireframe Bounding Lines around the floating cube */}
-                <g opacity="0.4">
-                  <path
-                    d="M272 135 L300 115 L328 135 L300 155 Z"
-                    stroke="#B84A2B"
-                    strokeWidth="1"
-                  />
-                  <line x1="300" y1="155" x2="300" y2="182" stroke="#B84A2B" strokeWidth="1" />
-                </g>
-              </svg>
+                      {/* Cube wireframe & LED vents */}
+                      <g opacity="0.4">
+                        <path d="M272 135 L300 115 L328 135 L300 155 Z" stroke="#B84A2B" strokeWidth="1" />
+                        <line x1="300" y1="155" x2="300" y2="182" stroke="#B84A2B" strokeWidth="1" />
+                      </g>
+                    </svg>
+                  )}
 
-              {/* Pulsing LED vents on server face */}
-              <div
-                className="absolute top-[37%] left-[38%] w-2 h-2 rounded-full bg-[#B84A2B] shadow-[0_0_12px_#B84A2B] animate-ping opacity-60 pointer-events-none"
-                aria-hidden="true"
-              />
-              <div
-                className="absolute top-[48%] left-[38%] w-1.5 h-1.5 rounded-full bg-[#FF8A50] shadow-[0_0_10px_#FF8A50] animate-pulse pointer-events-none"
-                aria-hidden="true"
-              />
-              <div
-                className="absolute top-[59%] left-[38%] w-1.5 h-1.5 rounded-full bg-[#B84A2B] shadow-[0_0_10px_#B84A2B] animate-pulse pointer-events-none"
-                aria-hidden="true"
-              />
+                  {/* ──────────────────────────────────────────────────────────
+                      02. CLOUD PLATFORMS ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'cloud' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* Expanding Multi-Cloud Gateway Radar Rings */}
+                      <g>
+                        <circle cx="300" cy="210" r="28" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.6">
+                          <animate attributeName="r" values="24;58;80" dur="3s" repeatCount="indefinite" />
+                          <animate attributeName="stroke-opacity" values="0.8;0.3;0" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="300" cy="210" r="28" stroke="#DA6A43" strokeWidth="1" strokeOpacity="0.4">
+                          <animate attributeName="r" values="24;58;80" dur="3s" begin="1.5s" repeatCount="indefinite" />
+                          <animate attributeName="stroke-opacity" values="0.8;0.3;0" dur="3s" begin="1.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="300" cy="210" r="5" fill="#B84A2B" className="animate-ping" />
+                      </g>
+
+                      {/* HYPERSCALER REGION (Top-Left) */}
+                      <g>
+                        <text x="65" y="160" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M215 156 L245 156 L265 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M215 156 L245 156 L265 190" dur="2.4s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="265" cy="190" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* TRANSIT GATEWAY (Top-Right) */}
+                      <g>
+                        <text x="380" y="140" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M375 145 L350 170 L320 195" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#DA6A43">
+                          <animateMotion path="M375 145 L350 170 L320 195" dur="3.1s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="320" cy="195" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* DIRECT CONNECT (Bottom-Left) */}
+                      <g>
+                        <text x="65" y="460" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M185 456 L220 456 L260 415 L285 415" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M185 456 L220 456 L260 415 L285 415" dur="2.8s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="285" cy="415" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* Orbiting data packet along the central cloud conduit */}
+                      <circle r="3" fill="#FF8A50">
+                        <animateMotion path="M190 320 L270 240 L390 240 L440 310" dur="4.2s" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
+                  )}
+
+                  {/* ──────────────────────────────────────────────────────────
+                      03. CONTAINERS ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'containers' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* Rotating Helm Wheel Energy Field */}
+                      <g transform="translate(300, 110)">
+                        <circle cx="0" cy="0" r="34" stroke="#B84A2B" strokeWidth="1" strokeDasharray="4 6" strokeOpacity="0.5">
+                          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="18s" repeatCount="indefinite" />
+                        </circle>
+                      </g>
+
+                      {/* POD ORCHESTRATION (Top-Left) */}
+                      <g>
+                        <text x="65" y="175" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M210 171 L245 171 L280 205" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M210 171 L245 171 L280 205" dur="2.8s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="280" cy="205" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* CONTROL PLANE (Top-Right) */}
+                      <g>
+                        <text x="380" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M375 135 L335 155 L315 155" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#DA6A43">
+                          <animateMotion path="M375 135 L335 155 L315 155" dur="3.2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="315" cy="155" r="4" fill="#B84A2B" className="animate-pulse" />
+                      </g>
+
+                      {/* CSI STORAGE FABRIC (Bottom-Left) */}
+                      <g>
+                        <text x="60" y="470" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M215 466 L250 466 L275 440 L300 440" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M215 466 L250 466 L275 440 L300 440" dur="3.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="300" cy="440" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* Container Pod Telemetry Blinks */}
+                      <circle cx="225" cy="275" r="3" fill="#FF8A50" className="animate-ping" opacity="0.8" />
+                      <circle cx="370" cy="285" r="2.5" fill="#B84A2B" className="animate-pulse" />
+                      <circle cx="410" cy="340" r="3" fill="#FF8A50" className="animate-ping" opacity="0.6" />
+                    </svg>
+                  )}
+
+                  {/* ──────────────────────────────────────────────────────────
+                      04. AUTOMATION ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'automation' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* Automated Laser Scanner Beam Sweeping across build gate */}
+                      <g>
+                        <line x1="330" y1="210" x2="330" y2="295" stroke="#B84A2B" strokeWidth="2" strokeOpacity="0.8" strokeLinecap="round">
+                          <animate attributeName="x1" values="275;385;275" dur="3.6s" repeatCount="indefinite" />
+                          <animate attributeName="x2" values="275;385;275" dur="3.6s" repeatCount="indefinite" />
+                          <animate attributeName="stroke-opacity" values="0.9;0.4;0.9" dur="3.6s" repeatCount="indefinite" />
+                        </line>
+                      </g>
+
+                      {/* GITOPS PIPELINE (Top-Left) */}
+                      <g>
+                        <text x="75" y="180" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M200 176 L235 176 L250 200 L280 200" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M200 176 L235 176 L250 200 L280 200" dur="2.6s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="280" cy="200" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* DECLARATIVE ENGINE (Top-Right) */}
+                      <g>
+                        <text x="375" y="135" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M370 140 L345 160 L345 195" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#DA6A43">
+                          <animateMotion path="M370 140 L345 160 L345 195" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="345" cy="195" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* ZERO-DRIFT STATE (Bottom-Left) */}
+                      <g>
+                        <text x="70" y="475" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M200 471 L245 471 L275 440 L315 440" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M200 471 L245 471 L275 440 L315 440" dur="3.2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="315" cy="440" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* Conveyor delivery pulses moving along the track */}
+                      <circle r="3" fill="#FF8A50">
+                        <animateMotion path="M190 280 L280 280 L350 310 L430 310" dur="3.8s" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
+                  )}
+
+                  {/* ──────────────────────────────────────────────────────────
+                      05. MODERNISATION ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'modernisation' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* Reactive Event Bus Rings Rotating around Microservices */}
+                      <g transform="translate(425, 290)">
+                        <circle cx="0" cy="0" r="26" stroke="#B84A2B" strokeWidth="1.2" strokeDasharray="3 5" strokeOpacity="0.6">
+                          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="14s" repeatCount="indefinite" />
+                        </circle>
+                      </g>
+                      <g transform="translate(460, 360)">
+                        <circle cx="0" cy="0" r="22" stroke="#DA6A43" strokeWidth="1" strokeDasharray="2 4" strokeOpacity="0.5">
+                          <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="11s" repeatCount="indefinite" />
+                        </circle>
+                      </g>
+
+                      {/* EVENT BUS / KAFKA (Top-Left) */}
+                      <g>
+                        <text x="65" y="165" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M205 161 L240 161 L265 190 L295 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M205 161 L240 161 L265 190 L295 190" dur="2.7s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="295" cy="190" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* MICROSERVICE MESH (Top-Right) */}
+                      <g>
+                        <text x="370" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M365 135 L335 165 L365 190 L395 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#DA6A43">
+                          <animateMotion path="M365 135 L335 165 L365 190 L395 190" dur="3.4s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="395" cy="190" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* DISTRIBUTED STATE (Bottom-Left) */}
+                      <g>
+                        <text x="70" y="470" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M210 466 L250 466 L280 435 L315 435" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M210 466 L250 466 L280 435 L315 435" dur="3.1s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="315" cy="435" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* Continuous particle flow from monolith to microservices */}
+                      <circle r="2.5" fill="#FF8A50">
+                        <animateMotion path="M305 285 Q350 260 410 275" dur="2.4s" repeatCount="indefinite" />
+                      </circle>
+                      <circle r="2.5" fill="#B84A2B">
+                        <animateMotion path="M305 320 Q360 300 420 330" dur="2.8s" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
+                  )}
+
+                  {/* ──────────────────────────────────────────────────────────
+                      06. DATA & AI ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'data-ai' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* Neural Matrix Synapses Firing on Top Core */}
+                      <g>
+                        <path d="M280 120 L300 95 L320 120 L300 145 Z" stroke="#B84A2B" strokeWidth="1" strokeOpacity="0.4" />
+                        <line x1="280" y1="120" x2="320" y2="120" stroke="#DA6A43" strokeWidth="1" strokeOpacity="0.5" />
+                        <circle cx="300" cy="95" r="3.5" fill="#B84A2B">
+                          <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
+                          <animate attributeName="fill-opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="280" cy="120" r="2.5" fill="#FF8A50" className="animate-ping" opacity="0.7" />
+                        <circle cx="320" cy="120" r="2.5" fill="#B84A2B" className="animate-pulse" />
+                      </g>
+
+                      {/* NEURAL SYNAPSE (Top-Left) */}
+                      <g>
+                        <text x="80" y="165" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M200 161 L240 161 L270 140 L285 140" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M200 161 L240 161 L270 140 L285 140" dur="2.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="285" cy="140" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* VECTOR EMBEDDINGS (Top-Right) */}
+                      <g>
+                        <text x="375" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M370 135 L335 155 L320 185" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#DA6A43">
+                          <animateMotion path="M370 135 L335 155 L320 185" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="320" cy="185" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* GOVERNED LAKEHOUSE (Bottom-Left) */}
+                      <g>
+                        <text x="70" y="465" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M215 461 L250 461 L280 430 L315 430" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M215 461 L250 461 L280 430 L315 430" dur="3.4s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="315" cy="430" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* Data streams flowing up into neural tier */}
+                      <circle r="2.5" fill="#FF8A50">
+                        <animateMotion path="M300 240 L300 170" dur="1.8s" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
+                  )}
+
+                  {/* ──────────────────────────────────────────────────────────
+                      07. SECURITY ANIMATION
+                      ────────────────────────────────────────────────────────── */}
+                  {activeItem.id === 'security' && (
+                    <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
+                      {/* Rotating Zero-Trust Perimeter Radar Sweep */}
+                      <g transform="translate(300, 340)">
+                        <circle cx="0" cy="0" r="165" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.4" strokeDasharray="3 7" />
+                        <line x1="0" y1="0" x2="165" y2="0" stroke="#FF8A50" strokeWidth="1.8" strokeOpacity="0.75">
+                          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="7s" repeatCount="indefinite" />
+                        </line>
+                      </g>
+
+                      {/* Geodesic Dome Shield Ripple Pulse */}
+                      <g>
+                        <ellipse cx="300" cy="270" rx="140" ry="110" stroke="#B84A2B" strokeWidth="1" strokeOpacity="0.3">
+                          <animate attributeName="stroke-opacity" values="0.15;0.6;0.15" dur="3.5s" repeatCount="indefinite" />
+                        </ellipse>
+                      </g>
+
+                      {/* VAULT ENCLAVE (Top-Left) */}
+                      <g>
+                        <text x="80" y="170" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top1}
+                        </text>
+                        <path d="M195 166 L230 166 L260 210 L285 210" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M195 166 L230 166 L260 210 L285 210" dur="2.6s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="285" cy="210" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* ZERO TRUST SHIELD (Top-Right) */}
+                      <g>
+                        <text x="375" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.top2}
+                        </text>
+                        <path d="M370 135 L330 155 L330 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#DA6A43">
+                          <animateMotion path="M370 135 L330 155 L330 190" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="330" cy="190" r="3.5" fill="#B84A2B" className="animate-pulse" />
+                      </g>
+
+                      {/* PERIMETER DEFENSE (Bottom-Left) */}
+                      <g>
+                        <text x="65" y="470" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
+                          {activeItem.callouts.bottom}
+                        </text>
+                        <path d="M210 466 L245 466 L270 435 L300 435" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
+                        <circle r="3" fill="#B84A2B">
+                          <animateMotion path="M210 466 L245 466 L270 435 L300 435" dur="3.2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="300" cy="435" r="3.5" fill="#B84A2B" />
+                      </g>
+
+                      {/* Vault lock status beacons */}
+                      <circle cx="310" cy="300" r="4" fill="#B84A2B" className="animate-ping" opacity="0.75" />
+                    </svg>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           </div>
 
