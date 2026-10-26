@@ -42,7 +42,7 @@ export default function ServicesOverview() {
         </div>
 
         {/* Minimal Editorial Accordion Index */}
-        <div className="border-t border-b border-[#171614]/10 divide-y divide-[#171614]/10">
+        <div className="border-t border-[#171614]/10 divide-y divide-[#171614]/10">
           {servicesData.map((service, index) => {
             const isOpen = openIdx === index;
             const num = (index + 1).toString().padStart(2, '0');
