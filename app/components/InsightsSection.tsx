@@ -15,7 +15,7 @@ const insightImages: Record<string, string> = {
 
 export default function InsightsSection() {
   return (
-    <section className="pt-12 pb-10 sm:pt-14 sm:pb-12 lg:pt-16 lg:pb-14 bg-[#F4EFE6] border-b border-[#171614]/8" id="insights">
+    <section className="pt-12 sm:pt-14 lg:pt-16 pb-0 bg-[#F4EFE6] overflow-hidden" id="insights">
       <div className="container-custom">
 
         {/* Header — matches Hero / Services section hierarchy */}
