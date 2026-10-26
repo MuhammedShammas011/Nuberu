@@ -128,15 +128,17 @@ export default function InsightsSection() {
             );
           })}
         </div>
+      </div>
 
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 sm:mt-10 pt-6 border-t border-[#171614]/10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
-        >
+      {/* Footer Strip — Perfectly centered between the two lines */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mt-10 sm:mt-12 border-t border-b border-[#171614]/8 py-5 sm:py-6 w-full bg-[#F4EFE6]"
+      >
+        <div className="container-custom flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
           <p className="font-mono text-[11px] text-[#171614]/40 tracking-wider m-0 text-center">
             ARCHITECTURE · MIGRATION · PLATFORM ENGINEERING
           </p>
@@ -150,8 +152,8 @@ export default function InsightsSection() {
             <span>All Technical Guides</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-[#B84A2B] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
