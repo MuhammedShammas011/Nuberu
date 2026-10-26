@@ -213,11 +213,6 @@ export default function TechEcosystem() {
             ))}
           </motion.div>
         </div>
-
-        {/* Disclaimer Note */}
-        <p className="text-[11px] font-mono text-[#171614]/40 mt-8 leading-relaxed max-w-3xl m-0">
-          * Technology platform names reference technical integration capabilities and architectural design patterns. They do not imply exclusive partnership, reseller authorization, or third-party trademark endorsement.
-        </p>
       </div>
     </section>
   );
