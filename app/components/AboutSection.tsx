@@ -25,10 +25,6 @@ export default function AboutSection() {
               About Nuberu
             </span>
           </div>
-
-          <span className="font-mono text-[11px] font-semibold text-[#171614]/40 tracking-wider uppercase">
-            01–03 {'//'} ARCHITECTURAL FOUNDATIONS
-          </span>
         </motion.div>
 
         {/* Prominent Editorial Manifesto Statement with ScrollRevealText Animation */}
