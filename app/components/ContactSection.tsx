@@ -38,7 +38,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="py-28 bg-[#F4EFE6]" id="contact">
+    <section className="pt-14 pb-20 sm:pt-16 sm:pb-24 lg:pt-18 lg:pb-28 bg-[#F4EFE6]" id="contact">
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Headline, Description & Contact info */}

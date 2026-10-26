@@ -15,7 +15,7 @@ const insightImages: Record<string, string> = {
 
 export default function InsightsSection() {
   return (
-    <section className="pt-12 pb-16 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24 bg-[#F4EFE6] border-b border-[#171614]/8" id="insights">
+    <section className="pt-12 pb-10 sm:pt-14 sm:pb-12 lg:pt-16 lg:pb-14 bg-[#F4EFE6] border-b border-[#171614]/8" id="insights">
       <div className="container-custom">
 
         {/* Header — matches Hero / Services section hierarchy */}
@@ -135,11 +135,14 @@ export default function InsightsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-12 sm:mt-14 pt-6 border-t border-[#171614]/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          className="mt-8 sm:mt-10 pt-6 border-t border-[#171614]/10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
         >
-          <p className="font-mono text-[11px] text-[#171614]/40 tracking-wider m-0">
+          <p className="font-mono text-[11px] text-[#171614]/40 tracking-wider m-0 text-center">
             ARCHITECTURE · MIGRATION · PLATFORM ENGINEERING
           </p>
+          <span className="hidden sm:inline text-[#171614]/20" aria-hidden="true">
+            /
+          </span>
           <Link
             href="/insights"
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#171614] hover:text-[#B84A2B] transition-colors group"
