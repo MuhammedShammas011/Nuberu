@@ -60,7 +60,7 @@ export default function TechEcosystem() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
-    <section className="py-24 sm:py-32 bg-[#F4EFE6] text-[#171614] border-b border-[#171614]/8 overflow-hidden" id="ecosystem">
+    <section className="pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-14 bg-[#F4EFE6] text-[#171614] border-b border-[#171614]/8 overflow-hidden" id="ecosystem">
       <div className="container-custom">
         {/* Top Hero Grid: Left Content + Right 3D Ecosystem Animation */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
@@ -144,7 +144,7 @@ export default function TechEcosystem() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
           >
             {ecosystem[activeCategory].technologies.map((tech, i) => {
               const scopeTags = tech.scope.split(',').map((s) => s.trim());
@@ -205,7 +205,7 @@ export default function TechEcosystem() {
         </AnimatePresence>
 
         {/* Minimal Continuous Ticker Animation */}
-        <div className="mt-14 pt-8 border-t border-[#171614]/10 overflow-hidden relative">
+        <div className="mt-10 sm:mt-12 pt-6 border-t border-[#171614]/10 overflow-hidden relative">
           {/* Subtle edge fades */}
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#F4EFE6] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#F4EFE6] to-transparent z-10 pointer-events-none" />

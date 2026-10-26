@@ -15,7 +15,7 @@ const insightImages: Record<string, string> = {
 
 export default function InsightsSection() {
   return (
-    <section className="py-24 sm:py-32 bg-[#F4EFE6] border-b border-[#171614]/8" id="insights">
+    <section className="pt-12 pb-16 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24 bg-[#F4EFE6] border-b border-[#171614]/8" id="insights">
       <div className="container-custom">
 
         {/* Header — matches Hero / Services section hierarchy */}
