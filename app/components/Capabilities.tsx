@@ -254,20 +254,20 @@ export default function Capabilities() {
         </div>
 
         {/* ── 3-Column Workspace ─────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[200px_1.25fr_1fr] xl:grid-cols-[220px_1.35fr_1.05fr] gap-8 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1.25fr_1fr] xl:grid-cols-[240px_1.35fr_1.05fr] gap-8 lg:gap-10 items-stretch lg:h-[530px] xl:h-[550px]">
           {/* ── Column 1: Left Navigation ────────────────────────── */}
-          <div className="flex flex-col justify-between self-stretch py-2">
-            <nav className="flex flex-col gap-1.5" aria-label="Practice areas menu">
+          <div className="flex flex-col justify-between h-full py-1">
+            <nav className="flex flex-col justify-between h-full gap-1.5" aria-label="Practice areas menu">
               {practiceAreas.map((item, idx) => {
                 const isActive = activeIndex === idx;
                 return (
                   <button
                     key={item.id}
                     onClick={() => setActiveIndex(idx)}
-                    className={`w-full flex items-center justify-between py-2 text-left transition-all duration-200 group cursor-pointer ${
+                    className={`w-full flex-1 flex items-center justify-between px-3.5 py-2 rounded-[12px] text-left transition-all duration-200 group cursor-pointer ${
                       isActive
-                        ? 'text-[#B84A2B]'
-                        : 'text-[#68635B] hover:text-[#171614]'
+                        ? 'bg-[#171614]/[0.045] text-[#B84A2B]'
+                        : 'text-[#68635B] hover:text-[#171614] hover:bg-[#171614]/[0.02]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -303,7 +303,7 @@ export default function Capabilities() {
             ref={centerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative flex items-center justify-center min-h-[460px] lg:min-h-[560px] py-4"
+            className="relative flex items-center justify-center h-full min-h-[460px] lg:min-h-0 py-1"
             style={{ perspective: 1200 }}
           >
             <motion.div
@@ -312,7 +312,7 @@ export default function Capabilities() {
                 rotateY: tiltY,
                 transformStyle: 'preserve-3d',
               }}
-              className="relative w-full max-w-[540px] aspect-square flex items-center justify-center transition-transform duration-100 ease-out"
+              className="relative w-full max-w-[500px] xl:max-w-[530px] aspect-square flex items-center justify-center transition-transform duration-100 ease-out"
             >
               {/* Soft background radial ambient light */}
               <div
