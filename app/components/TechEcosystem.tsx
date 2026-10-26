@@ -60,7 +60,7 @@ export default function TechEcosystem() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
-    <section className="pt-20 pb-10 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-14 bg-[#F4EFE6] text-[#171614] border-b border-[#171614]/8 overflow-hidden" id="ecosystem">
+    <section className="pt-20 sm:pt-24 lg:pt-28 pb-0 bg-[#F4EFE6] text-[#171614] overflow-hidden" id="ecosystem">
       <div className="container-custom">
         {/* Top Hero Grid: Left Content + Right 3D Ecosystem Animation */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
@@ -203,29 +203,29 @@ export default function TechEcosystem() {
             })}
           </motion.div>
         </AnimatePresence>
+      </div>
 
-        {/* Minimal Continuous Ticker Animation */}
-        <div className="mt-10 sm:mt-12 pt-6 border-t border-[#171614]/10 overflow-hidden relative">
-          {/* Subtle edge fades */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#F4EFE6] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#F4EFE6] to-transparent z-10 pointer-events-none" />
+      {/* Minimal Continuous Ticker Animation — Centered transitional feature band */}
+      <div className="mt-12 sm:mt-14 border-t border-b border-[#171614]/8 py-5 sm:py-6 overflow-hidden relative w-full bg-[#F4EFE6]">
+        {/* Subtle edge fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-28 bg-gradient-to-r from-[#F4EFE6] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-28 bg-gradient-to-l from-[#F4EFE6] to-transparent z-10 pointer-events-none" />
 
-          <motion.div
-            className="flex gap-8 whitespace-nowrap will-change-transform"
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ repeat: Infinity, ease: 'linear', duration: 32 }}
-          >
-            {[...tickerItems, ...tickerItems].map((item, idx) => (
-              <div
-                key={idx}
-                className="inline-flex items-center gap-3 text-xs font-mono font-semibold uppercase tracking-wider text-[#171614]/50"
-              >
-                <span>{item}</span>
-                <span className="text-[#B84A2B]">/</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
+        <motion.div
+          className="flex gap-8 whitespace-nowrap will-change-transform"
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ repeat: Infinity, ease: 'linear', duration: 32 }}
+        >
+          {[...tickerItems, ...tickerItems].map((item, idx) => (
+            <div
+              key={idx}
+              className="inline-flex items-center gap-3 text-xs font-mono font-semibold uppercase tracking-wider text-[#171614]/50"
+            >
+              <span>{item}</span>
+              <span className="text-[#B84A2B]">/</span>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
