@@ -731,7 +731,7 @@ export default function Capabilities() {
           </div>
 
           {/* ── Column 3: Right Details & Controls ────────────────── */}
-          <div className="flex flex-col justify-between self-stretch py-2 lg:pl-4">
+          <div className="flex flex-col justify-between h-full py-1 lg:pl-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeItem.id}
