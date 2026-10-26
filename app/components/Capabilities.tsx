@@ -231,19 +231,12 @@ export default function Capabilities() {
     <section
       ref={sectionRef}
       id="capabilities"
-      className="relative bg-[#F4EFE6] pt-24 pb-20 lg:pt-28 lg:pb-28 overflow-hidden select-none"
+      className="relative bg-[#F4EFE6] pt-24 pb-20 lg:pt-28 lg:pb-28 overflow-hidden"
       aria-label="Capabilities built for what's next"
     >
       <div className="container-custom relative z-10">
         {/* ── Top Header Row ────────────────────────────────────────── */}
-        <div className="flex items-center justify-between mb-7">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-[#B84A2B] shrink-0" aria-hidden="true" />
-            <span className="font-mono text-[12px] font-bold uppercase tracking-[0.18em] text-[#68635B]">
-              PRACTICE AREAS
-            </span>
-          </div>
-
+        <div className="flex items-center justify-end mb-6">
           <div className="font-mono text-[13px] font-semibold tracking-wider text-[#68635B]">
             <span className="text-[#171614]">{activeItem.number}</span>
             <span className="mx-2 text-[#68635B]/40">—</span>
@@ -251,24 +244,13 @@ export default function Capabilities() {
           </div>
         </div>
 
-        {/* ── Title & Intro Row ─────────────────────────────────────── */}
-        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 mb-12 lg:mb-16">
+        {/* ── Title Row ─────────────────────────────────────────────── */}
+        <div className="mb-10 lg:mb-14">
           <h2 className="text-[clamp(2.5rem,5.2vw,4.6rem)] font-extrabold leading-[0.98] tracking-[-0.04em] text-[#171614] m-0">
             Capabilities<br />
             built for what&apos;s<br />
             next<span className="text-[#B84A2B]">.</span>
           </h2>
-
-          <div className="flex items-start gap-8 max-w-[500px] lg:pt-3">
-            <span
-              className="w-px h-20 bg-[#171614]/15 shrink-0 hidden sm:block"
-              aria-hidden="true"
-            />
-            <p className="text-[1.08rem] leading-[1.62] text-[#555047] m-0">
-              From infrastructure to intelligent automation, we design scalable,
-              resilient, and future-ready systems for modern businesses.
-            </p>
-          </div>
         </div>
 
         {/* ── 3-Column Workspace ─────────────────────────────────────── */}
@@ -314,20 +296,6 @@ export default function Capabilities() {
                 );
               })}
             </nav>
-
-            {/* Mouse scroll cue */}
-            <div className="hidden lg:flex items-center gap-3 pt-12 mt-auto text-[#68635B]">
-              <div className="w-[18px] h-[28px] rounded-full border border-[#68635B]/40 flex justify-center pt-1.5 shrink-0">
-                <motion.span
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-                  className="w-1 h-1.5 bg-[#68635B] rounded-full"
-                />
-              </div>
-              <span className="font-mono text-[11px] uppercase tracking-[0.06em] text-[#68635B]/80">
-                Scroll or use navigation
-              </span>
-            </div>
           </div>
 
           {/* ── Column 2: Center Interactive 3D Visual Assembly ────── */}
@@ -379,7 +347,31 @@ export default function Capabilities() {
                 </AnimatePresence>
               </div>
 
-              {/* ── Feature-Specific Animated SVG Overlays ───────── */}
+              {/* ── Real HTML Text Callout Overlays (Selectable, Standard DOM Text) ── */}
+              <div className="absolute inset-0 pointer-events-none z-30">
+                {/* Callout 1 (Top-Left) */}
+                <div className="absolute left-[7%] top-[29%] pointer-events-auto">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
+                    {activeItem.callouts.top1}
+                  </span>
+                </div>
+
+                {/* Callout 2 (Top-Right) */}
+                <div className="absolute right-[8%] top-[19%] pointer-events-auto text-right">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
+                    {activeItem.callouts.top2}
+                  </span>
+                </div>
+
+                {/* Callout 3 (Bottom-Left) */}
+                <div className="absolute left-[7%] bottom-[23%] pointer-events-auto">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
+                    {activeItem.callouts.bottom}
+                  </span>
+                </div>
+              </div>
+
+              {/* ── Feature-Specific Animated SVG Overlays (Vector Lines & Nodes) ── */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`overlay-${activeItem.id}`}
@@ -396,9 +388,6 @@ export default function Capabilities() {
                     <svg viewBox="0 0 600 600" className="w-full h-full" fill="none">
                       {/* COMPUTE */}
                       <g>
-                        <text x="90" y="190" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M165 186 L230 186 L258 235 L268 250" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.45" />
                         <circle r="2.5" fill="#B84A2B">
                           <animateMotion path="M165 186 L230 186 L258 235 L268 250" dur="3.2s" repeatCount="indefinite" />
@@ -408,9 +397,6 @@ export default function Capabilities() {
 
                       {/* VIRTUALISATION */}
                       <g>
-                        <text x="370" y="125" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M365 135 L330 170 L330 205 L372 230" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <path d="M330 205 L370 205 L420 235 L420 280" stroke="#68635B" strokeWidth="1" strokeOpacity="0.25" strokeDasharray="2 3" />
                         <circle r="2.5" fill="#DA6A43">
@@ -422,9 +408,6 @@ export default function Capabilities() {
 
                       {/* STORAGE */}
                       <g>
-                        <text x="85" y="450" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M150 446 L195 446 L235 410 L250 410" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.45" />
                         <circle r="2.5" fill="#B84A2B">
                           <animateMotion path="M150 446 L195 446 L235 410 L250 410" dur="3.6s" repeatCount="indefinite" />
@@ -460,9 +443,6 @@ export default function Capabilities() {
 
                       {/* HYPERSCALER REGION (Top-Left) */}
                       <g>
-                        <text x="65" y="160" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M215 156 L245 156 L265 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M215 156 L245 156 L265 190" dur="2.4s" repeatCount="indefinite" />
@@ -472,9 +452,6 @@ export default function Capabilities() {
 
                       {/* TRANSIT GATEWAY (Top-Right) */}
                       <g>
-                        <text x="380" y="140" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M375 145 L350 170 L320 195" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#DA6A43">
                           <animateMotion path="M375 145 L350 170 L320 195" dur="3.1s" repeatCount="indefinite" />
@@ -484,9 +461,6 @@ export default function Capabilities() {
 
                       {/* DIRECT CONNECT (Bottom-Left) */}
                       <g>
-                        <text x="65" y="460" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M185 456 L220 456 L260 415 L285 415" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M185 456 L220 456 L260 415 L285 415" dur="2.8s" repeatCount="indefinite" />
@@ -515,9 +489,6 @@ export default function Capabilities() {
 
                       {/* POD ORCHESTRATION (Top-Left) */}
                       <g>
-                        <text x="65" y="175" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M210 171 L245 171 L280 205" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M210 171 L245 171 L280 205" dur="2.8s" repeatCount="indefinite" />
@@ -527,9 +498,6 @@ export default function Capabilities() {
 
                       {/* CONTROL PLANE (Top-Right) */}
                       <g>
-                        <text x="380" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M375 135 L335 155 L315 155" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#DA6A43">
                           <animateMotion path="M375 135 L335 155 L315 155" dur="3.2s" repeatCount="indefinite" />
@@ -539,9 +507,6 @@ export default function Capabilities() {
 
                       {/* CSI STORAGE FABRIC (Bottom-Left) */}
                       <g>
-                        <text x="60" y="470" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M215 466 L250 466 L275 440 L300 440" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M215 466 L250 466 L275 440 L300 440" dur="3.5s" repeatCount="indefinite" />
@@ -572,9 +537,6 @@ export default function Capabilities() {
 
                       {/* GITOPS PIPELINE (Top-Left) */}
                       <g>
-                        <text x="75" y="180" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M200 176 L235 176 L250 200 L280 200" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M200 176 L235 176 L250 200 L280 200" dur="2.6s" repeatCount="indefinite" />
@@ -584,9 +546,6 @@ export default function Capabilities() {
 
                       {/* DECLARATIVE ENGINE (Top-Right) */}
                       <g>
-                        <text x="375" y="135" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M370 140 L345 160 L345 195" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#DA6A43">
                           <animateMotion path="M370 140 L345 160 L345 195" dur="3s" repeatCount="indefinite" />
@@ -596,9 +555,6 @@ export default function Capabilities() {
 
                       {/* ZERO-DRIFT STATE (Bottom-Left) */}
                       <g>
-                        <text x="70" y="475" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M200 471 L245 471 L275 440 L315 440" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M200 471 L245 471 L275 440 L315 440" dur="3.2s" repeatCount="indefinite" />
@@ -632,9 +588,6 @@ export default function Capabilities() {
 
                       {/* EVENT BUS / KAFKA (Top-Left) */}
                       <g>
-                        <text x="65" y="165" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M205 161 L240 161 L265 190 L295 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M205 161 L240 161 L265 190 L295 190" dur="2.7s" repeatCount="indefinite" />
@@ -644,9 +597,6 @@ export default function Capabilities() {
 
                       {/* MICROSERVICE MESH (Top-Right) */}
                       <g>
-                        <text x="370" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M365 135 L335 165 L365 190 L395 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#DA6A43">
                           <animateMotion path="M365 135 L335 165 L365 190 L395 190" dur="3.4s" repeatCount="indefinite" />
@@ -656,9 +606,6 @@ export default function Capabilities() {
 
                       {/* DISTRIBUTED STATE (Bottom-Left) */}
                       <g>
-                        <text x="70" y="470" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M210 466 L250 466 L280 435 L315 435" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M210 466 L250 466 L280 435 L315 435" dur="3.1s" repeatCount="indefinite" />
@@ -695,9 +642,6 @@ export default function Capabilities() {
 
                       {/* NEURAL SYNAPSE (Top-Left) */}
                       <g>
-                        <text x="80" y="165" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M200 161 L240 161 L270 140 L285 140" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M200 161 L240 161 L270 140 L285 140" dur="2.5s" repeatCount="indefinite" />
@@ -707,9 +651,6 @@ export default function Capabilities() {
 
                       {/* VECTOR EMBEDDINGS (Top-Right) */}
                       <g>
-                        <text x="375" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M370 135 L335 155 L320 185" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#DA6A43">
                           <animateMotion path="M370 135 L335 155 L320 185" dur="3s" repeatCount="indefinite" />
@@ -719,9 +660,6 @@ export default function Capabilities() {
 
                       {/* GOVERNED LAKEHOUSE (Bottom-Left) */}
                       <g>
-                        <text x="70" y="465" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M215 461 L250 461 L280 430 L315 430" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M215 461 L250 461 L280 430 L315 430" dur="3.4s" repeatCount="indefinite" />
@@ -758,9 +696,6 @@ export default function Capabilities() {
 
                       {/* VAULT ENCLAVE (Top-Left) */}
                       <g>
-                        <text x="80" y="170" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top1}
-                        </text>
                         <path d="M195 166 L230 166 L260 210 L285 210" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M195 166 L230 166 L260 210 L285 210" dur="2.6s" repeatCount="indefinite" />
@@ -770,9 +705,6 @@ export default function Capabilities() {
 
                       {/* ZERO TRUST SHIELD (Top-Right) */}
                       <g>
-                        <text x="375" y="130" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.top2}
-                        </text>
                         <path d="M370 135 L330 155 L330 190" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#DA6A43">
                           <animateMotion path="M370 135 L330 155 L330 190" dur="3s" repeatCount="indefinite" />
@@ -782,9 +714,6 @@ export default function Capabilities() {
 
                       {/* PERIMETER DEFENSE (Bottom-Left) */}
                       <g>
-                        <text x="65" y="470" className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] fill-[#68635B]">
-                          {activeItem.callouts.bottom}
-                        </text>
                         <path d="M210 466 L245 466 L270 435 L300 435" stroke="#B84A2B" strokeWidth="1.2" strokeOpacity="0.5" />
                         <circle r="3" fill="#B84A2B">
                           <animateMotion path="M210 466 L245 466 L270 435 L300 435" dur="3.2s" repeatCount="indefinite" />
