@@ -1,372 +1,364 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import { useState, useRef } from 'react';
+import Image from 'next/image';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
-// ─── Brand Colours ────────────────────────────────────────────────────────────
-const C = {
-  carbon:     new THREE.Color('#171614'),
-  ivory:      new THREE.Color('#F4EFE6'),
-  terracotta: new THREE.Color('#B84A2B'),
-  clay:       new THREE.Color('#DA6A43'),
-  teal:       new THREE.Color('#1E5A63'),
-  sand:       new THREE.Color('#DDD4C5'),
-  tealLight:  new THREE.Color('#2a7a88'),
-};
+export default function EcosystemScene() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [activeTile, setActiveTile] = useState<string | null>(null);
 
-// ─── Mouse Parallax ───────────────────────────────────────────────────────────
-function MouseParallax({ mouse }: { mouse: React.MutableRefObject<[number, number]> }) {
-  const { camera } = useThree();
-  useFrame(() => {
-    const [mx, my] = mouse.current;
-    camera.position.x += (mx * 0.7 - camera.position.x) * 0.03;
-    camera.position.y += (my * 0.4 - camera.position.y) * 0.03;
-    camera.lookAt(0, 0.2, 0);
-  });
-  return null;
-}
+  // Mouse parallax motion values (normalized from -0.5 to 0.5)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-// ─── Infrastructure Foundation ─────────────────────────────────────────────────
-function InfrastructureFoundation() {
-  const groupRef = useRef<THREE.Group>(null);
-  useFrame((_, delta) => { if (groupRef.current) groupRef.current.rotation.y += delta * 0.03; });
-  return (
-    <group ref={groupRef} position={[0, -0.5, 0]}>
-      {/* Base slab */}
-      <mesh position={[0, -1.5, 0]} receiveShadow>
-        <boxGeometry args={[3.8, 0.14, 3.8]} />
-        <meshStandardMaterial color={C.carbon} metalness={0.9} roughness={0.15} />
-      </mesh>
+  const springConfig = { damping: 28, stiffness: 140, mass: 0.8 };
+  const smoothMouseX = useSpring(mouseX, springConfig);
+  const smoothMouseY = useSpring(mouseY, springConfig);
 
-      {/* Corner pillars */}
-      {([-1.4, 1.4] as const).flatMap((x) =>
-        ([-1.4, 1.4] as const).map((z) => (
-          <mesh key={`${x}-${z}`} position={[x, -0.65, z]} castShadow>
-            <boxGeometry args={[0.18, 1.73, 0.18]} />
-            <meshStandardMaterial color={C.carbon} metalness={0.8} roughness={0.25} />
-          </mesh>
-        ))
-      )}
+  // 3D stage rotational tilt based on mouse position
+  // Base perspective matches the isometric angle in reference image (~56deg X, -14deg Z)
+  const stageRotateX = useTransform(smoothMouseY, [-0.5, 0.5], [60, 52]);
+  const stageRotateZ = useTransform(smoothMouseX, [-0.5, 0.5], [-18, -10]);
+  const stageRotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-5, 5]);
 
-      {/* Terracotta accent cross-beams */}
-      {[[-0.7, 0.7], [0.7, -0.7]].map(([x, z], i) => (
-        <mesh key={`beam-${i}`} position={[x, -1.0, z]} rotation={[0, i * 0.8, 0.3]}>
-          <cylinderGeometry args={[0.015, 0.015, 2.0, 4]} />
-          <meshStandardMaterial color={C.terracotta} emissive={C.terracotta} emissiveIntensity={0.5} />
-        </mesh>
-      ))}
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
 
-      {/* Top horizontal ring */}
-      <mesh position={[0, -0.05, 0]}>
-        <torusGeometry args={[1.5, 0.018, 4, 40]} />
-        <meshStandardMaterial color={C.terracotta} emissive={C.terracotta} emissiveIntensity={0.35} transparent opacity={0.8} />
-      </mesh>
-    </group>
-  );
-}
-
-// ─── Cloud Forms — translucent wireframe icosahedra ────────────────────────────
-function CloudForms() {
-  const forms = useMemo(() => [
-    { pos: [-1.6, 1.0, -0.3] as [number,number,number], scale: 0.7, speed: 0.5 },
-    { pos: [1.5, 1.5, 0.1] as [number,number,number], scale: 0.55, speed: 0.7 },
-    { pos: [0.1, 2.0, -0.6] as [number,number,number], scale: 0.42, speed: 0.9 },
-  ], []);
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+    setIsHovered(false);
+    setActiveTile(null);
+  };
 
   return (
-    <group>
-      {forms.map((f, i) => (
-        <Float key={i} speed={f.speed} rotationIntensity={0.35} floatIntensity={0.5} floatingRange={[-0.1, 0.1]}>
-          <group position={f.pos}>
-            {/* Solid inner */}
-            <mesh castShadow>
-              <icosahedronGeometry args={[f.scale * 0.6, 1]} />
-              <meshStandardMaterial
-                color={C.teal}
-                transparent
-                opacity={0.18}
-                metalness={0.2}
-                roughness={0.1}
-                side={THREE.DoubleSide}
-              />
-            </mesh>
-            {/* Wireframe outer */}
-            <mesh>
-              <icosahedronGeometry args={[f.scale * 0.65, 1]} />
-              <meshStandardMaterial
-                color={C.tealLight}
-                transparent
-                opacity={0.55}
-                metalness={0.5}
-                roughness={0.1}
-                wireframe
-              />
-            </mesh>
-          </group>
-        </Float>
-      ))}
-    </group>
-  );
-}
-
-// ─── Container Modules ─────────────────────────────────────────────────────────
-function ContainerModules() {
-  const groupRef = useRef<THREE.Group>(null);
-  const modules = useMemo(() => [
-    { pos: [-1.0, 0.15, 0.5] as [number,number,number], color: C.terracotta, rx: 0.25,  ry: 0.3  },
-    { pos: [0.3, -0.35, 1.0] as [number,number,number], color: C.clay,       rx: -0.15, ry: -0.4 },
-    { pos: [1.1, 0.25, 0.3] as [number,number,number],  color: C.sand,       rx: 0.1,   ry: 0.5  },
-    { pos: [-0.15, 0.7, -0.1] as [number,number,number], color: C.carbon,     rx: -0.2,  ry: 0.2  },
-  ], []);
-  useFrame((state) => {
-    if (groupRef.current) groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.1) * 0.12;
-  });
-  return (
-    <group ref={groupRef}>
-      {modules.map((m, i) => (
-        <mesh key={i} position={m.pos} rotation={[m.rx, m.ry, 0]} castShadow>
-          <boxGeometry args={[0.44, 0.44, 0.44]} />
-          <meshStandardMaterial color={m.color} metalness={0.35} roughness={0.6} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-// ─── Connecting Lines ─────────────────────────────────────────────────────────
-function ConnectionMesh() {
-  const lineRef = useRef<THREE.LineSegments>(null);
-  const geometry = useMemo(() => {
-    const nodes = [
-      new THREE.Vector3(0, -0.5 - 1.5, 0),   // Foundation
-      new THREE.Vector3(-1.0, 0.15, 0.5),      // Module 1
-      new THREE.Vector3(0.3, -0.35, 1.0),      // Module 2
-      new THREE.Vector3(1.1, 0.25, 0.3),       // Module 3
-      new THREE.Vector3(-0.15, 0.7, -0.1),     // Module 4
-      new THREE.Vector3(-1.6, 1.0, -0.3),      // Cloud 1
-      new THREE.Vector3(1.5, 1.5, 0.1),        // Cloud 2
-      new THREE.Vector3(0.1, 2.0, -0.6),       // Cloud 3
-    ];
-    const edges = [
-      [0,1],[0,2],[0,3],[0,4],
-      [1,5],[3,6],[4,7],
-      [5,6],[6,7],[5,7],
-      [1,2],[2,3],[3,4],[4,1],
-    ];
-    const pos: number[] = [];
-    edges.forEach(([a,b]) => {
-      pos.push(nodes[a].x,nodes[a].y,nodes[a].z, nodes[b].x,nodes[b].y,nodes[b].z);
-    });
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    return geo;
-  }, []);
-  useFrame((state) => {
-    if (lineRef.current?.material) {
-      (lineRef.current.material as THREE.LineBasicMaterial).opacity =
-        0.28 + Math.sin(state.clock.elapsedTime * 0.7) * 0.12;
-    }
-  });
-  return (
-    <lineSegments ref={lineRef} geometry={geometry}>
-      <lineBasicMaterial color={C.terracotta} transparent opacity={0.35} />
-    </lineSegments>
-  );
-}
-
-// ─── Pulsing Nodes ────────────────────────────────────────────────────────────
-function NetworkNodes() {
-  const nodePositions: [number,number,number][] = [
-    [0,-2.0,0],
-    [-1.0,0.15,0.5],[0.3,-0.35,1.0],[1.1,0.25,0.3],[-0.15,0.7,-0.1],
-    [-1.6,1.0,-0.3],[1.5,1.5,0.1],[0.1,2.0,-0.6],
-  ];
-  const pMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: C.terracotta, emissive: C.terracotta, emissiveIntensity: 1.4, roughness: 0, metalness: 0,
-  }), []);
-  const tMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: C.tealLight, emissive: C.tealLight, emissiveIntensity: 1.0, roughness: 0, metalness: 0,
-  }), []);
-  const refs = useRef<(THREE.Mesh|null)[]>([]);
-  useFrame((state) => {
-    refs.current.forEach((m, i) => {
-      if (m) m.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 1.3 + i * 0.85) * 0.3);
-    });
-  });
-  return (
-    <group>
-      {nodePositions.map((pos, i) => (
-        <mesh key={i} position={pos} ref={(el) => { refs.current[i] = el; }}>
-          <sphereGeometry args={[0.05, 8, 8]} />
-          <primitive object={i < 5 ? pMat : tMat} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-// ─── Automation Ring with orbiting dots ───────────────────────────────────────
-function AutomationRing() {
-  const ringRef = useRef<THREE.Mesh>(null);
-  const dotGroupRef = useRef<THREE.Group>(null);
-  const dotMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: C.teal, emissive: C.teal, emissiveIntensity: 0.8,
-  }), []);
-  const dots = useMemo(() => Array.from({length: 6}, (_, i) => {
-    const a = (i / 6) * Math.PI * 2;
-    return { pos: [Math.cos(a) * 2.2, Math.sin(a) * 2.2, 0] as [number,number,number] };
-  }), []);
-  useFrame((state, delta) => {
-    if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.22;
-      ringRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.15) * 0.08;
-    }
-    if (dotGroupRef.current) dotGroupRef.current.rotation.z -= delta * 0.44;
-  });
-  return (
-    <group position={[0, 0.15, 0]}>
-      <mesh ref={ringRef}>
-        <torusGeometry args={[2.2, 0.022, 6, 80]} />
-        <meshStandardMaterial color={C.teal} emissive={C.teal} emissiveIntensity={0.3} transparent opacity={0.5} />
-      </mesh>
-      <group ref={dotGroupRef}>
-        {dots.map((d, i) => (
-          <mesh key={i} position={d.pos}>
-            <sphereGeometry args={[0.055, 6, 6]} />
-            <primitive object={dotMat} />
-          </mesh>
-        ))}
-      </group>
-    </group>
-  );
-}
-
-// ─── Outer Orbital Rings ──────────────────────────────────────────────────────
-function OrbitalRings() {
-  const r1 = useRef<THREE.Mesh>(null);
-  const r2 = useRef<THREE.Mesh>(null);
-  useFrame((_, delta) => {
-    if (r1.current) r1.current.rotation.z += delta * 0.05;
-    if (r2.current) r2.current.rotation.x += delta * 0.07;
-  });
-  return (
-    <group>
-      <mesh ref={r1} rotation={[Math.PI / 2.6, 0.25, 0]}>
-        <torusGeometry args={[2.9, 0.01, 4, 120]} />
-        <meshStandardMaterial color={C.sand} transparent opacity={0.22} />
-      </mesh>
-      <mesh ref={r2} rotation={[0.3, Math.PI / 3, 0]}>
-        <torusGeometry args={[3.4, 0.007, 4, 140]} />
-        <meshStandardMaterial color={C.terracotta} transparent opacity={0.14} />
-      </mesh>
-    </group>
-  );
-}
-
-// ─── Whole ecosystem slow rotation ───────────────────────────────────────────
-function SlowRotation({ children }: { children: React.ReactNode }) {
-  const ref = useRef<THREE.Group>(null);
-  useFrame((_, delta) => { if (ref.current) ref.current.rotation.y += delta * 0.045; });
-  return <group ref={ref}>{children}</group>;
-}
-
-// ─── Scene Root ───────────────────────────────────────────────────────────────
-function SceneContent({ mouse }: { mouse: React.MutableRefObject<[number, number]> }) {
-  return (
-    <>
-      <MouseParallax mouse={mouse} />
-      <color attach="background" args={['#F4EFE6']} />
-
-      <ambientLight intensity={0.7} color={'#F8F4EC'} />
-      <directionalLight position={[5, 7, 4]} intensity={1.6} color={'#FFF8F0'} castShadow shadow-mapSize={[512,512]} />
-      <directionalLight position={[-4, 2, -3]} intensity={0.5} color={'#F4EFE6'} />
-      <pointLight position={[-2, 3, 2]} intensity={1.4} color={'#B84A2B'} distance={8} decay={2} />
-      <pointLight position={[2, 4, -2]} intensity={0.9} color={'#1E5A63'} distance={8} decay={2} />
-
-      <Environment preset="apartment" />
-
-      <SlowRotation>
-        <InfrastructureFoundation />
-        <ContainerModules />
-        <CloudForms />
-        <ConnectionMesh />
-        <NetworkNodes />
-        <AutomationRing />
-      </SlowRotation>
-
-      <OrbitalRings />
-    </>
-  );
-}
-
-// ─── Static Fallback SVG ──────────────────────────────────────────────────────
-function StaticFallback() {
-  return (
-    <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
-      <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-72 h-72 opacity-85">
-        {/* Foundation base */}
-        <rect x="130" y="348" width="140" height="12" rx="2" fill="#171614" />
-        {/* Corner pillars */}
-        {[[145,240],[175,240],[225,240],[255,240]].map(([x,y],i) => (
-          <rect key={i} x={x} y={y} width="12" height="108" rx="2" fill="#171614" />
-        ))}
-        {/* Connecting horizontal */}
-        <line x1="145" y1="270" x2="267" y2="270" stroke="#B84A2B" strokeWidth="1.5" strokeOpacity="0.5"/>
-        {/* Container modules */}
-        {[[118,205],[176,195],[234,202],[176,248]].map(([x,y],i) => (
-          <rect key={i} x={x} y={y} width="42" height="42" rx="4"
-            fill={['#B84A2B','#DA6A43','#DDD4C5','#171614'][i]} opacity="0.88" />
-        ))}
-        {/* Cloud wireframe icosahedra */}
-        {[[115,148,20],[200,95,17],[278,135,14]].map(([cx,cy,r],i) => (
-          <g key={i}>
-            <polygon
-              points={Array.from({length:6},(_,k)=>{const a=(k/6)*Math.PI*2;return `${cx+Math.cos(a)*r},${cy+Math.sin(a)*r}`;}).join(' ')}
-              stroke="#1E5A63" strokeWidth="1.2" fill="#1E5A63" fillOpacity="0.12" strokeOpacity="0.6"
-            />
-          </g>
-        ))}
-        {/* Connection lines */}
-        {[
-          [200,348,139,247],[200,348,200,237],[200,348,261,244],
-          [139,247,115,168],[261,244,278,149],[200,237,200,112],
-          [115,168,115,148],[278,149,278,135],
-        ].map(([x1,y1,x2,y2],i) => (
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#B84A2B" strokeWidth="1.5" strokeOpacity="0.38" />
-        ))}
-        {/* Automation ring */}
-        <circle cx="200" cy="210" r="132" stroke="#1E5A63" strokeWidth="1" strokeOpacity="0.2" fill="none" strokeDasharray="5 9" />
-        {/* Outer ring */}
-        <circle cx="200" cy="210" r="165" stroke="#DDD4C5" strokeWidth="0.8" strokeOpacity="0.25" fill="none" />
-        {/* Nodes */}
-        {[[200,348],[139,247],[200,237],[261,244],[115,148],[200,112],[278,135]].map(([cx,cy],i) => (
-          <circle key={i} cx={cx} cy={cy} r="5" fill={i>3?'#2a7a88':'#B84A2B'} />
-        ))}
-      </svg>
-    </div>
-  );
-}
-
-// ─── Exported Component ───────────────────────────────────────────────────────
-interface EcosystemSceneProps {
-  mouse: React.MutableRefObject<[number, number]>;
-  scrollY: React.MutableRefObject<number>;
-  reducedMotion: boolean;
-  isMobile: boolean;
-}
-
-export default function EcosystemScene({ mouse, reducedMotion, isMobile }: EcosystemSceneProps) {
-  if (reducedMotion || isMobile) return <StaticFallback />;
-  return (
-    <Canvas
-      camera={{ position: [0, 0.5, 6.5], fov: 46 }}
-      dpr={[1, 1.5]}
-      shadows
-      gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+    <div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full h-[440px] sm:h-[480px] lg:h-[520px] flex items-center justify-center select-none overflow-visible"
+      style={{ perspective: 1200 }}
+      aria-label="Interactive 3D Connected Technology Ecosystem"
     >
-      <SceneContent mouse={mouse} />
-    </Canvas>
+      {/* 3D Isometric Perspective Stage */}
+      <motion.div
+        className="relative w-[520px] h-[520px] sm:w-[560px] sm:h-[560px] flex items-center justify-center pointer-events-auto"
+        style={{
+          transformStyle: 'preserve-3d',
+          rotateX: stageRotateX,
+          rotateZ: stageRotateZ,
+          rotateY: stageRotateY,
+        }}
+      >
+        {/* ─── Ground Plane & Concentric Orbit Rings ────────────────────────── */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ transform: 'translateZ(0px)' }}
+        >
+          {/* Outer Orbit Ring */}
+          <div className="absolute w-[520px] h-[520px] rounded-full border border-[#171614]/[0.08]" />
+
+          {/* Middle Orbit Ring */}
+          <div className="absolute w-[390px] h-[390px] rounded-full border border-[#171614]/[0.10]" />
+
+          {/* Inner Orbit Ring */}
+          <div className="absolute w-[260px] h-[260px] rounded-full border border-[#171614]/[0.12]" />
+
+          {/* ─── Orbit Labels ────────────────────────────────────────────── */}
+          {/* Top: SCALABLE */}
+          <span
+            className="absolute top-[28px] left-1/2 -translate-x-1/2 font-mono text-[9.5px] uppercase tracking-[0.24em] font-semibold text-[#171614]/45"
+            style={{ transform: 'translateX(-50%)' }}
+          >
+            SCALABLE
+          </span>
+
+          {/* Right: OPEN */}
+          <span
+            className="absolute right-[32px] top-[48%] -translate-y-1/2 font-mono text-[9.5px] uppercase tracking-[0.24em] font-semibold text-[#171614]/45"
+            style={{ transform: 'translateY(-50%)' }}
+          >
+            OPEN
+          </span>
+
+          {/* Bottom: VENDOR NEUTRAL */}
+          <span
+            className="absolute bottom-[36px] left-1/2 -translate-x-1/2 font-mono text-[9.5px] uppercase tracking-[0.24em] font-semibold text-[#171614]/45 text-center leading-tight"
+            style={{ transform: 'translateX(-50%)' }}
+          >
+            VENDOR<br />NEUTRAL
+          </span>
+
+          {/* Left: SECURE */}
+          <span
+            className="absolute left-[40px] top-[54%] -translate-y-1/2 font-mono text-[9.5px] uppercase tracking-[0.24em] font-semibold text-[#171614]/45"
+            style={{ transform: 'translateY(-50%)' }}
+          >
+            SECURE
+          </span>
+
+          {/* ─── Glossy Pearl Spheres on Orbit Rings ───────────────────────── */}
+          {/* Pearl 1 (Top Outer Ring near SCALABLE) */}
+          <motion.div
+            className="absolute top-[32px] left-[58%] w-3.5 h-3.5 rounded-full"
+            style={{
+              background: 'radial-gradient(circle at 35% 30%, #ffffff 0%, #F5EFE6 45%, #D4C9BC 85%, #9E9385 100%)',
+              boxShadow: '0 6px 12px rgba(23, 22, 20, 0.22)',
+            }}
+            animate={{ y: [-1.5, 1.5, -1.5] }}
+            transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
+          />
+
+          {/* Pearl 2 (Right Middle Ring near OPEN) */}
+          <motion.div
+            className="absolute right-[78px] top-[39%] w-3 h-3 rounded-full"
+            style={{
+              background: 'radial-gradient(circle at 35% 30%, #ffffff 0%, #F5EFE6 45%, #D4C9BC 85%, #9E9385 100%)',
+              boxShadow: '0 5px 10px rgba(23, 22, 20, 0.20)',
+            }}
+            animate={{ y: [1.5, -1.5, 1.5] }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+          />
+
+          {/* Pearl 3 (Left Middle Ring near SECURE) */}
+          <motion.div
+            className="absolute left-[70px] top-[66%] w-3 h-3 rounded-full"
+            style={{
+              background: 'radial-gradient(circle at 35% 30%, #ffffff 0%, #F5EFE6 45%, #D4C9BC 85%, #9E9385 100%)',
+              boxShadow: '0 5px 10px rgba(23, 22, 20, 0.20)',
+            }}
+            animate={{ y: [-1, 1, -1] }}
+            transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut' }}
+          />
+        </div>
+
+        {/* ─── Central Nuberu Frosted Glass Stack ────────────────────────────── */}
+        <div
+          className="absolute z-20 flex items-center justify-center pointer-events-auto"
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          {/* Ground Soft Shadow for Center Stack */}
+          <motion.div
+            className="absolute w-44 h-44 rounded-[36px] bg-[#171614]/15 filter blur-xl pointer-events-none"
+            style={{ transform: 'translateZ(2px)' }}
+            animate={{
+              scale: isHovered ? 1.08 : [1, 1.04, 1],
+              opacity: isHovered ? 0.35 : [0.28, 0.22, 0.28],
+            }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+          />
+
+          {/* Layer 1: Bottom Base Glass Slab */}
+          <motion.div
+            className="absolute w-48 h-48 rounded-[34px] bg-white/35 border border-white/60 pointer-events-none"
+            style={{
+              transform: 'translateZ(6px)',
+              boxShadow: '0 20px 50px -10px rgba(23, 22, 20, 0.12)',
+            }}
+            animate={{ z: isHovered ? 8 : [6, 9, 6] }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+          />
+
+          {/* Layer 2: Middle Translucent Glass Slab */}
+          <motion.div
+            className="absolute w-44 h-44 rounded-[30px] bg-white/50 backdrop-blur-md border border-white/75 pointer-events-none"
+            style={{
+              transform: 'translateZ(16px)',
+              boxShadow: '0 15px 35px -8px rgba(23, 22, 20, 0.10)',
+            }}
+            animate={{ z: isHovered ? 20 : [16, 21, 16] }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+          />
+
+          {/* Layer 3: Top Frosted Acrylic Glass Tile with Nuberu Logo */}
+          <motion.div
+            className="relative w-40 h-40 rounded-[28px] flex flex-col items-center justify-center p-6 cursor-pointer group/nuberu"
+            style={{
+              transformStyle: 'preserve-3d',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(244, 239, 230, 0.72) 100%)',
+              backdropFilter: 'blur(22px)',
+              WebkitBackdropFilter: 'blur(22px)',
+              border: '1.5px solid rgba(255, 255, 255, 0.95)',
+              boxShadow:
+                'inset 0 2px 4px rgba(255, 255, 255, 0.9), inset 0 -2px 4px rgba(0, 0, 0, 0.04), 0 24px 50px -10px rgba(23, 22, 20, 0.16)',
+            }}
+            animate={{
+              z: isHovered ? 34 : [28, 36, 28],
+            }}
+            transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.04 }}
+          >
+            {/* Nuberu Logo Mark (Two waving ribbons) */}
+            <div className="w-12 h-10 text-[#171614] mb-1.5 transition-transform duration-300 group-hover/nuberu:scale-105">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.0 33.5" fill="currentColor" className="w-full h-full">
+                <path d="M 30.562 9.974 L 24.895 14.104 C 23.730 14.956, 22.219 15.174, 20.857 14.687 L 12.353 11.635 C 10.798 11.082, 9.163 12.232, 9.163 13.878 L 9.163 22.651 C 9.163 24.495, 8.283 26.228, 6.794 27.312 L 3.011 30.074 C 1.755 30.989, 0.000 30.094, 0.000 28.542 L 0.000 8.873 C 0.000 7.052, 0.872 5.340, 2.340 4.267 L 5.805 1.743 C 7.348 0.619, 9.361 0.338, 11.157 1.006 L 30.321 8.153 C 31.098 8.446, 31.242 9.481, 30.571 9.974 L 30.562 9.974 Z" />
+                <path d="M 11.137 23.310 L 16.804 19.180 C 17.971 18.328, 19.480 18.110, 20.842 18.598 L 29.346 21.649 C 30.903 22.203, 32.535 21.053, 32.535 19.406 L 32.535 10.633 C 32.535 8.789, 33.416 7.059, 34.907 5.972 L 38.687 3.213 C 39.944 2.295, 41.699 3.193, 41.699 4.742 L 41.699 24.414 C 41.699 26.232, 40.830 27.945, 39.359 29.017 L 35.894 31.541 C 34.351 32.665, 32.338 32.949, 30.542 32.278 L 11.378 25.131 C 10.600 24.841, 10.457 23.803, 11.128 23.310 L 11.137 23.310 Z" />
+              </svg>
+            </div>
+
+            {/* Wordmark "Nuberu" */}
+            <span className="font-extrabold text-[1.45rem] tracking-tight text-[#171614] leading-none">
+              Nuberu
+            </span>
+          </motion.div>
+        </div>
+
+        {/* ─── Floating Satellite Tile 1: AWS (Top Left) ────────────────────── */}
+        <div
+          className="absolute left-[38px] top-[110px] sm:left-[45px] sm:top-[115px] pointer-events-auto"
+          style={{ transformStyle: 'preserve-3d' }}
+          onMouseEnter={() => setActiveTile('aws')}
+          onMouseLeave={() => setActiveTile(null)}
+        >
+          {/* Cast Contact Shadow on Orbit Floor */}
+          <motion.div
+            className="absolute -inset-2 rounded-[26px] bg-[#171614]/15 filter blur-lg pointer-events-none"
+            style={{ transform: 'translateZ(2px)' }}
+            animate={{
+              scale: activeTile === 'aws' ? 1.15 : [1, 1.08, 1],
+              opacity: activeTile === 'aws' ? 0.35 : [0.25, 0.16, 0.25],
+            }}
+            transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut' }}
+          />
+
+          {/* Elevated 3D Floating White/Frosted Tile */}
+          <motion.div
+            className="relative w-28 h-28 sm:w-30 sm:h-30 rounded-[22px] sm:rounded-[24px] flex items-center justify-center p-5 cursor-pointer"
+            style={{
+              transformStyle: 'preserve-3d',
+              background: 'linear-gradient(145deg, #FFFFFF 0%, #F9F6F0 100%)',
+              border: '1.5px solid rgba(255, 255, 255, 0.95)',
+              boxShadow:
+                '0 20px 42px -10px rgba(23, 22, 20, 0.16), 0 8px 18px -4px rgba(23, 22, 20, 0.08), inset 0 2px 3px rgba(255, 255, 255, 0.95)',
+            }}
+            animate={{
+              z: activeTile === 'aws' ? 68 : [50, 64, 50],
+              rotateZ: [-0.8, 1.2, -0.8],
+            }}
+            transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.08 }}
+          >
+            {/* Amazon Web Services Logo */}
+            <div className="relative w-18 h-12 flex items-center justify-center">
+              <Image
+                src="/images/ecosystem/aws_official.svg"
+                alt="Amazon Web Services"
+                width={72}
+                height={44}
+                className="object-contain"
+                priority
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ─── Floating Satellite Tile 2: Azure (Top Right) ─────────────────── */}
+        <div
+          className="absolute right-[48px] top-[40px] sm:right-[60px] sm:top-[42px] pointer-events-auto"
+          style={{ transformStyle: 'preserve-3d' }}
+          onMouseEnter={() => setActiveTile('azure')}
+          onMouseLeave={() => setActiveTile(null)}
+        >
+          {/* Cast Contact Shadow on Orbit Floor */}
+          <motion.div
+            className="absolute -inset-2 rounded-[26px] bg-[#171614]/15 filter blur-lg pointer-events-none"
+            style={{ transform: 'translateZ(2px)' }}
+            animate={{
+              scale: activeTile === 'azure' ? 1.15 : [1, 1.08, 1],
+              opacity: activeTile === 'azure' ? 0.35 : [0.24, 0.15, 0.24],
+            }}
+            transition={{ repeat: Infinity, duration: 4.8, ease: 'easeInOut' }}
+          />
+
+          {/* Elevated 3D Floating White/Frosted Tile */}
+          <motion.div
+            className="relative w-28 h-28 sm:w-30 sm:h-30 rounded-[22px] sm:rounded-[24px] flex items-center justify-center p-5 cursor-pointer"
+            style={{
+              transformStyle: 'preserve-3d',
+              background: 'linear-gradient(145deg, #FFFFFF 0%, #F9F6F0 100%)',
+              border: '1.5px solid rgba(255, 255, 255, 0.95)',
+              boxShadow:
+                '0 22px 45px -10px rgba(23, 22, 20, 0.18), 0 8px 18px -4px rgba(23, 22, 20, 0.08), inset 0 2px 3px rgba(255, 255, 255, 0.95)',
+            }}
+            animate={{
+              z: activeTile === 'azure' ? 88 : [70, 84, 70],
+              rotateZ: [1.2, -0.8, 1.2],
+            }}
+            transition={{ repeat: Infinity, duration: 4.8, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.08 }}
+          >
+            {/* Microsoft Azure 3D Folded 'A' Logo */}
+            <div className="relative w-14 h-14 flex items-center justify-center">
+              <Image
+                src="/images/ecosystem/azure.svg"
+                alt="Microsoft Azure"
+                width={56}
+                height={56}
+                className="object-contain"
+                priority
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ─── Floating Satellite Tile 3: Google Cloud (Bottom Right) ───────── */}
+        <div
+          className="absolute right-[42px] bottom-[90px] sm:right-[52px] sm:bottom-[96px] pointer-events-auto"
+          style={{ transformStyle: 'preserve-3d' }}
+          onMouseEnter={() => setActiveTile('gcp')}
+          onMouseLeave={() => setActiveTile(null)}
+        >
+          {/* Cast Contact Shadow on Orbit Floor */}
+          <motion.div
+            className="absolute -inset-2 rounded-[26px] bg-[#171614]/15 filter blur-lg pointer-events-none"
+            style={{ transform: 'translateZ(2px)' }}
+            animate={{
+              scale: activeTile === 'gcp' ? 1.15 : [1, 1.08, 1],
+              opacity: activeTile === 'gcp' ? 0.35 : [0.26, 0.17, 0.26],
+            }}
+            transition={{ repeat: Infinity, duration: 4.4, ease: 'easeInOut' }}
+          />
+
+          {/* Elevated 3D Floating White/Frosted Tile */}
+          <motion.div
+            className="relative w-28 h-28 sm:w-30 sm:h-30 rounded-[22px] sm:rounded-[24px] flex items-center justify-center p-5 cursor-pointer"
+            style={{
+              transformStyle: 'preserve-3d',
+              background: 'linear-gradient(145deg, #FFFFFF 0%, #F9F6F0 100%)',
+              border: '1.5px solid rgba(255, 255, 255, 0.95)',
+              boxShadow:
+                '0 20px 42px -10px rgba(23, 22, 20, 0.16), 0 8px 18px -4px rgba(23, 22, 20, 0.08), inset 0 2px 3px rgba(255, 255, 255, 0.95)',
+            }}
+            animate={{
+              z: activeTile === 'gcp' ? 56 : [40, 54, 40],
+              rotateZ: [-1, 1, -1],
+            }}
+            transition={{ repeat: Infinity, duration: 4.4, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.08 }}
+          >
+            {/* Google Cloud 4-Color Cloud Logo */}
+            <div className="relative w-15 h-13 flex items-center justify-center">
+              <Image
+                src="/images/ecosystem/gcp_cloud.svg"
+                alt="Google Cloud Platform"
+                width={60}
+                height={52}
+                className="object-contain"
+                priority
+              />
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </div>
   );
 }

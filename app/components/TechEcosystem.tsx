@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import EcosystemScene from './EcosystemScene';
 
 const ecosystem = [
   {
@@ -57,34 +60,44 @@ export default function TechEcosystem() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
-    <section className="py-24 sm:py-32 bg-[#F4EFE6] text-[#171614] border-b border-[#171614]/8" id="ecosystem">
+    <section className="py-24 sm:py-32 bg-[#F4EFE6] text-[#171614] border-b border-[#171614]/8 overflow-hidden" id="ecosystem">
       <div className="container-custom">
-        {/* Header matching Hero section hierarchy */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-20 gap-8">
+        {/* Top Hero Grid: Left Content + Right 3D Ecosystem Animation */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="lg:col-span-5 flex flex-col justify-center"
           >
             <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-6">
               PLATFORM INTEGRATION
             </p>
-            <h2 className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
+            <h2 className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] mb-8 m-0">
               Technology Ecosystem.<br />
               Neutral & Validated.
             </h2>
+            <p className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0 mb-8">
+              Nuberu designs across leading hyperscalers, container platforms, and open-source infrastructure tooling with zero vendor lock-in.
+            </p>
+            <div>
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-[#171614] hover:text-[#B84A2B] transition-colors group"
+              >
+                <span>Explore Integrations</span>
+                <span className="w-8 h-8 rounded-full border border-[#171614]/15 flex items-center justify-center group-hover:border-[#B84A2B] group-hover:bg-[#B84A2B] group-hover:text-white transition-all">
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </Link>
+            </div>
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0"
-          >
-            Nuberu designs across leading hyperscalers, container platforms, and open-source infrastructure tooling with zero vendor lock-in.
-          </motion.p>
+          {/* Right Column: 3D Connected Ecosystem Animation */}
+          <div className="lg:col-span-7 w-full flex items-center justify-center overflow-visible">
+            <EcosystemScene />
+          </div>
         </div>
 
         {/* Minimal Tab Bar with Animated Gliding Pill */}
