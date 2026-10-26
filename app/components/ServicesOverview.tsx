@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Plus } from 'lucide-react';
@@ -110,33 +111,44 @@ export default function ServicesOverview() {
                       className="overflow-hidden"
                     >
                       <div className="pb-8 pt-2 grid grid-cols-1 md:grid-cols-12 gap-8 items-start pl-12 sm:pl-15 pr-2">
-                        {/* Summary & Tech Platforms */}
-                        <div className="md:col-span-6 lg:col-span-6">
-                          <p className="text-[15px] leading-relaxed text-[#171614]/75 mb-5 m-0">
-                            {service.shortSummary}
-                          </p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {service.platforms.slice(0, 5).map((plat) => (
-                              <span
-                                key={plat}
-                                className="font-mono text-[10.5px] px-2.5 py-1 rounded bg-[#171614]/[0.05] text-[#171614]/70"
-                              >
-                                {plat}
-                              </span>
-                            ))}
+                        {/* Left: Summary, Tech Platforms & Action Link */}
+                        <div className="md:col-span-5 lg:col-span-5 flex flex-col justify-between h-full">
+                          <div>
+                            <p className="text-[14.5px] sm:text-[15px] leading-relaxed text-[#171614]/75 mb-4 m-0">
+                              {service.shortSummary}
+                            </p>
+                            <div className="flex flex-wrap gap-1.5 mb-6">
+                              {service.platforms.slice(0, 5).map((plat) => (
+                                <span
+                                  key={plat}
+                                  className="font-mono text-[10.5px] px-2.5 py-1 rounded bg-[#171614]/[0.05] text-[#171614]/70"
+                                >
+                                  {plat}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="pt-2">
+                            <Link
+                              href={`/services/${service.slug}`}
+                              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#171614] hover:text-[#B84A2B] transition-colors group/link py-2 px-4 rounded-full border border-[#171614]/15 hover:border-[#B84A2B] bg-white/70 hover:bg-white shrink-0 w-fit"
+                            >
+                              <span>Explore Service</span>
+                              <ArrowUpRight className="w-3.5 h-3.5 text-[#B84A2B] transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                            </Link>
                           </div>
                         </div>
 
-                        {/* Core Deliverables */}
-                        <div className="md:col-span-4 lg:col-span-4 md:border-l md:border-[#171614]/10 md:pl-8">
+                        {/* Middle: Core Deliverables */}
+                        <div className="md:col-span-3 lg:col-span-3 md:border-l md:border-[#171614]/10 md:pl-6 lg:pl-8">
                           <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#B84A2B] mb-3 m-0">
                             Core Deliverables
                           </p>
-                          <ul className="space-y-2 list-none p-0 m-0">
-                            {service.deliverables.slice(0, 3).map((item, dIdx) => (
+                          <ul className="space-y-2.5 list-none p-0 m-0">
+                            {service.deliverables.slice(0, 4).map((item, dIdx) => (
                               <li
                                 key={dIdx}
-                                className="flex items-start gap-2 text-xs sm:text-[13px] text-[#171614]/80 leading-snug"
+                                className="flex items-start gap-2.5 text-xs sm:text-[13px] text-[#171614]/80 leading-snug"
                               >
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#B84A2B] mt-1.5 shrink-0" />
                                 <span>{item}</span>
@@ -145,15 +157,29 @@ export default function ServicesOverview() {
                           </ul>
                         </div>
 
-                        {/* Direct Action Link */}
-                        <div className="md:col-span-2 lg:col-span-2 flex md:justify-end items-center md:items-start pt-1">
-                          <Link
-                            href={`/services/${service.slug}`}
-                            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#171614] hover:text-[#B84A2B] transition-colors group/link py-2 px-4 rounded-full border border-[#171614]/15 hover:border-[#B84A2B] bg-white/70 hover:bg-white shrink-0"
-                          >
-                            <span>Explore</span>
-                            <ArrowUpRight className="w-3.5 h-3.5 text-[#B84A2B] transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                          </Link>
+                        {/* Right: Authentic Real Image Container Aligned to Right Side */}
+                        <div className="md:col-span-4 lg:col-span-4 flex justify-end">
+                          <div className="relative w-full aspect-[4/3] max-w-[340px] rounded-2xl overflow-hidden border border-[#171614]/12 shadow-[0_8px_24px_-8px_rgba(23,22,20,0.12)] bg-[#171614]/5 group/img ml-auto">
+                            <Image
+                              src={service.image}
+                              alt={service.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 340px"
+                              className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
+                            />
+                            {/* Authentic lighting vignette */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
+
+                            {/* Engineering Tag Badge */}
+                            <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                              <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/95 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/15">
+                                {service.category}
+                              </span>
+                              <span className="font-mono text-[8.5px] uppercase tracking-wider text-white/80 bg-black/50 backdrop-blur-md px-1.5 py-0.5 rounded border border-white/10">
+                                PROD DEPLOY
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </motion.div>
