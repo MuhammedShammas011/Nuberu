@@ -19,6 +19,118 @@ const interestOptions = [
   'Other Technology Requirements',
 ];
 
+const countryOptions = [
+  'United Kingdom',
+  'United States',
+  'United Arab Emirates',
+  'Saudi Arabia',
+  'Germany',
+  'France',
+  'Netherlands',
+  'Switzerland',
+  'Ireland',
+  'Singapore',
+  'Australia',
+  'Canada',
+  'India',
+  'Qatar',
+  'Afghanistan',
+  'Albania',
+  'Algeria',
+  'Andorra',
+  'Angola',
+  'Argentina',
+  'Armenia',
+  'Austria',
+  'Azerbaijan',
+  'Bahamas',
+  'Bahrain',
+  'Bangladesh',
+  'Barbados',
+  'Belgium',
+  'Belize',
+  'Bermuda',
+  'Bolivia',
+  'Bosnia and Herzegovina',
+  'Botswana',
+  'Brazil',
+  'Bulgaria',
+  'Cambodia',
+  'Cameroon',
+  'Chile',
+  'China',
+  'Colombia',
+  'Costa Rica',
+  'Croatia',
+  'Cyprus',
+  'Czech Republic',
+  'Denmark',
+  'Dominican Republic',
+  'Ecuador',
+  'Egypt',
+  'Estonia',
+  'Ethiopia',
+  'Finland',
+  'Georgia',
+  'Ghana',
+  'Greece',
+  'Hong Kong',
+  'Hungary',
+  'Iceland',
+  'Indonesia',
+  'Israel',
+  'Italy',
+  'Jamaica',
+  'Japan',
+  'Jordan',
+  'Kazakhstan',
+  'Kenya',
+  'Kuwait',
+  'Latvia',
+  'Lebanon',
+  'Lithuania',
+  'Luxembourg',
+  'Malaysia',
+  'Malta',
+  'Mauritius',
+  'Mexico',
+  'Monaco',
+  'Morocco',
+  'New Zealand',
+  'Nigeria',
+  'Norway',
+  'Oman',
+  'Pakistan',
+  'Panama',
+  'Paraguay',
+  'Peru',
+  'Philippines',
+  'Poland',
+  'Portugal',
+  'Romania',
+  'Rwanda',
+  'Senegal',
+  'Serbia',
+  'Slovakia',
+  'Slovenia',
+  'South Africa',
+  'South Korea',
+  'Spain',
+  'Sri Lanka',
+  'Sweden',
+  'Taiwan',
+  'Tanzania',
+  'Thailand',
+  'Tunisia',
+  'Turkey',
+  'Uganda',
+  'Ukraine',
+  'Uruguay',
+  'Uzbekistan',
+  'Vietnam',
+  'Other / Global',
+];
+
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -170,14 +282,21 @@ export default function ContactSection() {
                       <label className="block text-xs font-semibold uppercase tracking-wider text-[#171614]/70 mb-2">
                         Country or Region *
                       </label>
-                      <input
-                        type="text"
+                      <select
                         required
                         value={formData.country}
                         onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                        placeholder="e.g. United Kingdom"
-                        className="w-full px-4 py-3 rounded-xl bg-[#F4EFE6]/50 border border-[#171614]/15 text-sm text-[#171614] focus:outline-none focus:border-[#B84A2B] focus:bg-white transition-all"
-                      />
+                        className="w-full px-4 py-3 rounded-xl bg-[#F4EFE6]/50 border border-[#171614]/15 text-sm text-[#171614] focus:outline-none focus:border-[#B84A2B] focus:bg-white transition-all cursor-pointer"
+                      >
+                        <option value="" disabled>
+                          Select country or region...
+                        </option>
+                        {countryOptions.map((country) => (
+                          <option key={country} value={country}>
+                            {country}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div>
