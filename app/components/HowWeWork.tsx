@@ -46,7 +46,7 @@ export default function HowWeWork() {
 
   return (
     <section
-      className="pt-20 pb-12 lg:pt-24 lg:pb-14 bg-[#F4EFE6] text-[#171614] border-b border-[#171614]/8"
+      className="pt-20 sm:pt-24 lg:pt-24 pb-0 bg-[#F4EFE6] text-[#171614] overflow-hidden"
       id="delivery-approach"
     >
       <div className="container-custom">
@@ -233,9 +233,11 @@ export default function HowWeWork() {
           </div>
 
         </div>
+      </div>
 
-        {/* ── Minimal footer note ── */}
-        <div className="w-full flex items-center justify-center border-t border-[#171614]/10 mt-8 pt-5 text-center">
+      {/* ── Minimal footer note — Centered between the two lines ── */}
+      <div className="mt-10 sm:mt-12 border-t border-b border-[#171614]/8 py-5 sm:py-6 w-full bg-[#F4EFE6]">
+        <div className="container-custom flex items-center justify-center text-center">
           <p className="font-mono text-[11.5px] text-[#171614]/40 tracking-wider text-center m-0 max-w-2xl">
             End-to-end delivery — from first architecture audit to continuous Day 2 SRE.
           </p>
