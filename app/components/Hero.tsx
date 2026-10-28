@@ -17,7 +17,7 @@ export default function Hero() {
             ONE SYSTEM. MANY CAPABILITIES.
           </p>
 
-          <h1 className="text-[clamp(2.15rem,6.2vw,5.75rem)] font-[550] leading-[1.04] sm:leading-[1.02] tracking-[-0.04em] text-[#171614] m-0">
+          <h1 className="text-[clamp(2.15rem,6.2vw,5.75rem)] font-extrabold leading-[1.04] sm:leading-[1.02] tracking-[-0.04em] text-[#171614] m-0">
             Here Infrastructure<br />
             Enables<br />
             Transformation.

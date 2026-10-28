@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 
 export interface ScrollRevealTextProps {
   text: string;
@@ -102,15 +102,71 @@ function BoldHoverPhrase({
   preview?: { image: string; tag: string };
   wordGroups: WordGroup[];
 }) {
-  const [isHovered, setIsHovered] = React.useState(false);
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Mouse coordinates relative to this phrase element
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Organic snappy spring follower
+  const springConfig = { damping: 24, stiffness: 280, mass: 0.35 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  // Dynamic tilt angle based on horizontal cursor movement velocity
+  const prevX = useRef<number>(0);
+  const rotateTilt = useMotionValue(0);
+  const smoothTilt = useSpring(rotateTilt, { damping: 20, stiffness: 220 });
+
+  const updateCoordinates = (clientX: number, clientY: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    const deltaX = x - prevX.current;
+    prevX.current = x;
+    const tilt = Math.max(-7, Math.min(7, deltaX * 0.9));
+    rotateTilt.set(tilt);
+
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLSpanElement>) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      mouseX.set(x);
+      mouseY.set(y);
+      smoothX.jump(x);
+      smoothY.jump(y);
+      prevX.current = x;
+    }
+    setIsHovered(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
+    updateCoordinates(e.clientX, e.clientY);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    rotateTilt.set(0);
+  };
 
   return (
     <span
+      ref={containerRef}
       className="relative inline-block cursor-pointer select-none group/phrase"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onPointerEnter={() => setIsHovered(true)}
-      onPointerLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onPointerEnter={handleMouseEnter}
+      onPointerMove={(e) => updateCoordinates(e.clientX, e.clientY)}
+      onPointerLeave={handleMouseLeave}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
       tabIndex={0}
@@ -130,34 +186,43 @@ function BoldHoverPhrase({
         )}
       </span>
 
-      {/* Very small floating image preview sitting directly upon the text */}
+      {/* Floating image preview tracking cursor smoothly across the text */}
       {preview && (
-        <span
-          className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none flex flex-col items-center transition-all duration-200 ease-out ${
-            isHovered
-              ? 'opacity-100 scale-100 translate-y-0'
-              : 'opacity-0 scale-90 translate-y-1.5 group-hover/phrase:opacity-100 group-hover/phrase:scale-100 group-hover/phrase:translate-y-0'
-          }`}
-        >
-          {/* Compact mini card (approx 104px x 68px) */}
-          <span className="block w-24 sm:w-28 h-16 sm:h-[70px] rounded-lg overflow-hidden border border-[#171614]/20 shadow-[0_10px_25px_rgba(0,0,0,0.25)] bg-[#171614] relative">
-            <Image
-              src={preview.image}
-              alt={phrase}
-              fill
-              sizes="112px"
-              className="object-cover"
-              priority
-            />
-            <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent pointer-events-none" />
-            <span className="absolute bottom-1 left-1.5 right-1.5 font-mono text-[8px] font-semibold text-white/95 tracking-wider uppercase truncate block text-left">
-              {preview.tag}
-            </span>
-          </span>
+        <AnimatePresence>
+          {isHovered && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.82, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.82, y: 6 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                left: smoothX,
+                top: smoothY,
+                rotate: smoothTilt,
+              }}
+              className="absolute z-50 pointer-events-none -translate-x-1/2 -translate-y-full pb-3 flex flex-col items-center will-change-transform"
+            >
+              {/* Compact mini card with preview image & tag */}
+              <span className="block w-28 sm:w-32 h-18 sm:h-20 rounded-xl overflow-hidden border border-white/20 shadow-[0_16px_36px_-8px_rgba(23,22,20,0.38),0_4px_12px_rgba(23,22,20,0.18)] bg-[#171614] relative">
+                <Image
+                  src={preview.image}
+                  alt={phrase}
+                  fill
+                  sizes="128px"
+                  className="object-cover"
+                  priority
+                />
+                <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+                <span className="absolute bottom-1.5 left-2 right-2 font-mono text-[8.5px] font-semibold text-white/95 tracking-wider uppercase truncate block text-left">
+                  {preview.tag}
+                </span>
+              </span>
 
-          {/* Caret pointing directly upon the hovered word */}
-          <span className="w-2 h-2 bg-[#171614] rotate-45 -mt-1 shadow-sm block" />
-        </span>
+              {/* Caret pointing directly upon the hovered cursor position */}
+              <span className="w-2.5 h-2.5 bg-[#171614] rotate-45 -mt-1 shadow-sm block border-r border-b border-white/10" />
+            </motion.span>
+          )}
+        </AnimatePresence>
       )}
     </span>
   );
