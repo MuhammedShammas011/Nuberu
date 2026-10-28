@@ -2,41 +2,153 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import EcosystemScene from './EcosystemScene';
 
-const ecosystem = [
+interface TechnologyItem {
+  name: string;
+  code: string;
+  logo: string;
+  logoWidth: number;
+  logoHeight: number;
+  description: string;
+  scope: string;
+}
+
+interface EcosystemCategory {
+  category: string;
+  technologies: TechnologyItem[];
+}
+
+const ecosystem: EcosystemCategory[] = [
   {
     category: 'Public Cloud',
     technologies: [
-      { name: 'Amazon Web Services', code: 'AWS', scope: 'Compute, VPC, EKS, Storage, Security Hub' },
-      { name: 'Microsoft Azure', code: 'Azure', scope: 'AKS, Virtual WAN, Azure DevOps, Defender' },
-      { name: 'Google Cloud Platform', code: 'GCP', scope: 'GKE, Anthos, Cloud Run, Cloud SCC' },
+      {
+        name: 'Amazon Web Services',
+        code: 'AWS',
+        logo: '/images/ecosystem/aws_official.svg',
+        logoWidth: 64,
+        logoHeight: 38,
+        description: 'Compute, networking, storage and security services to build at any scale.',
+        scope: 'Compute, VPC, EKS, Storage, Security Hub',
+      },
+      {
+        name: 'Microsoft Azure',
+        code: 'AZURE',
+        logo: '/images/ecosystem/azure.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Enterprise-grade cloud platform for modern infrastructure.',
+        scope: 'AKS, Virtual WAN, Azure DevOps, Defender',
+      },
+      {
+        name: 'Google Cloud Platform',
+        code: 'GCP',
+        logo: '/images/ecosystem/gcp_cloud.svg',
+        logoWidth: 42,
+        logoHeight: 36,
+        description: 'Open, secure and high-performance infrastructure for cloud-native workloads.',
+        scope: 'GKE, Anthos, Cloud Run, Cloud SCC',
+      },
     ],
   },
   {
     category: 'Container & Platform',
     technologies: [
-      { name: 'Kubernetes', code: 'K8s', scope: 'Cluster architecture, ingress, CNI, storage' },
-      { name: 'Red Hat OpenShift', code: 'OpenShift', scope: 'ROSA, ODF, ACM, Enterprise Platform' },
-      { name: 'SUSE Rancher', code: 'Rancher', scope: 'Multi-cluster management and governance' },
+      {
+        name: 'Kubernetes',
+        code: 'K8S',
+        logo: '/images/ecosystem/kubernetes.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Production-grade container orchestration and declarative cluster scheduling at scale.',
+        scope: 'Cluster architecture, Ingress, CNI, Storage',
+      },
+      {
+        name: 'Red Hat OpenShift',
+        code: 'OPENSHIFT',
+        logo: '/images/ecosystem/openshift.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Turnkey enterprise application platform with built-in security, governance, and CI/CD.',
+        scope: 'ROSA, ODF, ACM, Enterprise Platform',
+      },
+      {
+        name: 'SUSE Rancher',
+        code: 'RANCHER',
+        logo: '/images/ecosystem/rancher.svg',
+        logoWidth: 40,
+        logoHeight: 38,
+        description: 'Unified multi-cluster management, security policy enforcement, and Kubernetes operations.',
+        scope: 'Multi-cluster, Fleet, RKE2, Governance',
+      },
     ],
   },
   {
     category: 'Automation & IaC',
     technologies: [
-      { name: 'HashiCorp Terraform', code: 'Terraform', scope: 'Declarative multi-cloud provisioning' },
-      { name: 'Red Hat Ansible', code: 'Ansible', scope: 'Config management, AAP playbooks, OS automation' },
-      { name: 'Jenkins & GitLab CI', code: 'CI/CD', scope: 'Automated test, build and release pipelines' },
+      {
+        name: 'HashiCorp Terraform',
+        code: 'TERRAFORM',
+        logo: '/images/ecosystem/terraform.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Declarative multi-cloud infrastructure as code provisioning with state governance.',
+        scope: 'Declarative IaC, Modules, State Locking, Multi-Cloud',
+      },
+      {
+        name: 'Red Hat Ansible',
+        code: 'ANSIBLE',
+        logo: '/images/ecosystem/ansible.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Agentless configuration management, AAP orchestration, and automated OS patching.',
+        scope: 'AAP playbooks, Config management, OS automation',
+      },
+      {
+        name: 'Jenkins & GitLab CI',
+        code: 'GITLAB',
+        logo: '/images/ecosystem/gitlab.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Automated continuous integration, artifact verification, and zero-downtime release pipelines.',
+        scope: 'CI/CD pipelines, Automated testing, Release automation',
+      },
     ],
   },
   {
     category: 'Observability & Security',
     technologies: [
-      { name: 'Prometheus & Grafana', code: 'Telemetry', scope: 'Metrics aggregation, dashboards, alerting' },
-      { name: 'HashiCorp Vault', code: 'Vault', scope: 'Secrets lifecycle, PKI, dynamic credentials' },
-      { name: 'NeuVector & Aqua', code: 'Runtime', scope: 'Container network firewall, CVE scanning' },
+      {
+        name: 'Prometheus & Grafana',
+        code: 'PROMETHEUS',
+        logo: '/images/ecosystem/prometheus.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'End-to-end telemetry monitoring, high-cardinality time series, and alerting workflows.',
+        scope: 'Telemetry aggregation, Dashboards, Alerting',
+      },
+      {
+        name: 'HashiCorp Vault',
+        code: 'VAULT',
+        logo: '/images/ecosystem/vault.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Dynamic secret brokering, automated TLS/PKI certificates, and identity-based access control.',
+        scope: 'Secrets lifecycle, Dynamic credentials, PKI engine',
+      },
+      {
+        name: 'NeuVector & Aqua',
+        code: 'NEUVECTOR',
+        logo: '/images/ecosystem/neuvector.svg',
+        logoWidth: 38,
+        logoHeight: 38,
+        description: 'Zero-trust container firewall, runtime CVE scanning, and continuous compliance enforcement.',
+        scope: 'Container firewall, CVE scanning, Runtime protection',
+      },
     ],
   },
 ];
@@ -100,43 +212,46 @@ export default function TechEcosystem() {
           </div>
         </div>
 
-        {/* Minimal Tab Bar with Animated Gliding Pill */}
-        <div className="flex flex-nowrap sm:flex-wrap items-center gap-2 mb-8 sm:mb-12 pb-3 sm:pb-4 border-b border-[#171614]/10 overflow-x-auto no-scrollbar">
-          {ecosystem.map((cat, idx) => {
-            const isActive = activeCategory === idx;
+        {/* Minimal Tab Bar matching Reference Image */}
+        <div className="flex items-center gap-3 sm:gap-6 mb-8 sm:mb-12 overflow-x-auto no-scrollbar pb-2 sm:pb-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {ecosystem.map((cat, idx) => {
+              const isActive = activeCategory === idx;
 
-            return (
-              <button
-                key={cat.category}
-                type="button"
-                onClick={() => setActiveCategory(idx)}
-                className={`shrink-0 relative px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors cursor-pointer select-none whitespace-nowrap ${
-                  isActive ? 'text-[#F4EFE6]' : 'text-[#171614]/65 hover:text-[#171614]'
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTechTab"
-                    className="absolute inset-0 bg-[#171614] rounded-full shadow-sm"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  <span
-                    className={`font-mono text-[10px] ${
-                      isActive ? 'text-[#B84A2B]' : 'text-[#171614]/40'
-                    }`}
-                  >
-                    0{idx + 1}
+              return (
+                <button
+                  key={cat.category}
+                  type="button"
+                  onClick={() => setActiveCategory(idx)}
+                  className={`relative px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-medium transition-all cursor-pointer select-none whitespace-nowrap ${
+                    isActive ? 'text-[#F4EFE6]' : 'text-[#171614]/70 hover:text-[#171614]'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTechTab"
+                      className="absolute inset-0 bg-[#171614] rounded-full shadow-[0_6px_20px_-4px_rgba(23,22,20,0.35)]"
+                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2.5">
+                    <span
+                      className={`font-mono text-[11px] font-bold ${
+                        isActive ? 'text-[#B84A2B]' : 'text-[#171614]/40'
+                      }`}
+                    >
+                      0{idx + 1}
+                    </span>
+                    <span className="font-semibold">{cat.category}</span>
                   </span>
-                  <span>{cat.category}</span>
-                </span>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
+          <div className="hidden sm:block flex-1 border-b border-[#171614]/12" />
         </div>
 
-        {/* Animated Cards Grid with AnimatePresence */}
+        {/* Redesigned Cards Grid matching Reference Image */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -144,7 +259,7 @@ export default function TechEcosystem() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-7"
           >
             {ecosystem[activeCategory].technologies.map((tech, i) => {
               const scopeTags = tech.scope.split(',').map((s) => s.trim());
@@ -155,35 +270,52 @@ export default function TechEcosystem() {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: i * 0.07 }}
-                  className="group relative p-5 sm:p-8 rounded-2xl bg-white/70 hover:bg-white border border-[#171614]/[0.08] hover:border-[#B84A2B]/40 transition-all duration-300 hover:shadow-[0_20px_45px_-15px_rgba(23,22,20,0.08)] hover:-translate-y-1 flex flex-col justify-between"
+                  className="group relative p-6 sm:p-7 rounded-[24px] bg-white border border-[#171614]/[0.08] hover:border-[#B84A2B]/40 transition-all duration-300 hover:shadow-[0_20px_45px_-15px_rgba(23,22,20,0.08)] hover:-translate-y-1 flex flex-col justify-between"
                 >
                   <div>
                     {/* Top Row: Code Badge & Verification Status */}
-                    <div className="flex items-center justify-between gap-3 mb-6">
-                      <span className="font-mono text-xs font-bold px-2.5 py-1 rounded bg-[#171614]/[0.04] border border-[#171614]/[0.08] text-[#171614]/80 tracking-wider">
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <span className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-md bg-[#171614]/[0.05] text-[#171614] tracking-wider uppercase">
                         {tech.code}
                       </span>
 
-                      <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-[#1E5A63]">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1E5A63] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#1E5A63]" />
-                        </span>
-                        <span className="uppercase tracking-wider">Verified</span>
+                      <div className="flex items-center gap-1.5 font-mono text-[10.5px] font-bold tracking-widest text-[#00875A]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00875A]" />
+                        <span>VERIFIED</span>
                       </div>
                     </div>
 
-                    {/* Technology Name */}
-                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-[#171614] group-hover:text-[#B84A2B] transition-colors mb-4 m-0">
-                      {tech.name}
-                    </h3>
+                    {/* Middle Section: Logo, Title & Description */}
+                    <div className="mb-6">
+                      {/* Official Brand Logo */}
+                      <div className="h-11 mb-3.5 flex items-center">
+                        <Image
+                          src={tech.logo}
+                          alt={tech.name}
+                          width={tech.logoWidth}
+                          height={tech.logoHeight}
+                          className="object-contain max-h-10 w-auto select-none"
+                          priority
+                        />
+                      </div>
+
+                      {/* Technology Name */}
+                      <h3 className="text-lg sm:text-[1.24rem] font-bold tracking-tight text-[#171614] group-hover:text-[#B84A2B] transition-colors mb-2 leading-snug m-0">
+                        {tech.name}
+                      </h3>
+
+                      {/* Enterprise Description */}
+                      <p className="text-[13px] leading-[1.62] text-[#555047] m-0">
+                        {tech.description}
+                      </p>
+                    </div>
 
                     {/* Integration Scope Tags */}
                     <div className="flex flex-wrap gap-1.5 mb-6">
                       {scopeTags.map((tag) => (
                         <span
                           key={tag}
-                          className="font-mono text-[11px] px-2.5 py-1 rounded-full bg-[#171614]/[0.035] text-[#171614]/70 group-hover:bg-[#171614]/[0.06] transition-colors"
+                          className="font-mono text-[11px] px-3 py-1 rounded-full bg-[#171614]/[0.04] text-[#171614]/75 group-hover:bg-[#171614]/[0.07] transition-colors"
                         >
                           {tag}
                         </span>
@@ -191,12 +323,15 @@ export default function TechEcosystem() {
                     </div>
                   </div>
 
-                  {/* Card Bottom Meta */}
-                  <div className="pt-5 border-t border-[#171614]/[0.06] flex items-center justify-between text-xs font-mono text-[#171614]/40">
-                    <span>Pattern 0{i + 1}</span>
-                    <span className="group-hover:text-[#B84A2B] transition-colors">
-                      Architectural Blueprint →
-                    </span>
+                  {/* Card Bottom: View Blueprint Link matching Reference Image */}
+                  <div className="pt-2">
+                    <Link
+                      href="/services"
+                      className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#171614] group-hover:text-[#B84A2B] transition-colors"
+                    >
+                      <span>View Blueprint</span>
+                      <span className="transition-transform group-hover:translate-x-1">→</span>
+                    </Link>
                   </div>
                 </motion.div>
               );
