@@ -64,7 +64,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#12110F] text-[#F4EFE6] relative overflow-hidden border-t border-white/[0.08]">
       {/* Subtle architectural noise / radial vignette */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.025] pointer-events-none"
         style={{
           backgroundImage: 'radial-gradient(#F4EFE6 1px, transparent 1px)',
@@ -231,7 +231,7 @@ export default function Footer() {
               <h3 className="text-xs font-mono font-bold uppercase tracking-[0.16em] text-[#B84A2B] mb-6 flex items-center gap-2">
                 <span>{'// CONNECT'}</span>
               </h3>
-              
+
               <div className="flex flex-col gap-2.5">
                 <a
                   href="https://linkedin.com"
@@ -296,10 +296,12 @@ export default function Footer() {
         </div>
 
         {/* Sub-Footer Precision Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#F4EFE6]/50 font-mono">
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-center sm:text-left">
+        <div className="pt-8 border-t border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6 text-xs text-[#F4EFE6]/50 font-mono relative">
+          <div className="text-center lg:text-left">
             <span>© {currentYear} NUBERU ENTERPRISE. ALL RIGHTS RESERVED.</span>
-            <span className="hidden sm:inline text-white/20">•</span>
+          </div>
+
+          <div className="text-center lg:absolute lg:left-1/2 lg:-translate-x-1/2">
             <span className="text-[#F4EFE6]/40">ENTERPRISE CLOUD & MODERNISATION</span>
           </div>
 
@@ -310,7 +312,7 @@ export default function Footer() {
             <Link href="/terms" className="hover:text-white transition-colors">
               Terms of Engagement
             </Link>
-            
+
             {/* Minimal Smooth Back-to-Top Button */}
             <button
               type="button"
@@ -321,7 +323,7 @@ export default function Footer() {
               <span>Top</span>
               <ArrowUp className="w-3 h-3" />
             </button>
-          </div>0
+          </div>
         </div>
       </div>
     </footer>
