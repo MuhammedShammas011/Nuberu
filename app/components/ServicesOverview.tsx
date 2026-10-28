@@ -159,12 +159,12 @@ export default function ServicesOverview() {
 
                         {/* Right: Authentic Real Image Container Aligned to Right Side */}
                         <div className="md:col-span-4 lg:col-span-4 flex justify-end">
-                          <div className="relative w-full aspect-[4/3] max-w-[340px] rounded-2xl overflow-hidden border border-[#171614]/12 shadow-[0_8px_24px_-8px_rgba(23,22,20,0.12)] bg-[#171614]/5 group/img ml-auto">
+                          <div className="relative w-full aspect-[4/3] max-w-[250px] overflow-hidden border border-[#171614]/12 shadow-[0_8px_24px_-8px_rgba(23,22,20,0.12)] bg-[#171614]/5 group/img ml-auto">
                             <Image
                               src={service.image}
                               alt={service.title}
                               fill
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 340px"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 250px"
                               className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                             />
                             {/* Authentic lighting vignette */}
@@ -172,10 +172,10 @@ export default function ServicesOverview() {
 
                             {/* Engineering Tag Badge */}
                             <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
-                              <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/95 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/15">
+                              <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/95 bg-black/60 backdrop-blur-md px-2 py-0.5 border border-white/15">
                                 {service.category}
                               </span>
-                              <span className="font-mono text-[8.5px] uppercase tracking-wider text-white/80 bg-black/50 backdrop-blur-md px-1.5 py-0.5 rounded border border-white/10">
+                              <span className="font-mono text-[8.5px] uppercase tracking-wider text-white/80 bg-black/50 backdrop-blur-md px-1.5 py-0.5 border border-white/10">
                                 PROD DEPLOY
                               </span>
                             </div>
