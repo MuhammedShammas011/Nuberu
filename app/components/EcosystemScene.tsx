@@ -2,9 +2,123 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
-export default function EcosystemScene() {
+interface TechSatellite {
+  id: string;
+  name: string;
+  logo: string;
+  width: number;
+  height: number;
+}
+
+interface CategoryTrio {
+  tile1: TechSatellite;
+  tile2: TechSatellite;
+  tile3: TechSatellite;
+}
+
+const categorySceneData: Record<number, CategoryTrio> = {
+  0: {
+    tile1: {
+      id: 'aws',
+      name: 'Amazon Web Services',
+      logo: '/images/ecosystem/aws_official.svg',
+      width: 72,
+      height: 44,
+    },
+    tile2: {
+      id: 'azure',
+      name: 'Microsoft Azure',
+      logo: '/images/ecosystem/azure.svg',
+      width: 54,
+      height: 54,
+    },
+    tile3: {
+      id: 'gcp',
+      name: 'Google Cloud Platform',
+      logo: '/images/ecosystem/gcp_cloud.svg',
+      width: 58,
+      height: 50,
+    },
+  },
+  1: {
+    tile1: {
+      id: 'kubernetes',
+      name: 'Kubernetes',
+      logo: '/images/ecosystem/kubernetes.svg',
+      width: 54,
+      height: 54,
+    },
+    tile2: {
+      id: 'openshift',
+      name: 'Red Hat OpenShift',
+      logo: '/images/ecosystem/openshift.svg',
+      width: 54,
+      height: 54,
+    },
+    tile3: {
+      id: 'rancher',
+      name: 'SUSE Rancher',
+      logo: '/images/ecosystem/rancher.svg',
+      width: 54,
+      height: 54,
+    },
+  },
+  2: {
+    tile1: {
+      id: 'terraform',
+      name: 'HashiCorp Terraform',
+      logo: '/images/ecosystem/terraform.svg',
+      width: 54,
+      height: 54,
+    },
+    tile2: {
+      id: 'ansible',
+      name: 'Red Hat Ansible',
+      logo: '/images/ecosystem/ansible.svg',
+      width: 54,
+      height: 54,
+    },
+    tile3: {
+      id: 'gitlab',
+      name: 'GitLab CI / CD',
+      logo: '/images/ecosystem/gitlab.svg',
+      width: 54,
+      height: 54,
+    },
+  },
+  3: {
+    tile1: {
+      id: 'prometheus',
+      name: 'Prometheus & Grafana',
+      logo: '/images/ecosystem/prometheus.svg',
+      width: 54,
+      height: 54,
+    },
+    tile2: {
+      id: 'vault',
+      name: 'HashiCorp Vault',
+      logo: '/images/ecosystem/vault.svg',
+      width: 54,
+      height: 54,
+    },
+    tile3: {
+      id: 'neuvector',
+      name: 'NeuVector & Aqua',
+      logo: '/images/ecosystem/neuvector.svg',
+      width: 54,
+      height: 54,
+    },
+  },
+};
+
+interface EcosystemSceneProps {
+  activeCategory?: number;
+}
+
+export default function EcosystemScene({ activeCategory = 0 }: EcosystemSceneProps) {
+  const currentData = categorySceneData[activeCategory] || categorySceneData[0];
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [activeTile, setActiveTile] = useState<string | null>(null);
@@ -212,11 +326,11 @@ export default function EcosystemScene() {
           </motion.div>
         </div>
 
-        {/* ─── Floating Satellite Tile 1: AWS (Top Left) ────────────────────── */}
+        {/* ─── Floating Satellite Tile 1 (Top Left) ────────────────────── */}
         <div
           className="absolute left-[38px] top-[110px] sm:left-[45px] sm:top-[115px] pointer-events-auto"
           style={{ transformStyle: 'preserve-3d' }}
-          onMouseEnter={() => setActiveTile('aws')}
+          onMouseEnter={() => setActiveTile('tile1')}
           onMouseLeave={() => setActiveTile(null)}
         >
           {/* Cast Contact Shadow on Orbit Floor */}
@@ -224,8 +338,8 @@ export default function EcosystemScene() {
             className="absolute -inset-2 rounded-[26px] bg-[#171614]/15 filter blur-lg pointer-events-none"
             style={{ transform: 'translateZ(2px)' }}
             animate={{
-              scale: activeTile === 'aws' ? 1.15 : [1, 1.08, 1],
-              opacity: activeTile === 'aws' ? 0.35 : [0.25, 0.16, 0.25],
+              scale: activeTile === 'tile1' ? 1.15 : [1, 1.08, 1],
+              opacity: activeTile === 'tile1' ? 0.35 : [0.25, 0.16, 0.25],
             }}
             transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut' }}
           />
@@ -241,31 +355,44 @@ export default function EcosystemScene() {
                 '0 20px 42px -10px rgba(23, 22, 20, 0.16), 0 8px 18px -4px rgba(23, 22, 20, 0.08), inset 0 2px 3px rgba(255, 255, 255, 0.95)',
             }}
             animate={{
-              z: activeTile === 'aws' ? 68 : [50, 64, 50],
+              z: activeTile === 'tile1' ? 68 : [50, 64, 50],
               rotateZ: [-0.8, 1.2, -0.8],
             }}
             transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut' }}
             whileHover={{ scale: 1.08 }}
+            title={currentData.tile1.name}
+            aria-label={currentData.tile1.name}
           >
-            {/* Amazon Web Services Logo */}
-            <div className="relative w-18 h-12 flex items-center justify-center">
-              <Image
-                src="/images/ecosystem/aws_official.svg"
-                alt="Amazon Web Services"
-                width={72}
-                height={44}
-                className="object-contain"
-                priority
-              />
+            {/* Satellite Tile 1 Dynamic Logo */}
+            <div className="relative w-18 h-12 flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentData.tile1.id}
+                  initial={{ opacity: 0, scale: 0.72, rotate: -6 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.72, rotate: 6 }}
+                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  <Image
+                    src={currentData.tile1.logo}
+                    alt={currentData.tile1.name}
+                    width={currentData.tile1.width}
+                    height={currentData.tile1.height}
+                    className="object-contain max-h-11 max-w-[68px] select-none pointer-events-none drop-shadow-sm"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>
 
-        {/* ─── Floating Satellite Tile 2: Azure (Top Right) ─────────────────── */}
+        {/* ─── Floating Satellite Tile 2 (Top Right) ─────────────────── */}
         <div
           className="absolute right-[48px] top-[40px] sm:right-[60px] sm:top-[42px] pointer-events-auto"
           style={{ transformStyle: 'preserve-3d' }}
-          onMouseEnter={() => setActiveTile('azure')}
+          onMouseEnter={() => setActiveTile('tile2')}
           onMouseLeave={() => setActiveTile(null)}
         >
           {/* Cast Contact Shadow on Orbit Floor */}
@@ -273,8 +400,8 @@ export default function EcosystemScene() {
             className="absolute -inset-2 rounded-[26px] bg-[#171614]/15 filter blur-lg pointer-events-none"
             style={{ transform: 'translateZ(2px)' }}
             animate={{
-              scale: activeTile === 'azure' ? 1.15 : [1, 1.08, 1],
-              opacity: activeTile === 'azure' ? 0.35 : [0.24, 0.15, 0.24],
+              scale: activeTile === 'tile2' ? 1.15 : [1, 1.08, 1],
+              opacity: activeTile === 'tile2' ? 0.35 : [0.24, 0.15, 0.24],
             }}
             transition={{ repeat: Infinity, duration: 4.8, ease: 'easeInOut' }}
           />
@@ -290,31 +417,44 @@ export default function EcosystemScene() {
                 '0 22px 45px -10px rgba(23, 22, 20, 0.18), 0 8px 18px -4px rgba(23, 22, 20, 0.08), inset 0 2px 3px rgba(255, 255, 255, 0.95)',
             }}
             animate={{
-              z: activeTile === 'azure' ? 88 : [70, 84, 70],
+              z: activeTile === 'tile2' ? 88 : [70, 84, 70],
               rotateZ: [1.2, -0.8, 1.2],
             }}
             transition={{ repeat: Infinity, duration: 4.8, ease: 'easeInOut' }}
             whileHover={{ scale: 1.08 }}
+            title={currentData.tile2.name}
+            aria-label={currentData.tile2.name}
           >
-            {/* Microsoft Azure 3D Folded 'A' Logo */}
-            <div className="relative w-14 h-14 flex items-center justify-center">
-              <Image
-                src="/images/ecosystem/azure.svg"
-                alt="Microsoft Azure"
-                width={56}
-                height={56}
-                className="object-contain"
-                priority
-              />
+            {/* Satellite Tile 2 Dynamic Logo */}
+            <div className="relative w-14 h-14 flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentData.tile2.id}
+                  initial={{ opacity: 0, scale: 0.72, rotate: 6 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.72, rotate: -6 }}
+                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  <Image
+                    src={currentData.tile2.logo}
+                    alt={currentData.tile2.name}
+                    width={currentData.tile2.width}
+                    height={currentData.tile2.height}
+                    className="object-contain max-h-12 max-w-14 select-none pointer-events-none drop-shadow-sm"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>
 
-        {/* ─── Floating Satellite Tile 3: Google Cloud (Bottom Right) ───────── */}
+        {/* ─── Floating Satellite Tile 3 (Bottom Right) ───────── */}
         <div
           className="absolute right-[42px] bottom-[90px] sm:right-[52px] sm:bottom-[96px] pointer-events-auto"
           style={{ transformStyle: 'preserve-3d' }}
-          onMouseEnter={() => setActiveTile('gcp')}
+          onMouseEnter={() => setActiveTile('tile3')}
           onMouseLeave={() => setActiveTile(null)}
         >
           {/* Cast Contact Shadow on Orbit Floor */}
@@ -322,8 +462,8 @@ export default function EcosystemScene() {
             className="absolute -inset-2 rounded-[26px] bg-[#171614]/15 filter blur-lg pointer-events-none"
             style={{ transform: 'translateZ(2px)' }}
             animate={{
-              scale: activeTile === 'gcp' ? 1.15 : [1, 1.08, 1],
-              opacity: activeTile === 'gcp' ? 0.35 : [0.26, 0.17, 0.26],
+              scale: activeTile === 'tile3' ? 1.15 : [1, 1.08, 1],
+              opacity: activeTile === 'tile3' ? 0.35 : [0.26, 0.17, 0.26],
             }}
             transition={{ repeat: Infinity, duration: 4.4, ease: 'easeInOut' }}
           />
@@ -339,22 +479,35 @@ export default function EcosystemScene() {
                 '0 20px 42px -10px rgba(23, 22, 20, 0.16), 0 8px 18px -4px rgba(23, 22, 20, 0.08), inset 0 2px 3px rgba(255, 255, 255, 0.95)',
             }}
             animate={{
-              z: activeTile === 'gcp' ? 56 : [40, 54, 40],
+              z: activeTile === 'tile3' ? 56 : [40, 54, 40],
               rotateZ: [-1, 1, -1],
             }}
             transition={{ repeat: Infinity, duration: 4.4, ease: 'easeInOut' }}
             whileHover={{ scale: 1.08 }}
+            title={currentData.tile3.name}
+            aria-label={currentData.tile3.name}
           >
-            {/* Google Cloud 4-Color Cloud Logo */}
-            <div className="relative w-15 h-13 flex items-center justify-center">
-              <Image
-                src="/images/ecosystem/gcp_cloud.svg"
-                alt="Google Cloud Platform"
-                width={60}
-                height={52}
-                className="object-contain"
-                priority
-              />
+            {/* Satellite Tile 3 Dynamic Logo */}
+            <div className="relative w-15 h-13 flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentData.tile3.id}
+                  initial={{ opacity: 0, scale: 0.72, rotate: -6 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.72, rotate: 6 }}
+                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  <Image
+                    src={currentData.tile3.logo}
+                    alt={currentData.tile3.name}
+                    width={currentData.tile3.width}
+                    height={currentData.tile3.height}
+                    className="object-contain max-h-12 max-w-15 select-none pointer-events-none drop-shadow-sm"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>

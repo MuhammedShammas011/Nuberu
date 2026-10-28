@@ -61,7 +61,9 @@ export default function Navbar() {
           transition={{
             layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
           }}
-          className={`pointer-events-auto flex items-center justify-between md:justify-start gap-2 sm:gap-2.5 p-2 sm:p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-[#171614]/10 transition-shadow duration-300 ${
+          className={`pointer-events-auto flex items-center justify-between md:justify-start ${
+            showFullNav ? 'gap-1.5 sm:gap-2' : 'gap-6 sm:gap-8'
+          } p-2 sm:p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-[#171614]/10 transition-all duration-300 ${
             isPastHero
               ? 'shadow-[0_14px_36px_rgba(23,22,20,0.14)] border-[#171614]/15'
               : 'shadow-[0_8px_28px_-4px_rgba(23,22,20,0.08),0_2px_4px_rgba(23,22,20,0.04)]'

@@ -96,7 +96,7 @@ export default function TechEcosystem() {
 
           {/* Right Column: 3D Connected Ecosystem Animation */}
           <div className="lg:col-span-7 w-full flex items-center justify-center overflow-hidden lg:overflow-visible">
-            <EcosystemScene />
+            <EcosystemScene activeCategory={activeCategory} />
           </div>
         </div>
 
