@@ -43,7 +43,7 @@ export default function Navbar() {
       {/* Floating Capsule Header Container */}
       <header className="fixed top-3.5 sm:top-5 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
         <div
-          className={`pointer-events-auto flex items-center justify-between md:justify-start gap-1 sm:gap-1.5 p-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#171614]/10 transition-all duration-300 ${
+          className={`pointer-events-auto flex items-center justify-between md:justify-start gap-1 sm:gap-1.5 p-1.5 rounded-full bg-[#DDD4C5]/95 backdrop-blur-md border border-[#171614]/10 transition-all duration-300 ${
             scrolled
               ? 'shadow-[0_12px_32px_rgba(23,22,20,0.12)] border-[#171614]/15'
               : 'shadow-[0_6px_24px_-4px_rgba(23,22,20,0.08),0_1px_2px_rgba(23,22,20,0.04)]'
@@ -52,7 +52,7 @@ export default function Navbar() {
           {/* Left Circular Mark Badge */}
           <Link
             href="/"
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#171614] flex items-center justify-center shrink-0 transition-transform duration-200 hover:scale-105"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#B84A2B] hover:bg-[#9E3E23] flex items-center justify-center shrink-0 transition-all duration-200 hover:scale-105 shadow-[0_2px_8px_rgba(184,74,43,0.3)]"
             aria-label="Nuberu Home"
           >
             <Image
