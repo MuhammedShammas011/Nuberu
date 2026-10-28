@@ -61,16 +61,16 @@ export default function HowWeWork() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-6">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-4 sm:mb-6">
                 DELIVERY METHODOLOGY
               </p>
 
-              <h2 className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
+              <h2 className="text-[clamp(2.35rem,6.8vw,5.8rem)] font-extrabold leading-[0.98] sm:leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
                 How We<br />
                 Work.
               </h2>
 
-              <p className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[500px] mt-6 mb-10">
+              <p className="text-[1rem] sm:text-[1.08rem] leading-[1.62] text-[#555047] max-w-[500px] mt-4 sm:mt-6 mb-8 sm:mb-10">
                 A disciplined four-stage delivery model engineered to manage risk, accelerate implementation, and ensure operational continuity.
               </p>
             </motion.div>
@@ -158,7 +158,7 @@ export default function HowWeWork() {
 
           {/* RIGHT — Large interactive card matching Hero right-card visual language */}
           <div className="lg:sticky lg:top-28">
-            <div className="relative rounded-[32px] overflow-hidden shadow-[0_24px_60px_-15px_rgba(23,22,20,0.12)] bg-[#171614] aspect-[1/1.02] w-full">
+            <div className="relative rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-[0_24px_60px_-15px_rgba(23,22,20,0.12)] bg-[#171614] aspect-[4/3.2] sm:aspect-[1/1.02] w-full">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIdx}
@@ -182,7 +182,7 @@ export default function HowWeWork() {
               </AnimatePresence>
 
               {/* Bottom text overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 z-10">
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 z-10">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeIdx}

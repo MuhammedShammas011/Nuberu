@@ -45,13 +45,13 @@ export default function EcosystemScene() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[440px] sm:h-[480px] lg:h-[520px] flex items-center justify-center select-none overflow-visible"
+      className="relative w-full h-[360px] sm:h-[480px] lg:h-[520px] flex items-center justify-center select-none overflow-hidden sm:overflow-visible"
       style={{ perspective: 1200 }}
       aria-label="Interactive 3D Connected Technology Ecosystem"
     >
       {/* 3D Isometric Perspective Stage */}
       <motion.div
-        className="relative w-[520px] h-[520px] sm:w-[560px] sm:h-[560px] flex items-center justify-center pointer-events-auto"
+        className="relative w-[520px] h-[520px] sm:w-[560px] sm:h-[560px] flex items-center justify-center pointer-events-auto scale-[0.65] sm:scale-100 origin-center"
         style={{
           transformStyle: 'preserve-3d',
           rotateX: stageRotateX,

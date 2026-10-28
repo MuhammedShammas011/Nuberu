@@ -155,13 +155,13 @@ export default function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Headline, Description & Contact info */}
           <div className="lg:col-span-5">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1E5A63] mb-4">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1E5A63] mb-3 sm:mb-4">
               Direct Engagement
             </p>
-            <h2 className="text-[clamp(2.6rem,4.8vw,4.4rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.96] mb-6">
+            <h2 className="text-[clamp(1.95rem,4.8vw,4.4rem)] font-extrabold text-[#171614] tracking-[-0.04em] leading-[0.98] sm:leading-[0.96] mb-4 sm:mb-6">
               READY TO MODERNIZE YOUR DIGITAL CORE?
             </h2>
-            <p className="text-[1.1rem] leading-relaxed text-[#171614]/70 mb-10 max-w-[460px]">
+            <p className="text-[1rem] sm:text-[1.1rem] leading-relaxed text-[#171614]/70 mb-8 sm:mb-10 max-w-[460px]">
               Talk to our team about your infrastructure, cloud, application or operations requirements. We will review your landscape and outline practical next steps.
             </p>
 
@@ -192,7 +192,7 @@ export default function ContactSection() {
 
           {/* Right Column: Clean Enterprise Enquiry Form */}
           <div className="lg:col-span-7">
-            <div className="p-8 sm:p-10 rounded-3xl bg-white border border-[#171614]/10 shadow-[0_20px_50px_-20px_rgba(23,22,20,0.06)]">
+            <div className="p-5 sm:p-10 rounded-2xl sm:rounded-3xl bg-white border border-[#171614]/10 shadow-[0_20px_50px_-20px_rgba(23,22,20,0.06)]">
               {submitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}

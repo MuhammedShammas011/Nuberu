@@ -6,40 +6,40 @@ import Image from 'next/image';
 export default function Hero() {
   return (
     <section
-      className="pt-[116px] bg-[#F4EFE6] relative flex flex-col justify-between"
+      className="pt-[100px] sm:pt-[116px] bg-[#F4EFE6] relative flex flex-col justify-between"
       id="hero"
       aria-label="Hero — One System. Many Capabilities."
     >
-      <div className="container-custom pb-16 pt-4 grid grid-cols-1 lg:grid-cols-[1.15fr_0.95fr] gap-12 lg:gap-14 items-center">
+      <div className="container-custom pb-12 sm:pb-16 pt-4 grid grid-cols-1 lg:grid-cols-[1.15fr_0.95fr] gap-10 lg:gap-14 items-center">
         {/* Left Column: Text & CTAs */}
         <div className="flex flex-col">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#4A6B7C] mb-6">
+          <p className="text-xs sm:text-[13px] font-semibold uppercase tracking-[0.14em] text-[#4A6B7C] mb-4 sm:mb-6">
             ONE SYSTEM. MANY CAPABILITIES.
           </p>
 
-          <h1 className="text-[clamp(3.4rem,5.8vw,5.75rem)] font-[550] leading-[1.02] tracking-[-0.04em] text-[#171614] m-0">
+          <h1 className="text-[clamp(2.15rem,6.2vw,5.75rem)] font-[550] leading-[1.04] sm:leading-[1.02] tracking-[-0.04em] text-[#171614] m-0">
             Here Infrastructure<br />
             Enables<br />
             Transformation.
           </h1>
 
-          <p className="text-[1.15rem] sm:text-[1.2rem] leading-[1.6] text-[#555047] max-w-[520px] mt-6 mb-9">
+          <p className="text-[1.02rem] sm:text-[1.2rem] leading-[1.6] text-[#555047] max-w-[520px] mt-5 sm:mt-6 mb-7 sm:mb-9">
             Nuberu connects infrastructure, cloud and modern technologies to create simpler, 
             scalable and resilient technology environments.
           </p>
 
-          <div className="flex items-center gap-3.5 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5">
             <Link
               href="/contact"
               id="hero-cta-primary"
-              className="inline-flex items-center justify-center text-[14.5px] font-medium text-[#F4EFE6] bg-[#171614] hover:bg-[#2b2925] px-7 py-3.5 rounded-full tracking-[-0.01em] border border-[#171614] transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(23,22,20,0.15)]"
+              className="inline-flex items-center justify-center text-[14.5px] font-medium text-[#F4EFE6] bg-[#171614] hover:bg-[#2b2925] px-7 py-3.5 rounded-full tracking-[-0.01em] border border-[#171614] transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(23,22,20,0.15)] text-center"
             >
               Start a conversation
             </Link>
             <Link
               href="#capabilities"
               id="hero-cta-secondary"
-              className="inline-flex items-center justify-center text-[14.5px] font-medium text-[#171614] bg-transparent hover:bg-[#171614]/5 px-7 py-3.5 rounded-full tracking-[-0.01em] border border-[#171614] transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center text-[14.5px] font-medium text-[#171614] bg-transparent hover:bg-[#171614]/5 px-7 py-3.5 rounded-full tracking-[-0.01em] border border-[#171614] transition-all hover:-translate-y-0.5 text-center"
             >
               See capabilities
             </Link>
@@ -48,7 +48,7 @@ export default function Hero() {
 
         {/* Right Column: Visual Card with Floating Brand Badge */}
         <div className="flex justify-center lg:justify-end items-center">
-          <div className="relative w-full max-w-[520px] aspect-[1/1.05] rounded-[36px] overflow-hidden shadow-[0_24px_60px_-15px_rgba(23,22,20,0.14)] bg-[#2c201d] group">
+          <div className="relative w-full max-w-[520px] aspect-[1/1.05] rounded-[24px] sm:rounded-[36px] overflow-hidden shadow-[0_24px_60px_-15px_rgba(23,22,20,0.14)] bg-[#2c201d] group">
             <Image
               src="/images/vr_hero.png"
               alt="Futuristic VR Headset Portrait in Amber Light"
@@ -60,7 +60,7 @@ export default function Hero() {
 
             {/* Floating Brand Badge */}
             <div
-              className="absolute bottom-7 left-7 w-[72px] h-[72px] bg-[#B84A2B] rounded-[18px] flex items-center justify-center shadow-[0_8px_24px_rgba(184,74,43,0.35)] z-10 transition-transform duration-200 group-hover:scale-105"
+              className="absolute bottom-4 left-4 sm:bottom-7 sm:left-7 w-13 h-13 sm:w-[72px] sm:h-[72px] bg-[#B84A2B] rounded-2xl sm:rounded-[18px] flex items-center justify-center shadow-[0_8px_24px_rgba(184,74,43,0.35)] z-10 transition-transform duration-200 group-hover:scale-105"
               aria-hidden="true"
             >
               <Image
@@ -68,7 +68,7 @@ export default function Hero() {
                 alt="Nuberu Mark"
                 width={36}
                 height={28}
-                className="w-9 h-auto block"
+                className="w-7 sm:w-9 h-auto block"
               />
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom Capabilities Full-Width Bar */}
-      <div className="w-full bg-[#171614] py-5 mt-auto overflow-x-auto" role="navigation" aria-label="Capability areas">
+      <div className="w-full bg-[#171614] py-4 sm:py-5 mt-auto overflow-x-auto no-scrollbar" role="navigation" aria-label="Capability areas">
         <div className="container-custom flex justify-between items-center gap-6 min-w-max md:min-w-0">
           <Link
             href="#capabilities"

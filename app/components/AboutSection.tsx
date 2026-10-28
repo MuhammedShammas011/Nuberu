@@ -37,14 +37,14 @@ export default function AboutSection() {
             offsetEnd={25}
             colorHidden="rgba(23, 22, 20, 0.2)"
             colorRevealed="#171614"
-            className="text-[clamp(1.4rem,2.5vw,2.3rem)] leading-[1.42] text-[#171614] font-normal tracking-[-0.025em] m-0"
+            className="text-[clamp(1.18rem,2.8vw,2.3rem)] leading-[1.46] sm:leading-[1.42] text-[#171614] font-normal tracking-[-0.025em] m-0"
             text="Our practice operates across three interconnected commitments: delivering **Technology Neutral** architecture recommendations dictated solely by operational realities and uptime requirements with zero vendor lock-in; engineering **Transformation Focused** outcomes that lower failure rates, eliminate technical debt, and ensure predictable velocity; and establishing **Clarity & Connection** by synchronizing physical compute fabrics, multi-cloud landing zones, and continuous GitOps pipelines into one governed core from silicon to ingress."
           />
         </div>
 
         {/* Bottom Precision Telemetry Bar */}
-        <div className="mt-14 sm:mt-18 pt-6 border-t border-[#171614]/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#171614]/60">
-          <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-center sm:text-left">
+        <div className="mt-12 sm:mt-18 pt-6 border-t border-[#171614]/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#171614]/60">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 sm:gap-6 text-center sm:text-left">
             <span>ISO 27001 Methodology</span>
             <span className="text-[#171614]/20 hidden sm:inline">•</span>
             <span>Multi-Cloud Certified</span>

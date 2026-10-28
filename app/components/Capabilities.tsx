@@ -245,8 +245,8 @@ export default function Capabilities() {
         </div>
 
         {/* ── Title Row ─────────────────────────────────────────────── */}
-        <div className="mb-10 lg:mb-14">
-          <h2 className="text-[clamp(2.5rem,5.2vw,4.6rem)] font-extrabold leading-[0.98] tracking-[-0.04em] text-[#171614] m-0">
+        <div className="mb-8 lg:mb-14">
+          <h2 className="text-[clamp(2.1rem,5.2vw,4.6rem)] font-extrabold leading-[0.98] tracking-[-0.04em] text-[#171614] m-0">
             Capabilities<br />
             built for what&apos;s<br />
             next<span className="text-[#B84A2B]">.</span>
@@ -254,30 +254,30 @@ export default function Capabilities() {
         </div>
 
         {/* ── 3-Column Workspace ─────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[220px_1.25fr_1fr] xl:grid-cols-[240px_1.35fr_1.05fr] gap-8 lg:gap-10 items-stretch lg:h-[530px] xl:h-[550px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1.25fr_1fr] xl:grid-cols-[240px_1.35fr_1.05fr] gap-6 sm:gap-8 lg:gap-10 items-stretch lg:h-[530px] xl:h-[550px]">
           {/* ── Column 1: Left Navigation ────────────────────────── */}
           <div className="flex flex-col justify-between h-full py-1">
-            <nav className="flex flex-col justify-between h-full gap-1.5" aria-label="Practice areas menu">
+            <nav className="flex flex-row lg:flex-col justify-start lg:justify-between h-full gap-2 lg:gap-1.5 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0" aria-label="Practice areas menu">
               {practiceAreas.map((item, idx) => {
                 const isActive = activeIndex === idx;
                 return (
                   <button
                     key={item.id}
                     onClick={() => setActiveIndex(idx)}
-                    className={`w-full flex-1 flex items-center justify-between px-3.5 py-2 rounded-[12px] text-left transition-all duration-200 group cursor-pointer ${
+                    className={`shrink-0 lg:w-full flex-none lg:flex-1 flex items-center justify-between gap-3 px-3.5 py-2.5 lg:py-2 rounded-full lg:rounded-[12px] text-left transition-all duration-200 group cursor-pointer ${
                       isActive
-                        ? 'bg-[#171614]/[0.045] text-[#B84A2B]'
+                        ? 'bg-[#171614]/[0.06] lg:bg-[#171614]/[0.045] text-[#B84A2B]'
                         : 'text-[#68635B] hover:text-[#171614] hover:bg-[#171614]/[0.02]'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
                       {isActive ? (
                         <span className="w-2 h-2 rounded-full bg-[#B84A2B] shrink-0 shadow-[0_0_8px_rgba(184,74,43,0.5)]" />
                       ) : (
                         <span className="w-2 h-2 rounded-full border border-[#68635B]/40 group-hover:border-[#171614] shrink-0 transition-colors" />
                       )}
                       <span
-                        className={`text-[14.5px] tracking-[-0.01em] transition-colors ${
+                        className={`text-[13.5px] sm:text-[14.5px] whitespace-nowrap tracking-[-0.01em] transition-colors ${
                           isActive ? 'font-semibold text-[#B84A2B]' : 'font-medium'
                         }`}
                       >
@@ -286,7 +286,7 @@ export default function Capabilities() {
                     </div>
 
                     <span
-                      className={`font-mono text-[12px] tabular-nums transition-colors ${
+                      className={`font-mono text-[11px] sm:text-[12px] tabular-nums transition-colors ${
                         isActive ? 'text-[#B84A2B] font-semibold' : 'text-[#68635B]/60'
                       }`}
                     >
@@ -303,7 +303,7 @@ export default function Capabilities() {
             ref={centerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative flex items-center justify-center h-full min-h-[460px] lg:min-h-0 py-1"
+            className="relative flex items-center justify-center h-full min-h-[300px] sm:min-h-[420px] lg:min-h-0 py-1"
             style={{ perspective: 1200 }}
           >
             <motion.div
@@ -351,21 +351,21 @@ export default function Capabilities() {
               <div className="absolute inset-0 pointer-events-none z-30">
                 {/* Callout 1 (Top-Left) */}
                 <div className="absolute left-[7%] top-[29%] pointer-events-auto">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
+                  <span className="font-mono text-[9.5px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
                     {activeItem.callouts.top1}
                   </span>
                 </div>
 
                 {/* Callout 2 (Top-Right) */}
                 <div className="absolute right-[8%] top-[19%] pointer-events-auto text-right">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
+                  <span className="font-mono text-[9.5px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
                     {activeItem.callouts.top2}
                   </span>
                 </div>
 
                 {/* Callout 3 (Bottom-Left) */}
                 <div className="absolute left-[7%] bottom-[23%] pointer-events-auto">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
+                  <span className="font-mono text-[9.5px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-[#68635B] select-text">
                     {activeItem.callouts.bottom}
                   </span>
                 </div>
@@ -752,21 +752,21 @@ export default function Capabilities() {
                 </div>
 
                 {/* Practice Title */}
-                <h3 className="text-[clamp(2.4rem,3.6vw,3.3rem)] font-extrabold tracking-[-0.035em] text-[#171614] leading-[1.04] m-0 mb-4">
+                <h3 className="text-[clamp(1.85rem,4.5vw,3.3rem)] font-extrabold tracking-[-0.035em] text-[#171614] leading-[1.04] m-0 mb-4">
                   {activeItem.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[1.05rem] leading-[1.65] text-[#555047] max-w-[440px] m-0 mb-6">
+                <p className="text-[0.98rem] sm:text-[1.05rem] leading-[1.65] text-[#555047] max-w-[440px] m-0 mb-6">
                   {activeItem.summary}
                 </p>
 
                 {/* Platform Badges */}
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-8">
                   {activeItem.platforms.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3.5 py-1.5 rounded-[10px] bg-[#171614]/[0.045] border border-[#171614]/[0.06] font-mono text-[12px] font-medium text-[#171614]/80 tracking-tight"
+                      className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-[10px] bg-[#171614]/[0.045] border border-[#171614]/[0.06] font-mono text-[11px] sm:text-[12px] font-medium text-[#171614]/80 tracking-tight"
                     >
                       {tag}
                     </span>
@@ -774,16 +774,16 @@ export default function Capabilities() {
                 </div>
 
                 {/* Actions: Button & Network Connection */}
-                <div className="flex items-center gap-5 flex-wrap mb-10">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-5 mb-8 sm:mb-10">
                   <Link
                     href={activeItem.href}
                     id="capabilities-explore-cta"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#B84A2B] hover:bg-[#a13e22] text-white text-[14px] font-semibold tracking-[-0.01em] transition-all hover:shadow-[0_8px_24px_rgba(184,74,43,0.28)] hover:-translate-y-0.5"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#B84A2B] hover:bg-[#a13e22] text-white text-[14px] font-semibold tracking-[-0.01em] transition-all hover:shadow-[0_8px_24px_rgba(184,74,43,0.28)] hover:-translate-y-0.5 text-center"
                   >
                     Explore Practice <ArrowUpRight className="w-4 h-4" />
                   </Link>
 
-                  <div className="inline-flex items-center gap-2 text-[13px] font-medium text-[#1E5A63]">
+                  <div className="inline-flex items-center justify-center sm:justify-start gap-2 text-[13px] font-medium text-[#1E5A63]">
                     <Network className="w-4 h-4 text-[#1E5A63]" />
                     <span>{activeItem.connectedTo}</span>
                   </div>

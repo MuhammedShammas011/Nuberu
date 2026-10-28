@@ -21,10 +21,10 @@ export default function ServicesOverview() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-6">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-4 sm:mb-6">
               SERVICE PORTFOLIO
             </p>
-            <h2 className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
+            <h2 className="text-[clamp(2.35rem,6.8vw,5.8rem)] font-extrabold leading-[0.98] sm:leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
               Engineered Services.<br />
               Enterprise Delivery.
             </h2>
@@ -35,7 +35,7 @@ export default function ServicesOverview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0"
+            className="text-[1rem] sm:text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0"
           >
             Targeted service engagements designed to modernize architecture, de-risk workload transitions, and establish Day 2 operational reliability.
           </motion.p>
@@ -73,7 +73,7 @@ export default function ServicesOverview() {
 
                     {/* Title */}
                     <h3
-                      className={`text-xl sm:text-2xl lg:text-[1.75rem] font-extrabold tracking-tight transition-colors duration-200 m-0 truncate ${
+                      className={`text-lg sm:text-2xl lg:text-[1.75rem] font-extrabold tracking-tight transition-colors duration-200 m-0 ${
                         isOpen ? 'text-[#B84A2B]' : 'text-[#171614] group-hover:text-[#B84A2B]'
                       }`}
                     >
@@ -81,7 +81,7 @@ export default function ServicesOverview() {
                     </h3>
                   </div>
 
-                  <div className="flex items-center gap-4 sm:gap-6 shrink-0">
+                  <div className="flex items-center gap-3 sm:gap-6 shrink-0">
                     {/* Category Tag */}
                     <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-[#171614]/40 hidden md:inline-block">
                       {service.category}
@@ -89,7 +89,7 @@ export default function ServicesOverview() {
 
                     {/* Animated Toggle Icon */}
                     <div
-                      className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 ${
                         isOpen
                           ? 'bg-[#B84A2B] text-white rotate-45 shadow-[0_4px_12px_rgba(184,74,43,0.25)]'
                           : 'border border-[#171614]/15 text-[#171614]/60 group-hover:border-[#B84A2B] group-hover:text-[#B84A2B]'
@@ -110,7 +110,7 @@ export default function ServicesOverview() {
                       transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-8 pt-2 grid grid-cols-1 md:grid-cols-12 gap-8 items-start pl-12 sm:pl-15 pr-2">
+                      <div className="pb-8 pt-2 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start pl-0 sm:pl-12 lg:pl-15 pr-0 sm:pr-2">
                         {/* Left: Summary, Tech Platforms & Action Link */}
                         <div className="md:col-span-5 lg:col-span-5 flex flex-col justify-between h-full">
                           <div>
@@ -158,8 +158,8 @@ export default function ServicesOverview() {
                         </div>
 
                         {/* Right: Authentic Real Image Container Aligned to Right Side */}
-                        <div className="md:col-span-4 lg:col-span-4 flex justify-end">
-                          <div className="relative w-full aspect-[4/3] max-w-[250px] overflow-hidden border border-[#171614]/12 shadow-[0_8px_24px_-8px_rgba(23,22,20,0.12)] bg-[#171614]/5 group/img ml-auto">
+                        <div className="md:col-span-4 lg:col-span-4 flex justify-start sm:justify-end">
+                          <div className="relative w-full aspect-[4/3] max-w-[250px] overflow-hidden border border-[#171614]/12 shadow-[0_8px_24px_-8px_rgba(23,22,20,0.12)] bg-[#171614]/5 group/img sm:ml-auto">
                             <Image
                               src={service.image}
                               alt={service.title}

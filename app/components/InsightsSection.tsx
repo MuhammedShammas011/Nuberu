@@ -26,10 +26,10 @@ export default function InsightsSection() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-6">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-4 sm:mb-6">
               TECHNICAL PERSPECTIVES
             </p>
-            <h2 className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
+            <h2 className="text-[clamp(2.35rem,6.8vw,5.8rem)] font-extrabold leading-[0.98] sm:leading-[0.96] tracking-[-0.045em] text-[#171614] m-0">
               Insights &<br />
               Guides.
             </h2>
@@ -40,7 +40,7 @@ export default function InsightsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0"
+            className="text-[1rem] sm:text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0"
           >
             Practical architectural guidance, migration considerations, and technical notes from our engineering team.
           </motion.p>
@@ -81,7 +81,7 @@ export default function InsightsSection() {
                 )}
 
                 {/* Text Content */}
-                <div className="flex flex-col flex-1 p-7">
+                <div className="flex flex-col flex-1 p-5 sm:p-7">
                   {/* Category + Read Time */}
                   <div className="flex items-center justify-between mb-5">
                     <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.15em] text-[#B84A2B]">

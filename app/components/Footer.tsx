@@ -82,7 +82,7 @@ export default function Footer() {
                 <span className="w-2 h-2 rounded-full bg-[#B84A2B] animate-pulse" />
                 Let&apos;s Build Resilient Systems
               </span>
-              <h2 className="text-[clamp(2.5rem,5.5vw,4.8rem)] font-extrabold text-[#F4EFE6] tracking-[-0.04em] leading-[0.98] m-0">
+              <h2 className="text-[clamp(2.1rem,5.5vw,4.8rem)] font-extrabold text-[#F4EFE6] tracking-[-0.04em] leading-[0.98] m-0">
                 Ready to Architect <br className="hidden sm:inline" />
                 What&apos;s Next?
               </h2>

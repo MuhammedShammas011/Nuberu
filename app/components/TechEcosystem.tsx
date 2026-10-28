@@ -71,14 +71,14 @@ export default function TechEcosystem() {
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="lg:col-span-5 flex flex-col justify-center"
           >
-            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-6">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#68635B] mb-4 sm:mb-6">
               PLATFORM INTEGRATION
             </p>
-            <h2 className="text-[clamp(3.3rem,6.8vw,5.8rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#171614] mb-8 m-0">
+            <h2 className="text-[clamp(2.35rem,6.8vw,5.8rem)] font-extrabold leading-[0.98] sm:leading-[0.96] tracking-[-0.045em] text-[#171614] mb-6 sm:mb-8 m-0">
               Technology Ecosystem.<br />
               Neutral & Validated.
             </h2>
-            <p className="text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0 mb-8">
+            <p className="text-[1rem] sm:text-[1.08rem] leading-[1.62] text-[#555047] max-w-[480px] m-0 mb-6 sm:mb-8">
               Nuberu designs across leading hyperscalers, container platforms, and open-source infrastructure tooling with zero vendor lock-in.
             </p>
             <div>
@@ -95,13 +95,13 @@ export default function TechEcosystem() {
           </motion.div>
 
           {/* Right Column: 3D Connected Ecosystem Animation */}
-          <div className="lg:col-span-7 w-full flex items-center justify-center overflow-visible">
+          <div className="lg:col-span-7 w-full flex items-center justify-center overflow-hidden lg:overflow-visible">
             <EcosystemScene />
           </div>
         </div>
 
         {/* Minimal Tab Bar with Animated Gliding Pill */}
-        <div className="flex flex-wrap items-center gap-2 mb-12 pb-4 border-b border-[#171614]/10">
+        <div className="flex flex-nowrap sm:flex-wrap items-center gap-2 mb-8 sm:mb-12 pb-3 sm:pb-4 border-b border-[#171614]/10 overflow-x-auto no-scrollbar">
           {ecosystem.map((cat, idx) => {
             const isActive = activeCategory === idx;
 
@@ -110,7 +110,7 @@ export default function TechEcosystem() {
                 key={cat.category}
                 type="button"
                 onClick={() => setActiveCategory(idx)}
-                className={`relative px-5 py-2.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors cursor-pointer select-none ${
+                className={`shrink-0 relative px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors cursor-pointer select-none whitespace-nowrap ${
                   isActive ? 'text-[#F4EFE6]' : 'text-[#171614]/65 hover:text-[#171614]'
                 }`}
               >
@@ -155,7 +155,7 @@ export default function TechEcosystem() {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: i * 0.07 }}
-                  className="group relative p-7 sm:p-8 rounded-2xl bg-white/70 hover:bg-white border border-[#171614]/[0.08] hover:border-[#B84A2B]/40 transition-all duration-300 hover:shadow-[0_20px_45px_-15px_rgba(23,22,20,0.08)] hover:-translate-y-1 flex flex-col justify-between"
+                  className="group relative p-5 sm:p-8 rounded-2xl bg-white/70 hover:bg-white border border-[#171614]/[0.08] hover:border-[#B84A2B]/40 transition-all duration-300 hover:shadow-[0_20px_45px_-15px_rgba(23,22,20,0.08)] hover:-translate-y-1 flex flex-col justify-between"
                 >
                   <div>
                     {/* Top Row: Code Badge & Verification Status */}
