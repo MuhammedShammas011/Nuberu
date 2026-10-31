@@ -46,31 +46,17 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Visual Card with Floating Brand Badge */}
+        {/* Right Column: Isolated Portrait PNG */}
         <div className="flex justify-center lg:justify-end items-center">
-          <div className="relative w-full max-w-[520px] aspect-[1/1.05] rounded-[24px] sm:rounded-[36px] overflow-hidden shadow-[0_24px_60px_-15px_rgba(23,22,20,0.14)] bg-[#2c201d] group">
+          <div className="relative w-full max-w-[520px] flex items-center justify-center group">
             <Image
-              src="/images/vr_hero.png"
-              alt="Futuristic VR Headset Portrait in Amber Light"
-              width={580}
-              height={620}
+              src="/assets/a_clean_high_resolution_isolated_png_style_portra.png"
+              alt="Futuristic Portrait in Amber Light"
+              width={650}
+              height={595}
               priority
-              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              className="w-full h-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(23,22,20,0.12)] transition-transform duration-700 ease-out group-hover:scale-[1.02]"
             />
-
-            {/* Floating Brand Badge */}
-            <div
-              className="absolute bottom-4 left-4 sm:bottom-7 sm:left-7 w-13 h-13 sm:w-[72px] sm:h-[72px] bg-[#B84A2B] rounded-2xl sm:rounded-[18px] flex items-center justify-center shadow-[0_8px_24px_rgba(184,74,43,0.35)] z-10 transition-transform duration-200 group-hover:scale-105"
-              aria-hidden="true"
-            >
-              <Image
-                src="/images/nuberu_mark_white.svg"
-                alt="Nuberu Mark"
-                width={36}
-                height={28}
-                className="w-7 sm:w-9 h-auto block"
-              />
-            </div>
           </div>
         </div>
       </div>
