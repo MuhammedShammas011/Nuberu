@@ -36,8 +36,10 @@ export default function Hero() {
             </p>
 
             <h1 className="text-[clamp(1.6rem,3.4vw,3.25rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-[#171614] m-0">
-              Here Infrastructure<br />
-              <span className="text-[#B84A2B]">Enables Transformation.</span>
+              Here Infrastructure
+              <span className="text-[#B84A2B] text-[clamp(1.3rem,2.7vw,2.55rem)] block mt-1 tracking-[-0.025em]">
+                Enables Transformation.
+              </span>
             </h1>
           </div>
 
@@ -67,19 +69,27 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Isolated Portrait PNG */}
+        {/* Right Column: Isolated Portrait PNG with Bulky Terracotta Text Behind */}
         <div className="flex justify-center items-end self-end w-full relative z-10">
           <motion.div
             style={{ y }}
-            className="relative w-full max-w-[580px] sm:max-w-[660px] lg:max-w-[760px] xl:max-w-[840px] 2xl:max-w-[920px] flex items-end justify-center -mb-4 sm:-mb-6 lg:-mb-8 xl:-mb-10 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 group will-change-transform"
+            className="relative w-full max-w-[580px] sm:max-w-[660px] lg:max-w-[760px] xl:max-w-[840px] 2xl:max-w-[920px] flex items-end justify-center -mb-5 sm:-mb-7 lg:-mb-9 xl:-mb-11 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 scale-[1.05] sm:scale-[1.07] lg:scale-[1.09] origin-bottom group will-change-transform"
           >
+            {/* Bulky Terracotta "nuberu" Text behind the Portrait */}
+            <span
+              aria-hidden="true"
+              className="absolute top-[38%] sm:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(8.5rem,26vw,24rem)] font-black tracking-[-0.06em] leading-none text-[#B84A2B] select-none pointer-events-none z-0 whitespace-nowrap"
+            >
+              nuberu
+            </span>
+
             <Image
               src="/assets/a_clean_high_resolution_isolated_png_style_portra.png"
               alt="Futuristic Portrait in Amber Light"
               width={920}
               height={840}
               priority
-              className="w-full h-auto object-contain object-bottom select-none drop-shadow-[0_28px_60px_rgba(23,22,20,0.16)] block align-bottom transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              className="relative z-10 w-full h-auto object-contain object-bottom select-none drop-shadow-[0_28px_60px_rgba(23,22,20,0.16)] block align-bottom transition-transform duration-700 ease-out group-hover:scale-[1.02]"
             />
           </motion.div>
         </div>
