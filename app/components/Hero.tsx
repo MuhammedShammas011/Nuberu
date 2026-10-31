@@ -78,7 +78,7 @@ export default function Hero() {
             {/* Bulky Terracotta "nuberu" Text behind the Portrait */}
             <span
               aria-hidden="true"
-              className="absolute top-[38%] sm:top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(8.5rem,26vw,24rem)] font-black tracking-[-0.06em] leading-none text-[#B84A2B] select-none pointer-events-none z-0 whitespace-nowrap"
+              className="absolute top-[31%] sm:top-[36%] left-[25%] sm:left-[27%] -translate-x-1/2 -translate-y-1/2 text-[clamp(8.5rem,26vw,24rem)] font-black tracking-[-0.06em] leading-none text-[#B84A2B] select-none pointer-events-none z-0 whitespace-nowrap"
             >
               nuberu
             </span>
