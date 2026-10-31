@@ -14,7 +14,7 @@ export default function Hero() {
         {/* Left Column: Text & CTAs */}
         <div className="flex flex-col justify-between self-stretch h-full pt-1 sm:pt-2 lg:pt-3">
           {/* Top Headline Block */}
-          <div className="relative z-20">
+          <div>
             <p className="text-xs sm:text-[13px] font-semibold uppercase tracking-[0.14em] text-[#4A6B7C] mb-2.5 sm:mb-3.5">
               ONE SYSTEM. MANY CAPABILITIES.
             </p>
@@ -25,15 +25,8 @@ export default function Hero() {
             </h1>
           </div>
 
-          {/* Middle Big Brand Text in Terracotta — Layers behind the PNG portrait */}
-          <div className="my-auto py-1 sm:py-2 select-none relative z-0 pointer-events-none" aria-hidden="true">
-            <span className="text-[clamp(4.2rem,12vw,6.5rem)] lg:text-[clamp(9rem,21vw,18.5rem)] font-black tracking-[-0.055em] leading-[0.8] text-[#B84A2B] block whitespace-nowrap">
-              nuberu
-            </span>
-          </div>
-
           {/* Bottom Description & CTAs Block */}
-          <div className="mt-6 lg:mt-auto pb-6 sm:pb-8 lg:pb-10 relative z-20">
+          <div className="mt-8 lg:mt-auto pb-6 sm:pb-8 lg:pb-10">
             <p className="text-[0.95rem] sm:text-[1.05rem] leading-[1.58] text-[#555047] max-w-[480px] mb-5 sm:mb-6">
               Nuberu connects infrastructure, cloud and modern technologies to create simpler,
               scalable and resilient technology environments.
@@ -59,7 +52,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column: Isolated Portrait PNG */}
-        <div className="flex justify-center items-end self-end w-full relative z-10 pointer-events-none">
+        <div className="flex justify-center items-end self-end w-full relative z-10">
           <div className="relative w-full max-w-[520px] sm:max-w-[580px] lg:max-w-[650px] xl:max-w-[710px] 2xl:max-w-[760px] flex items-end justify-center -mb-3 sm:-mb-5 lg:-mb-6 xl:-mb-8 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 group">
             <Image
               src="/assets/a_clean_high_resolution_isolated_png_style_portra.png"
@@ -74,7 +67,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom Capabilities Full-Width Bar */}
-      <div className="w-full bg-[#171614] py-4 sm:py-4.5 mt-auto overflow-x-auto no-scrollbar relative z-30" role="navigation" aria-label="Capability areas">
+      <div className="w-full bg-[#171614] py-4 sm:py-4.5 mt-auto overflow-x-auto no-scrollbar relative z-10" role="navigation" aria-label="Capability areas">
         <div className="container-custom flex justify-between items-center gap-6 min-w-max md:min-w-0">
           <Link
             href="#capabilities"
