@@ -24,20 +24,16 @@ export default function Hero() {
       ref={heroRef}
       className="min-h-screen lg:min-h-[100dvh] pt-[92px] sm:pt-[104px] lg:pt-[114px] bg-[#F4EFE6] relative flex flex-col justify-between overflow-hidden"
       id="hero"
-      aria-label="Hero — One System. Many Capabilities."
+      aria-label="Hero — Infrastructure Enables Transformation"
     >
       <div className="container-custom pt-4 sm:pt-6 pb-0 grid grid-cols-1 lg:grid-cols-[0.92fr_1.18fr] gap-6 lg:gap-8 items-end flex-1">
         {/* Left Column: Text & CTAs */}
         <div className="flex flex-col justify-between self-stretch h-full pt-1 sm:pt-2 lg:pt-3">
           {/* Top Headline Block */}
           <div>
-            <p className="text-xs sm:text-[13px] font-semibold uppercase tracking-[0.14em] text-[#4A6B7C] mb-2.5 sm:mb-3.5">
-              ONE SYSTEM. MANY CAPABILITIES.
-            </p>
-
-            <h1 className="text-[clamp(1.6rem,3.4vw,3.25rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-[#171614] m-0">
+            <h1 className="text-[clamp(1.6rem,3.4vw,3.25rem)] font-semibold leading-[1.03] tracking-[-0.03em] text-[#171614] m-0">
               Here Infrastructure
-              <span className="text-[#B84A2B] text-[clamp(1.3rem,2.7vw,2.55rem)] block mt-1 tracking-[-0.025em]">
+              <span className="text-[#B84A2B] text-[clamp(1.3rem,2.7vw,2.55rem)] block mt-0 tracking-[-0.025em] leading-[1.04]">
                 Enables Transformation.
               </span>
             </h1>
@@ -71,11 +67,10 @@ export default function Hero() {
 
         {/* Right Column: Isolated Portrait PNG with Bulky Terracotta Text Behind */}
         <div className="flex justify-center items-end self-end w-full relative z-10">
-          <motion.div
-            style={{ y }}
-            className="relative w-full max-w-[580px] sm:max-w-[660px] lg:max-w-[760px] xl:max-w-[840px] 2xl:max-w-[920px] flex items-end justify-center -mb-5 sm:-mb-7 lg:-mb-9 xl:-mb-11 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 scale-[1.05] sm:scale-[1.07] lg:scale-[1.09] origin-bottom group will-change-transform"
+          <div
+            className="relative w-full max-w-[580px] sm:max-w-[660px] lg:max-w-[760px] xl:max-w-[840px] 2xl:max-w-[920px] flex items-end justify-center -mb-5 sm:-mb-7 lg:-mb-9 xl:-mb-11 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 scale-[1.05] sm:scale-[1.07] lg:scale-[1.09] origin-bottom group"
           >
-            {/* Bulky Terracotta "nuberu" Text behind the Portrait */}
+            {/* Bulky Terracotta "nuberu" Text behind the Portrait (Static - stays in place on scroll) */}
             <span
               aria-hidden="true"
               className="absolute top-[31%] sm:top-[36%] left-[25%] sm:left-[27%] -translate-x-1/2 -translate-y-1/2 text-[clamp(8.5rem,26vw,24rem)] font-black tracking-[-0.06em] leading-none text-[#B84A2B] select-none pointer-events-none z-0 whitespace-nowrap"
@@ -83,15 +78,21 @@ export default function Hero() {
               nuberu
             </span>
 
-            <Image
-              src="/assets/a_clean_high_resolution_isolated_png_style_portra.png"
-              alt="Futuristic Portrait in Amber Light"
-              width={920}
-              height={840}
-              priority
-              className="relative z-10 w-full h-auto object-contain object-bottom select-none drop-shadow-[0_28px_60px_rgba(23,22,20,0.16)] block align-bottom transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-            />
-          </motion.div>
+            {/* Only the Portrait PNG translates downward on scroll */}
+            <motion.div
+              style={{ y }}
+              className="relative z-10 w-full flex items-end justify-center will-change-transform"
+            >
+              <Image
+                src="/assets/a_clean_high_resolution_isolated_png_style_portra.png"
+                alt="Futuristic Portrait in Amber Light"
+                width={920}
+                height={840}
+                priority
+                className="w-full h-auto object-contain object-bottom select-none drop-shadow-[0_28px_60px_rgba(23,22,20,0.16)] block align-bottom transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
 
