@@ -1,16 +1,32 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 
 export default function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  // Track scroll through the hero section
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // On scroll, translate the image downwards so it sinks under the capabilities belt
+  const rawY = useTransform(scrollYProgress, [0, 1], [0, 260]);
+  const y = shouldReduceMotion ? 0 : rawY;
+
   return (
     <section
+      ref={heroRef}
       className="min-h-screen lg:min-h-[100dvh] pt-[92px] sm:pt-[104px] lg:pt-[114px] bg-[#F4EFE6] relative flex flex-col justify-between overflow-hidden"
       id="hero"
       aria-label="Hero — One System. Many Capabilities."
     >
-      <div className="container-custom pt-4 sm:pt-6 pb-0 grid grid-cols-1 lg:grid-cols-[0.96fr_1.14fr] gap-6 lg:gap-8 items-end flex-1">
+      <div className="container-custom pt-4 sm:pt-6 pb-0 grid grid-cols-1 lg:grid-cols-[0.92fr_1.18fr] gap-6 lg:gap-8 items-end flex-1">
         {/* Left Column: Text & CTAs */}
         <div className="flex flex-col justify-between self-stretch h-full pt-1 sm:pt-2 lg:pt-3">
           {/* Top Headline Block */}
@@ -53,21 +69,24 @@ export default function Hero() {
 
         {/* Right Column: Isolated Portrait PNG */}
         <div className="flex justify-center items-end self-end w-full relative z-10">
-          <div className="relative w-full max-w-[520px] sm:max-w-[580px] lg:max-w-[650px] xl:max-w-[710px] 2xl:max-w-[760px] flex items-end justify-center -mb-3 sm:-mb-5 lg:-mb-6 xl:-mb-8 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 group">
+          <motion.div
+            style={{ y }}
+            className="relative w-full max-w-[580px] sm:max-w-[660px] lg:max-w-[760px] xl:max-w-[840px] 2xl:max-w-[920px] flex items-end justify-center -mb-4 sm:-mb-6 lg:-mb-8 xl:-mb-10 -translate-x-2 sm:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8 group will-change-transform"
+          >
             <Image
               src="/assets/a_clean_high_resolution_isolated_png_style_portra.png"
               alt="Futuristic Portrait in Amber Light"
-              width={780}
-              height={712}
+              width={920}
+              height={840}
               priority
-              className="w-full h-auto object-contain object-bottom select-none drop-shadow-[0_24px_50px_rgba(23,22,20,0.15)] block align-bottom transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              className="w-full h-auto object-contain object-bottom select-none drop-shadow-[0_28px_60px_rgba(23,22,20,0.16)] block align-bottom transition-transform duration-700 ease-out group-hover:scale-[1.02]"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Bottom Capabilities Full-Width Bar */}
-      <div className="w-full bg-[#171614] py-4 sm:py-4.5 mt-auto overflow-x-auto no-scrollbar relative z-10" role="navigation" aria-label="Capability areas">
+      <div className="w-full bg-[#171614] py-4 sm:py-4.5 mt-auto overflow-x-auto no-scrollbar relative z-20" role="navigation" aria-label="Capability areas">
         <div className="container-custom flex justify-between items-center gap-6 min-w-max md:min-w-0">
           <Link
             href="#capabilities"
