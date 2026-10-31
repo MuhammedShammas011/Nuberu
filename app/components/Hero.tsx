@@ -6,11 +6,11 @@ import Image from 'next/image';
 export default function Hero() {
   return (
     <section
-      className="pt-[92px] sm:pt-[104px] lg:pt-[114px] bg-[#F4EFE6] relative flex flex-col justify-between overflow-hidden"
+      className="min-h-screen lg:min-h-[100dvh] pt-[92px] sm:pt-[104px] lg:pt-[114px] bg-[#F4EFE6] relative flex flex-col justify-between overflow-hidden"
       id="hero"
       aria-label="Hero — One System. Many Capabilities."
     >
-      <div className="container-custom pt-4 sm:pt-6 pb-0 grid grid-cols-1 lg:grid-cols-[0.96fr_1.14fr] gap-6 lg:gap-8 items-end">
+      <div className="container-custom pt-4 sm:pt-6 pb-0 grid grid-cols-1 lg:grid-cols-[0.96fr_1.14fr] gap-6 lg:gap-8 items-end flex-1">
         {/* Left Column: Text & CTAs */}
         <div className="flex flex-col justify-between self-stretch h-full pt-1 sm:pt-2 lg:pt-3">
           {/* Top Headline Block */}
